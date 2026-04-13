@@ -363,7 +363,7 @@ function renderStats(){
   const estEl=document.getElementById('stat-estimated'),deltaEl=document.getElementById('stat-delta');
   const est=getCurrentEstimatedMax(),hasEst=Object.keys(state.weekEstimates).length>0;
   if(est!==null&&hasEst){estEl.textContent=est;if(state.initialMax!==null&&est>state.initialMax){deltaEl.className='sub-text';deltaEl.textContent=`최초 대비 +${est-state.initialMax}개`;}else{deltaEl.className='sub-text muted';deltaEl.textContent='';}}
-  else if(state.initialMax!==null){estEl.textContent=state.initialMax;deltaEl.className='sub-text muted';deltaEl.textContent='Week 1 측정이 완료되면 계산됩니다';}
+  else if(state.initialMax!==null){estEl.textContent=state.initialMax;deltaEl.className='sub-text muted';deltaEl.textContent='첫 1주 프로그램이 완료되면 계산됩니다';}
   else{estEl.textContent='-';deltaEl.className='sub-text muted';deltaEl.textContent='';}
 }
 
