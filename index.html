@@ -144,7 +144,7 @@ body {
   transition: width 0.5s ease;
 }
 
-/* ===== COLUMN SELECTOR ===== */
+/* ===== SECTION TITLE ===== */
 .section-title {
   font-size: 14px;
   font-weight: 600;
@@ -154,6 +154,7 @@ body {
   letter-spacing: 1px;
 }
 
+/* ===== COLUMN SELECTOR ===== */
 .col-selector {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -179,15 +180,15 @@ body {
 .col-btn.active { background: var(--active); border-color: var(--active); color: #fff; }
 .col-btn.completed { background: var(--done); border-color: var(--done); color: #fff; opacity: 0.8; }
 
-/* ===== BLOCK TABS ===== */
-.block-tabs {
+/* ===== WEEK TABS ===== */
+.week-tabs {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 6px;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
-.block-tab {
+.week-tab {
   background: var(--bg2);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
@@ -200,10 +201,36 @@ body {
   text-align: center;
 }
 
-.block-tab:hover { border-color: var(--active); color: var(--text); }
-.block-tab.active { background: var(--active); border-color: var(--active); color: #fff; }
-.block-tab.done { background: rgba(46,204,113,0.15); border-color: var(--done); color: var(--done); }
-.block-tab.done.active { background: var(--done); color: #fff; }
+.week-tab:hover { border-color: var(--active); color: var(--text); }
+.week-tab.active { background: var(--active); border-color: var(--active); color: #fff; }
+.week-tab.done { background: rgba(46,204,113,0.15); border-color: var(--done); color: var(--done); }
+.week-tab.done.active { background: var(--done); color: #fff; }
+
+/* ===== DAY TABS ===== */
+.day-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.day-tab {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 8px;
+  color: var(--text2);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.day-tab:hover { border-color: var(--active); color: var(--text); }
+.day-tab.active { background: var(--active); border-color: var(--active); color: #fff; }
+.day-tab.done { background: rgba(46,204,113,0.15); border-color: var(--done); color: var(--done); }
+.day-tab.done.active { background: var(--done); color: #fff; }
 
 /* ===== WORKOUT CARD ===== */
 .workout-card {
@@ -473,29 +500,29 @@ body {
 <div class="container" id="app">
   <!-- Header -->
   <div class="header">
-    <h1>💯 100 Push-Ups</h1>
-    <p>USNA Program by CAPT Mike Prevost, USN</p>
+    <h1>100 Push-Ups</h1>
+    <p>USNA 6-Week Program by CAPT Mike Prevost, USN</p>
   </div>
 
   <!-- Dashboard -->
   <div class="dashboard">
     <div class="stat-card">
-      <div class="label">완료 블록</div>
-      <div class="value blue" id="stat-blocks">0/6</div>
+      <div class="label">진행 주차</div>
+      <div class="value blue" id="stat-week">0/6</div>
     </div>
     <div class="stat-card">
       <div class="label">누적 푸쉬업</div>
       <div class="value" id="stat-total">0</div>
     </div>
     <div class="stat-card">
-      <div class="label">워크아웃</div>
+      <div class="label">운동 횟수</div>
       <div class="value green" id="stat-sessions">0</div>
     </div>
   </div>
 
   <div class="progress-wrap">
     <div class="label">
-      <span>전체 진행률</span>
+      <span>6주 프로그램 진행률</span>
       <span id="progress-pct">0%</span>
     </div>
     <div class="progress-bar">
@@ -507,15 +534,18 @@ body {
   <div class="section-title">현재 최대 푸쉬업 개수</div>
   <div class="col-selector" id="col-selector"></div>
 
-  <!-- Block Tabs -->
-  <div class="section-title">워크아웃 블록</div>
-  <div class="block-tabs" id="block-tabs"></div>
+  <!-- Week Tabs -->
+  <div class="section-title">주차 선택</div>
+  <div class="week-tabs" id="week-tabs"></div>
+
+  <!-- Day Tabs -->
+  <div class="day-tabs" id="day-tabs"></div>
 
   <!-- Workout Card -->
   <div class="workout-card" id="workout-card" style="display:none;">
     <div class="workout-header">
-      <div class="workout-title" id="workout-title">Block 1</div>
-      <div class="rest-badge">⏱ 휴식 30–60초</div>
+      <div class="workout-title" id="workout-title">Week 1 · Day 1</div>
+      <div class="rest-badge">세트 간 휴식 30-60초</div>
     </div>
 
     <div class="sets-grid" id="sets-grid"></div>
@@ -523,28 +553,28 @@ body {
     <textarea class="memo-area" id="memo" placeholder="오늘의 컨디션, 특이사항 메모..."></textarea>
 
     <div class="btn-row">
-      <button class="btn btn-primary" id="btn-save" onclick="saveWorkout()">💾 저장</button>
-      <button class="btn btn-done" id="btn-complete" onclick="completeBlock()" style="display:none;">✅ 블록 완료</button>
+      <button class="btn btn-primary" id="btn-save" onclick="saveWorkout()">저장</button>
+      <button class="btn btn-done" id="btn-complete" onclick="completeDay()" style="display:none;">Day 완료</button>
     </div>
   </div>
 
   <!-- No Column Selected -->
   <div class="empty-state" id="empty-state">
-    👆 위에서 현재 최대 푸쉬업 개수를 선택하세요
+    위에서 현재 최대 푸쉬업 개수를 선택하세요
   </div>
 
   <!-- History -->
   <div class="history-section">
     <div class="section-title" style="display:flex;justify-content:space-between;align-items:center;">
       <span>기록</span>
-      <button class="btn btn-secondary btn-sm" onclick="exportCSV()">📥 CSV 내보내기</button>
+      <button class="btn btn-secondary btn-sm" onclick="exportCSV()">CSV 내보내기</button>
     </div>
     <div id="history-list" style="margin-top:12px;"></div>
   </div>
 
   <!-- Footer -->
   <div class="footer-actions">
-    <button class="btn btn-secondary" onclick="showResetModal()">🔄 초기화</button>
+    <button class="btn btn-secondary" onclick="showResetModal()">초기화</button>
   </div>
 </div>
 
@@ -554,7 +584,7 @@ body {
 <!-- Reset Modal -->
 <div class="modal-overlay" id="reset-modal">
   <div class="modal">
-    <h3>⚠️ 데이터 초기화</h3>
+    <h3>데이터 초기화</h3>
     <p>모든 진행 상황과 기록이 삭제됩니다. 정말 초기화할까요?</p>
     <div class="btn-row">
       <button class="btn btn-secondary" onclick="closeResetModal()">취소</button>
@@ -565,22 +595,25 @@ body {
 
 <script>
 // ===== PROGRAM DATA =====
-const COLUMNS = ['< 6','6–10','11–20','21–25','26–35','36–50','50–75','75–100','> 100'];
+const COLUMNS = ['< 6','6-10','11-20','21-25','26-35','36-50','50-75','75-100','> 100'];
 
+// PROGRAM[week][set] = array of 9 column values, or null for MAX
 const PROGRAM = [
-  // Block 1
+  // Week 1
   [[2,6,10,12,14,25,35,45,55],[3,6,12,17,18,30,40,55,65],[2,4,7,13,14,25,30,35,35],[2,4,7,13,14,25,24,30,30],null],
-  // Block 2
+  // Week 2
   [[3,6,10,13,15,26,36,46,56],[4,8,12,18,19,31,41,56,66],[2,6,8,14,15,26,31,36,36],[3,6,8,14,15,26,25,31,31],null],
-  // Block 3
+  // Week 3
   [[4,8,11,14,16,27,37,47,57],[5,10,15,19,20,32,42,57,67],[4,7,9,15,16,27,32,37,37],[4,7,9,15,16,27,26,32,32],null],
-  // Block 4
+  // Week 4
   [[4,8,12,15,17,28,38,48,58],[6,10,15,20,21,33,43,58,68],[5,8,10,16,17,28,33,38,38],[4,8,10,16,17,28,27,33,33],null],
-  // Block 5
+  // Week 5
   [[5,8,12,16,18,29,39,49,59],[7,11,16,21,22,34,44,59,69],[5,8,10,17,18,29,34,39,39],[4,8,10,17,18,29,28,34,34],null],
-  // Block 6
+  // Week 6
   [[5,8,12,17,19,30,40,50,60],[8,12,17,22,23,35,45,60,70],[6,8,11,18,19,30,35,40,40],[5,8,10,18,19,30,29,35,35],null]
 ];
+
+const DAY_LABELS = ['Day 1', 'Day 2', 'Day 3'];
 
 // ===== STATE =====
 let state = loadState();
@@ -588,10 +621,12 @@ let state = loadState();
 function defaultState() {
   return {
     colIdx: -1,
-    blockIdx: 0,
-    completedBlocks: [],     // array of completed block indices for current column
-    completedColumns: [],    // array of completed column indices
-    history: [],             // { date, colIdx, blockIdx, sets:[5 numbers], memo, total }
+    weekIdx: 0,
+    dayIdx: 0,
+    // completedDays[weekIdx] = [0,1,2] (array of completed day indices)
+    completedDays: {},
+    completedColumns: [],
+    history: [],  // { date, colIdx, weekIdx, dayIdx, sets:[5], memo, total, completed }
     currentSets: [null,null,null,null,null],
     currentMemo: ''
   };
@@ -599,20 +634,37 @@ function defaultState() {
 
 function loadState() {
   try {
-    const s = JSON.parse(localStorage.getItem('pushup100'));
-    if (s && s.history) return s;
+    const s = JSON.parse(localStorage.getItem('pushup100_v2'));
+    if (s && s.history !== undefined && s.completedDays !== undefined) return s;
   } catch(e) {}
   return defaultState();
 }
 
 function saveState() {
-  localStorage.setItem('pushup100', JSON.stringify(state));
+  localStorage.setItem('pushup100_v2', JSON.stringify(state));
+}
+
+function getCompletedDays(weekIdx) {
+  return state.completedDays[weekIdx] || [];
+}
+
+function isWeekComplete(weekIdx) {
+  return getCompletedDays(weekIdx).length >= 3;
+}
+
+function countCompletedWeeks() {
+  let count = 0;
+  for (let w = 0; w < 6; w++) {
+    if (isWeekComplete(w)) count++;
+  }
+  return count;
 }
 
 // ===== RENDER =====
 function render() {
   renderColumnSelector();
-  renderBlockTabs();
+  renderWeekTabs();
+  renderDayTabs();
   renderWorkout();
   renderDashboard();
   renderHistory();
@@ -628,14 +680,26 @@ function renderColumnSelector() {
   }).join('');
 }
 
-function renderBlockTabs() {
-  const el = document.getElementById('block-tabs');
+function renderWeekTabs() {
+  const el = document.getElementById('week-tabs');
   if (state.colIdx < 0) { el.innerHTML = ''; return; }
   el.innerHTML = Array.from({length:6}, (_, i) => {
-    let cls = 'block-tab';
-    if (state.completedBlocks.includes(i)) cls += ' done';
-    if (i === state.blockIdx) cls += ' active';
-    return `<button class="${cls}" onclick="selectBlock(${i})">B${i+1}</button>`;
+    let cls = 'week-tab';
+    if (isWeekComplete(i)) cls += ' done';
+    if (i === state.weekIdx) cls += ' active';
+    return `<button class="${cls}" onclick="selectWeek(${i})">W${i+1}</button>`;
+  }).join('');
+}
+
+function renderDayTabs() {
+  const el = document.getElementById('day-tabs');
+  if (state.colIdx < 0) { el.innerHTML = ''; return; }
+  const days = getCompletedDays(state.weekIdx);
+  el.innerHTML = DAY_LABELS.map((label, i) => {
+    let cls = 'day-tab';
+    if (days.includes(i)) cls += ' done';
+    if (i === state.dayIdx) cls += ' active';
+    return `<button class="${cls}" onclick="selectDay(${i})">${label}</button>`;
   }).join('');
 }
 
@@ -652,14 +716,14 @@ function renderWorkout() {
   empty.style.display = 'none';
 
   document.getElementById('workout-title').textContent =
-    `Block ${state.blockIdx+1} · ${COLUMNS[state.colIdx]}`;
+    `Week ${state.weekIdx+1} · ${DAY_LABELS[state.dayIdx]} · ${COLUMNS[state.colIdx]}`;
 
-  const block = PROGRAM[state.blockIdx];
+  const week = PROGRAM[state.weekIdx];
   const grid = document.getElementById('sets-grid');
 
   grid.innerHTML = Array.from({length: 5}, (_, s) => {
-    const isMax = block[s] === null;
-    const target = isMax ? null : block[s][state.colIdx];
+    const isMax = week[s] === null;
+    const target = isMax ? null : week[s][state.colIdx];
     const val = state.currentSets[s];
     const valNum = val !== null && val !== '' ? parseInt(val) : null;
 
@@ -672,7 +736,7 @@ function renderWorkout() {
       <div class="set-item">
         <div class="set-label">Set ${s+1}</div>
         <div class="set-target ${isMax ? 'max-label' : ''}">${isMax ? 'MAX' : target}</div>
-        <input type="number" class="${inputCls}" 
+        <input type="number" class="${inputCls}"
           value="${val !== null && val !== '' ? val : ''}"
           placeholder="${isMax ? 'MAX' : target}"
           min="0" inputmode="numeric"
@@ -682,26 +746,28 @@ function renderWorkout() {
 
   document.getElementById('memo').value = state.currentMemo || '';
 
-  // Show complete button if all sets filled
   const allFilled = state.currentSets.every(v => v !== null && v !== '');
-  const isDone = state.completedBlocks.includes(state.blockIdx);
+  const isDone = getCompletedDays(state.weekIdx).includes(state.dayIdx);
   document.getElementById('btn-complete').style.display = (allFilled && !isDone) ? 'block' : 'none';
-  document.getElementById('btn-save').textContent = isDone ? '💾 수정 저장' : '💾 저장';
+  document.getElementById('btn-save').textContent = isDone ? '수정 저장' : '저장';
 }
 
 function renderDashboard() {
-  const blocksCompleted = state.completedBlocks.length;
-  document.getElementById('stat-blocks').textContent = `${blocksCompleted}/6`;
+  const completedWeeks = countCompletedWeeks();
+  document.getElementById('stat-week').textContent = `${completedWeeks}/6`;
 
   const totalPushups = state.history.reduce((sum, h) => sum + (h.total || 0), 0);
   document.getElementById('stat-total').textContent = totalPushups.toLocaleString();
 
-  document.getElementById('stat-sessions').textContent = state.history.length;
+  const totalSessions = state.history.filter(h => h.completed).length;
+  document.getElementById('stat-sessions').textContent = totalSessions;
 
-  // Progress: total columns completed * 6 blocks + current blocks
-  const totalBlocks = state.completedColumns.length * 6 + blocksCompleted;
-  const maxBlocks = 9 * 6;
-  const pct = Math.min(100, Math.round(totalBlocks / maxBlocks * 100));
+  // Progress: total completed days out of 18 (6 weeks * 3 days)
+  let totalCompletedDays = 0;
+  for (let w = 0; w < 6; w++) {
+    totalCompletedDays += getCompletedDays(w).length;
+  }
+  const pct = Math.min(100, Math.round(totalCompletedDays / 18 * 100));
   document.getElementById('progress-pct').textContent = `${pct}%`;
   document.getElementById('progress-fill').style.width = `${pct}%`;
 }
@@ -717,7 +783,7 @@ function renderHistory() {
     return `
       <div class="history-item">
         <div>
-          <div class="info"><strong>${COLUMNS[h.colIdx]}</strong> · B${h.blockIdx+1}</div>
+          <div class="info"><strong>${COLUMNS[h.colIdx]}</strong> · W${h.weekIdx+1} ${DAY_LABELS[h.dayIdx]}</div>
           <div class="date">${h.date}</div>
         </div>
         <div style="text-align:right">
@@ -732,37 +798,37 @@ function renderHistory() {
 function selectColumn(idx) {
   if (state.colIdx !== idx) {
     state.colIdx = idx;
-    state.blockIdx = 0;
-    state.completedBlocks = [];
+    state.weekIdx = 0;
+    state.dayIdx = 0;
+    state.completedDays = {};
     state.currentSets = [null,null,null,null,null];
     state.currentMemo = '';
 
-    // Restore completed blocks for this column from history
+    // Restore completed days from history for this column
     const colHistory = state.history.filter(h => h.colIdx === idx && h.completed);
-    state.completedBlocks = [...new Set(colHistory.map(h => h.blockIdx))];
-
-    // If all 6 blocks done, start at 0
-    if (state.completedBlocks.length >= 6) {
-      state.blockIdx = 0;
-    } else {
-      // Find first incomplete block
-      for (let i = 0; i < 6; i++) {
-        if (!state.completedBlocks.includes(i)) {
-          state.blockIdx = i;
-          break;
-        }
+    colHistory.forEach(h => {
+      if (!state.completedDays[h.weekIdx]) state.completedDays[h.weekIdx] = [];
+      if (!state.completedDays[h.weekIdx].includes(h.dayIdx)) {
+        state.completedDays[h.weekIdx].push(h.dayIdx);
       }
-    }
+    });
 
-    // Load current sets from latest history for this block
+    // Find first incomplete week/day
+    findNextIncomplete();
     loadCurrentFromHistory();
     saveState();
   }
   render();
 }
 
-function selectBlock(idx) {
-  state.blockIdx = idx;
+function selectWeek(idx) {
+  state.weekIdx = idx;
+  state.dayIdx = 0;
+  // Find first incomplete day in this week
+  const days = getCompletedDays(idx);
+  for (let d = 0; d < 3; d++) {
+    if (!days.includes(d)) { state.dayIdx = d; break; }
+  }
   state.currentSets = [null,null,null,null,null];
   state.currentMemo = '';
   loadCurrentFromHistory();
@@ -770,8 +836,33 @@ function selectBlock(idx) {
   render();
 }
 
+function selectDay(idx) {
+  state.dayIdx = idx;
+  state.currentSets = [null,null,null,null,null];
+  state.currentMemo = '';
+  loadCurrentFromHistory();
+  saveState();
+  render();
+}
+
+function findNextIncomplete() {
+  for (let w = 0; w < 6; w++) {
+    const days = getCompletedDays(w);
+    if (days.length < 3) {
+      state.weekIdx = w;
+      for (let d = 0; d < 3; d++) {
+        if (!days.includes(d)) { state.dayIdx = d; return; }
+      }
+    }
+  }
+  state.weekIdx = 0;
+  state.dayIdx = 0;
+}
+
 function loadCurrentFromHistory() {
-  const match = state.history.find(h => h.colIdx === state.colIdx && h.blockIdx === state.blockIdx);
+  const match = state.history.find(h =>
+    h.colIdx === state.colIdx && h.weekIdx === state.weekIdx && h.dayIdx === state.dayIdx
+  );
   if (match) {
     state.currentSets = [...match.sets];
     state.currentMemo = match.memo || '';
@@ -781,10 +872,9 @@ function loadCurrentFromHistory() {
 function updateSet(idx, val) {
   state.currentSets[idx] = val === '' ? null : parseInt(val);
 
-  // Update input styling immediately
-  const block = PROGRAM[state.blockIdx];
-  const isMax = block[idx] === null;
-  const target = isMax ? null : block[idx][state.colIdx];
+  const week = PROGRAM[state.weekIdx];
+  const isMax = week[idx] === null;
+  const target = isMax ? null : week[idx][state.colIdx];
   const input = document.querySelectorAll('.set-input')[idx];
   const valNum = val === '' ? null : parseInt(val);
 
@@ -793,9 +883,8 @@ function updateSet(idx, val) {
     input.classList.add(valNum >= target ? 'hit' : 'miss');
   }
 
-  // Show/hide complete button
   const allFilled = state.currentSets.every(v => v !== null && v !== '');
-  const isDone = state.completedBlocks.includes(state.blockIdx);
+  const isDone = getCompletedDays(state.weekIdx).includes(state.dayIdx);
   document.getElementById('btn-complete').style.display = (allFilled && !isDone) ? 'block' : 'none';
 
   saveState();
@@ -812,17 +901,19 @@ function saveWorkout() {
   const now = new Date();
   const date = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
 
-  // Check if already saved for this block
-  const existIdx = state.history.findIndex(h => h.colIdx === state.colIdx && h.blockIdx === state.blockIdx);
+  const existIdx = state.history.findIndex(h =>
+    h.colIdx === state.colIdx && h.weekIdx === state.weekIdx && h.dayIdx === state.dayIdx
+  );
 
   const record = {
     date,
     colIdx: state.colIdx,
-    blockIdx: state.blockIdx,
+    weekIdx: state.weekIdx,
+    dayIdx: state.dayIdx,
     sets,
     memo,
     total,
-    completed: state.completedBlocks.includes(state.blockIdx)
+    completed: getCompletedDays(state.weekIdx).includes(state.dayIdx)
   };
 
   if (existIdx >= 0) {
@@ -834,40 +925,57 @@ function saveWorkout() {
 
   saveState();
   render();
-  showToast('저장 완료! 💪');
+  showToast('저장 완료!');
 }
 
-function completeBlock() {
-  if (!state.completedBlocks.includes(state.blockIdx)) {
-    state.completedBlocks.push(state.blockIdx);
+function completeDay() {
+  const days = getCompletedDays(state.weekIdx);
+  if (!days.includes(state.dayIdx)) {
+    if (!state.completedDays[state.weekIdx]) state.completedDays[state.weekIdx] = [];
+    state.completedDays[state.weekIdx].push(state.dayIdx);
 
-    // Also update history record
-    const existIdx = state.history.findIndex(h => h.colIdx === state.colIdx && h.blockIdx === state.blockIdx);
+    // Update history record
+    const existIdx = state.history.findIndex(h =>
+      h.colIdx === state.colIdx && h.weekIdx === state.weekIdx && h.dayIdx === state.dayIdx
+    );
     if (existIdx >= 0) {
       state.history[existIdx].completed = true;
     } else {
       saveWorkout();
-      const newIdx = state.history.findIndex(h => h.colIdx === state.colIdx && h.blockIdx === state.blockIdx);
+      const newIdx = state.history.findIndex(h =>
+        h.colIdx === state.colIdx && h.weekIdx === state.weekIdx && h.dayIdx === state.dayIdx
+      );
       if (newIdx >= 0) state.history[newIdx].completed = true;
     }
 
-    // Check if all 6 blocks done
-    if (state.completedBlocks.length >= 6) {
-      if (!state.completedColumns.includes(state.colIdx)) {
-        state.completedColumns.push(state.colIdx);
+    // Check if week is now complete
+    if (isWeekComplete(state.weekIdx)) {
+      // Check if all 6 weeks done
+      if (countCompletedWeeks() >= 6) {
+        if (!state.completedColumns.includes(state.colIdx)) {
+          state.completedColumns.push(state.colIdx);
+        }
+        showToast(`6주 프로그램 완료! "${COLUMNS[state.colIdx]}" 클리어!`);
+      } else {
+        showToast(`Week ${state.weekIdx+1} 완료! 다음 주로 이동`);
+        findNextIncomplete();
+        state.currentSets = [null,null,null,null,null];
+        state.currentMemo = '';
+        loadCurrentFromHistory();
       }
-      showToast(`🎉 Column "${COLUMNS[state.colIdx]}" 완료! 다음 Column으로!`);
     } else {
-      // Move to next incomplete block
-      for (let i = 0; i < 6; i++) {
-        if (!state.completedBlocks.includes(i)) {
-          state.blockIdx = i;
+      // Move to next incomplete day in this week
+      const updatedDays = getCompletedDays(state.weekIdx);
+      for (let d = 0; d < 3; d++) {
+        if (!updatedDays.includes(d)) {
+          state.dayIdx = d;
           state.currentSets = [null,null,null,null,null];
           state.currentMemo = '';
+          loadCurrentFromHistory();
           break;
         }
       }
-      showToast(`블록 완료! 다음 Block으로 이동 🔥`);
+      showToast(`${DAY_LABELS[state.dayIdx]} 시작!`);
     }
 
     saveState();
@@ -881,9 +989,9 @@ function exportCSV() {
     return;
   }
 
-  const header = 'Date,Column,Block,Set1,Set2,Set3,Set4,Set5(MAX),Total,Memo';
+  const header = 'Date,Column,Week,Day,Set1,Set2,Set3,Set4,Set5(MAX),Total,Memo';
   const rows = state.history.map(h =>
-    `"${h.date}","${COLUMNS[h.colIdx]}","Block ${h.blockIdx+1}",${h.sets.join(',')},${h.total},"${(h.memo||'').replace(/"/g,'""')}"`
+    `"${h.date}","${COLUMNS[h.colIdx]}","Week ${h.weekIdx+1}","${DAY_LABELS[h.dayIdx]}",${h.sets.join(',')},${h.total},"${(h.memo||'').replace(/"/g,'""')}"`
   );
 
   const csv = [header, ...rows].join('\n');
@@ -894,7 +1002,7 @@ function exportCSV() {
   a.download = `pushup100_${new Date().toISOString().slice(0,10)}.csv`;
   a.click();
   URL.revokeObjectURL(url);
-  showToast('CSV 내보내기 완료 📥');
+  showToast('CSV 내보내기 완료');
 }
 
 function showResetModal() {
