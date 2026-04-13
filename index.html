@@ -566,7 +566,7 @@ function render() {
 }
 
 function renderStats() {
-  document.getElementById('stat-week').textContent = `${countCompletedWeeks()}/6`;
+  document.getElementById('stat-week').textContent = `Week ${state.weekIdx + 1}`;
 
   const totalPushups = state.history.reduce((sum, h) => sum + (h.total || 0), 0);
   document.getElementById('stat-total').textContent = totalPushups.toLocaleString();
@@ -673,7 +673,7 @@ function renderWorkout() {
           <div class="set-label">Set ${s+1}</div>
           <div class="set-target">${target}</div>
           <button class="set-toggle${isDone ? ' done' : ''}"
-            onclick="toggleSet(${s}, ${target})">${isDone ? target : '-'}</button>
+            onclick="toggleSet(${s}, ${target})">완료</button>
         </div>`;
     }
   }).join('');
@@ -793,8 +793,20 @@ function toggleSet(idx, target) {
 
 function updateSet(idx, val) {
   state.currentSets[idx] = val === '' ? null : parseInt(val);
+
+  // Update input styling without re-rendering the whole grid
+  const input = document.querySelectorAll('.set-input')[0];
+  if (input) {
+    const hasVal = val !== '' && val !== null;
+    input.classList.toggle('has-value', hasVal);
+  }
+
+  // Show/hide complete button
+  const allFilled = state.currentSets.every(v => v !== null && v !== '' && v !== 0);
+  const isDayDone = getCompletedDays(state.weekIdx).includes(state.dayIdx);
+  document.getElementById('btn-complete').style.display = (allFilled && !isDayDone) ? 'block' : 'none';
+
   saveState();
-  renderWorkout();
 }
 
 function saveWorkout() {
