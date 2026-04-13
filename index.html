@@ -247,8 +247,9 @@ body { font-family:'Space Grotesk',sans-serif; background:var(--bg); color:var(-
     <div id="history-list" style="margin-top:12px;"></div>
   </div>
 
-  <div style="margin-top:32px;">
+  <div style="margin-top:32px;display:flex;flex-direction:column;gap:10px;">
     <button class="btn btn-secondary" style="width:100%;" onclick="showResetModal()">초기화</button>
+    <button class="btn btn-secondary" style="width:100%;" onclick="showArchiveModal()">이전 프로그램 조회</button>
   </div>
 </div>
 
@@ -268,11 +269,28 @@ body { font-family:'Space Grotesk',sans-serif; background:var(--bg); color:var(-
 </div>
 <div class="modal-overlay" id="reset-modal">
   <div class="modal">
-    <h3>데이터 초기화</h3>
-    <p>모든 진행 상황과 기록이 삭제됩니다. 정말 초기화할까요?</p>
+    <h3>새 프로그램 시작</h3>
+    <p>현재까지의 진행 상황과 기록을 저장하고, 초기화된 새 프로그램을 시작하시겠습니까?</p>
     <div class="btn-row">
       <button class="btn btn-secondary" onclick="closeResetModal()">취소</button>
-      <button class="btn btn-primary" style="background:var(--danger);" onclick="resetAll()">초기화</button>
+      <button class="btn btn-primary" onclick="resetAll()">저장 후 초기화</button>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="archive-modal">
+  <div class="modal" style="max-width:500px;">
+    <h3>이전 프로그램</h3>
+    <div id="archive-list" style="max-height:400px;overflow-y:auto;margin-bottom:16px;"></div>
+    <div class="btn-row"><button class="btn btn-secondary" onclick="closeArchiveModal()">닫기</button></div>
+  </div>
+</div>
+<div class="modal-overlay" id="restore-modal">
+  <div class="modal">
+    <h3>프로그램 복원</h3>
+    <p>현재까지의 진행 상황과 기록을 저장하고, 이전 프로그램으로 복원하시겠습니까?</p>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="closeRestoreModal()">취소</button>
+      <button class="btn btn-primary" id="restore-confirm-btn">저장 후 복원</button>
     </div>
   </div>
 </div>
@@ -491,9 +509,80 @@ function showFinalTest(){state.weekIdx=-1;state.finalTestResult=null;saveState()
 function submitFinalTest(){const v=parseInt(document.getElementById('final-input').value);if(isNaN(v)||v<=0){showToast('숫자를 입력해주세요');return;}state.finalTestResult=v;if(v>=100){state.programComplete=true;saveState();render();showToast('100 Push-Ups 달성! 축하합니다!');}else{state.extraWeekCount++;const newWeek=TOTAL_BASE_WEEKS+state.extraWeekCount-1;state.weekIdx=newWeek;state.dayIdx=0;state.finalTestResult=null;state.currentSets=[null,null,null,null,null];state.currentMemo='';saveState();render();showToast(`${v}개! Extra Week ${state.extraWeekCount} 시작!`);}}
 
 function exportCSV(){if(state.history.length===0){showToast('내보낼 기록이 없습니다');return;}const h='Date,Column,Week,Day,Set1,Set2,Set3,Set4,Set5(MAX),Total,Memo';const r=state.history.map(h=>`"${h.date}","${h.colLabel||''}","${getWeekFullLabel(h.weekIdx)}","${DAY_LABELS[h.dayIdx]}",${h.sets.join(',')},${h.total},"${(h.memo||'').replace(/"/g,'""')}"`);const csv=[h,...r].join('\n');const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`pushup100_${new Date().toISOString().slice(0,10)}.csv`;a.click();URL.revokeObjectURL(url);showToast('CSV 내보내기 완료');}
+// ===== ARCHIVE (version save/restore) =====
+function getArchives(){try{return JSON.parse(localStorage.getItem('pushup100_archives'))||[];}catch(e){return [];}}
+function saveArchives(arr){localStorage.setItem('pushup100_archives',JSON.stringify(arr));}
+
+function archiveCurrentState(){
+  if(state.initialMax===null&&state.history.length===0)return; // nothing to archive
+  const archives=getArchives();
+  const now=new Date();
+  const dateStr=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+  const est=getCurrentEstimatedMax();
+  const completedWeeks=[];for(let w=0;w<getTotalWeeks();w++)if(isWeekComplete(w))completedWeeks.push(w);
+  archives.push({
+    date:dateStr,
+    initialMax:state.initialMax,
+    estimatedMax:est,
+    totalPushups:state.history.reduce((s,h)=>s+(h.total||0),0),
+    sessionsCount:state.history.filter(h=>h.completed).length,
+    weeksCompleted:completedWeeks.length,
+    snapshot:JSON.parse(JSON.stringify(state))
+  });
+  saveArchives(archives);
+}
+
 function showResetModal(){document.getElementById('reset-modal').classList.add('open');}
 function closeResetModal(){document.getElementById('reset-modal').classList.remove('open');}
-function resetAll(){state=defaultState();saveState();closeResetModal();document.getElementById('initial-input').value='';document.getElementById('final-input').value='';render();showToast('초기화 완료');}
+function resetAll(){
+  archiveCurrentState();
+  state=defaultState();saveState();closeResetModal();
+  document.getElementById('initial-input').value='';
+  document.getElementById('final-input').value='';
+  render();showToast('현재 프로그램 저장 완료. 새 프로그램을 시작합니다.');
+}
+
+function showArchiveModal(){
+  const archives=getArchives();
+  const el=document.getElementById('archive-list');
+  if(archives.length===0){el.innerHTML='<div class="empty-state">저장된 이전 프로그램이 없습니다</div>';}
+  else{el.innerHTML=archives.map((a,i)=>{
+    const idx=archives.length-1-i;const ar=archives[idx];
+    return `<div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;margin-bottom:8px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <div style="font-weight:600;">프로그램 #${idx+1}</div>
+        <div style="font-size:12px;color:var(--text3);font-family:'JetBrains Mono',monospace;">${ar.date}</div>
+      </div>
+      <div style="font-size:13px;color:var(--text2);display:flex;gap:16px;flex-wrap:wrap;">
+        <span>최초 ${ar.initialMax||'-'}개</span>
+        <span>추정 ${ar.estimatedMax||'-'}개</span>
+        <span>누적 ${ar.totalPushups}회</span>
+        <span>${ar.weeksCompleted}주 완료</span>
+      </div>
+      <div style="margin-top:10px;"><button class="btn btn-secondary btn-sm" onclick="confirmRestore(${idx})">복원</button></div>
+    </div>`;
+  }).join('');}
+  document.getElementById('archive-modal').classList.add('open');
+}
+function closeArchiveModal(){document.getElementById('archive-modal').classList.remove('open');}
+
+function confirmRestore(idx){
+  closeArchiveModal();
+  const btn=document.getElementById('restore-confirm-btn');
+  btn.onclick=function(){restoreArchive(idx);};
+  document.getElementById('restore-modal').classList.add('open');
+}
+function closeRestoreModal(){document.getElementById('restore-modal').classList.remove('open');}
+function restoreArchive(idx){
+  const archives=getArchives();
+  if(idx<0||idx>=archives.length)return;
+  archiveCurrentState(); // save current before restoring
+  const snapshot=archives[idx].snapshot;
+  state=snapshot;saveState();
+  closeRestoreModal();
+  document.getElementById('initial-input').value=state.initialMax||'';
+  render();showToast('이전 프로그램이 복원되었습니다.');
+}
 function showToast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2500);}
 
 render();
