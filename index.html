@@ -363,6 +363,22 @@ body {
     </div>
     <div id="history-list" style="margin-top:12px;"></div>
   </div>
+
+  <div style="margin-top:32px;text-align:center;">
+    <button style="background:none;border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:11px;color:var(--text3);cursor:pointer;font-family:'Space Grotesk',sans-serif;" onclick="showResetModal()">초기화</button>
+  </div>
+</div>
+
+<!-- Reset Modal -->
+<div class="modal-overlay" id="reset-modal">
+  <div class="modal">
+    <h3>데이터 초기화</h3>
+    <p>모든 진행 상황과 기록이 삭제됩니다. 정말 초기화할까요?</p>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="closeResetModal()">취소</button>
+      <button class="btn btn-primary" style="background:var(--danger);" onclick="resetAll()">초기화</button>
+    </div>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -914,6 +930,17 @@ function exportCSV() {
   a.href = url; a.download = `pushup100_${new Date().toISOString().slice(0,10)}.csv`;
   a.click(); URL.revokeObjectURL(url);
   showToast('CSV 내보내기 완료');
+}
+
+function showResetModal() { document.getElementById('reset-modal').classList.add('open'); }
+function closeResetModal() { document.getElementById('reset-modal').classList.remove('open'); }
+function resetAll() {
+  state = defaultState();
+  saveState();
+  closeResetModal();
+  document.getElementById('initial-input').value = '';
+  render();
+  showToast('초기화 완료');
 }
 
 function showToast(msg) {
