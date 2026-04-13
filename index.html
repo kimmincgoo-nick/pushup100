@@ -23,7 +23,6 @@
   --danger: #e74c3c;
   --border: #2a2a3a;
   --border2: #3a3a4a;
-  --shadow: rgba(0,0,0,0.4);
   --radius: 12px;
   --radius-sm: 8px;
 }
@@ -44,49 +43,33 @@ body {
   padding: 20px 16px 100px;
 }
 
-/* ===== HEADER ===== */
 .header {
   text-align: center;
   padding: 32px 0 24px;
   position: relative;
 }
-
 .header::after {
   content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
+  position: absolute; bottom: 0; left: 50%;
   transform: translateX(-50%);
-  width: 60px;
-  height: 3px;
-  background: var(--accent);
-  border-radius: 2px;
+  width: 60px; height: 3px;
+  background: var(--accent); border-radius: 2px;
 }
-
 .header h1 {
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: -0.5px;
+  font-size: 28px; font-weight: 700; letter-spacing: -0.5px;
   background: linear-gradient(135deg, var(--accent), var(--active));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   margin-bottom: 6px;
 }
+.header p { font-size: 13px; color: var(--text2); }
 
-.header p {
-  font-size: 13px;
-  color: var(--text2);
-  font-weight: 400;
-}
-
-/* ===== STAT GRID (2x2) ===== */
+/* ===== STAT GRID 2x2 ===== */
 .stat-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
   margin: 24px 0 16px;
 }
-
 .stat-card {
   background: var(--bg2);
   border: 1px solid var(--border);
@@ -94,57 +77,33 @@ body {
   padding: 16px 14px;
   text-align: center;
 }
-
 .stat-card .label {
-  font-size: 11px;
-  color: var(--text3);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 6px;
+  font-size: 11px; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;
 }
-
 .stat-card .value {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 24px;
-  font-weight: 600;
-  color: var(--accent);
+  font-size: 24px; font-weight: 600; color: var(--accent);
 }
-
 .stat-card .value.blue { color: var(--active); }
 .stat-card .value.green { color: var(--done); }
-
 .stat-card .sub-text {
-  font-size: 12px;
-  color: var(--done);
-  margin-top: 4px;
-  font-weight: 600;
+  font-size: 12px; color: var(--done); margin-top: 4px; font-weight: 600;
+}
+.stat-card .sub-text.muted {
+  color: var(--text3); font-weight: 400;
 }
 
-.stat-card .sub-text.none {
-  color: var(--text3);
-  font-weight: 400;
-}
-
-/* ===== INITIAL MAX INPUT ===== */
 .initial-input {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 24px;
-  font-weight: 600;
-  background: transparent;
-  border: none;
+  font-size: 24px; font-weight: 600;
+  background: transparent; border: none;
   border-bottom: 2px dashed var(--border2);
-  color: var(--active);
-  text-align: center;
-  width: 70px;
-  outline: none;
-  padding: 2px 0;
-  -moz-appearance: textfield;
-  transition: border-color 0.2s;
+  color: var(--active); text-align: center;
+  width: 70px; outline: none; padding: 2px 0;
+  -moz-appearance: textfield; transition: border-color 0.2s;
 }
-.initial-input:focus {
-  border-bottom-color: var(--active);
-  border-bottom-style: solid;
-}
+.initial-input:focus { border-bottom-color: var(--active); border-bottom-style: solid; }
 .initial-input::-webkit-inner-spin-button,
 .initial-input::-webkit-outer-spin-button { -webkit-appearance: none; }
 .initial-input::placeholder { color: var(--text3); font-size: 16px; }
@@ -152,66 +111,39 @@ body {
 /* ===== PROGRESS ===== */
 .progress-wrap {
   margin: 0 0 24px;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px;
 }
-
 .progress-wrap .label {
-  font-size: 12px;
-  color: var(--text2);
-  margin-bottom: 8px;
-  display: flex;
-  justify-content: space-between;
+  font-size: 12px; color: var(--text2); margin-bottom: 8px;
+  display: flex; justify-content: space-between;
 }
-
 .progress-bar {
-  width: 100%;
-  height: 8px;
-  background: var(--bg4);
-  border-radius: 4px;
-  overflow: hidden;
+  width: 100%; height: 8px;
+  background: var(--bg4); border-radius: 4px; overflow: hidden;
 }
-
 .progress-fill {
   height: 100%;
   background: linear-gradient(90deg, var(--accent), var(--done));
-  border-radius: 4px;
-  transition: width 0.5s ease;
+  border-radius: 4px; transition: width 0.5s ease;
 }
 
-/* ===== SECTION TITLE ===== */
 .section-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text2);
-  margin-bottom: 10px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  font-size: 14px; font-weight: 600; color: var(--text2);
+  margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;
 }
 
 /* ===== WEEK TABS ===== */
 .week-tabs {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 6px;
-  margin-bottom: 12px;
+  display: grid; grid-template-columns: repeat(6, 1fr);
+  gap: 6px; margin-bottom: 12px;
 }
-
 .week-tab {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 10px 4px;
-  color: var(--text2);
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  text-align: center;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 10px 4px;
+  color: var(--text2); font-size: 12px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s; text-align: center;
 }
-
 .week-tab:hover { border-color: var(--active); color: var(--text); }
 .week-tab.active { background: var(--active); border-color: var(--active); color: #fff; }
 .week-tab.done { background: rgba(46,204,113,0.15); border-color: var(--done); color: var(--done); }
@@ -219,25 +151,15 @@ body {
 
 /* ===== DAY TABS ===== */
 .day-tabs {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-bottom: 20px;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 8px; margin-bottom: 20px;
 }
-
 .day-tab {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 10px 8px;
-  color: var(--text2);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  text-align: center;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 10px 8px;
+  color: var(--text2); font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s; text-align: center;
 }
-
 .day-tab:hover { border-color: var(--active); color: var(--text); }
 .day-tab.active { background: var(--active); border-color: var(--active); color: #fff; }
 .day-tab.done { background: rgba(46,204,113,0.15); border-color: var(--done); color: var(--done); }
@@ -245,62 +167,52 @@ body {
 
 /* ===== WORKOUT CARD ===== */
 .workout-card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px;
-  margin-bottom: 16px;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px; margin-bottom: 16px;
 }
-
 .workout-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;
 }
-
-.workout-title {
-  font-size: 16px;
-  font-weight: 600;
-}
-
+.workout-title { font-size: 16px; font-weight: 600; }
 .rest-badge {
-  font-size: 11px;
-  color: var(--text3);
-  background: var(--bg4);
-  padding: 4px 10px;
-  border-radius: 20px;
+  font-size: 11px; color: var(--text3);
+  background: var(--bg4); padding: 4px 10px; border-radius: 20px;
 }
 
 .sets-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 8px;
-  margin-bottom: 16px;
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 8px; margin-bottom: 16px;
 }
-
 .set-item { text-align: center; }
-
 .set-label {
-  font-size: 11px;
-  color: var(--text3);
-  margin-bottom: 4px;
-  font-weight: 500;
+  font-size: 11px; color: var(--text3); margin-bottom: 4px; font-weight: 500;
 }
-
 .set-target {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--accent);
-  margin-bottom: 6px;
+  font-size: 18px; font-weight: 600; color: var(--accent); margin-bottom: 6px;
+}
+.set-target.max-label { color: var(--danger); font-size: 14px; }
+
+/* Set toggle button (Sets 1-4) */
+.set-toggle {
+  width: 100%;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 4px;
+  color: var(--text3);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px; font-weight: 500;
+  text-align: center;
+  cursor: pointer; transition: all 0.2s;
+  outline: none;
+}
+.set-toggle:hover { border-color: var(--active); color: var(--text2); }
+.set-toggle.done {
+  border-color: var(--done); background: rgba(46,204,113,0.08); color: var(--done);
 }
 
-.set-target.max-label {
-  color: var(--danger);
-  font-size: 14px;
-}
-
+/* Set input (Set 5 MAX) */
 .set-input {
   width: 100%;
   background: var(--bg);
@@ -309,56 +221,32 @@ body {
   padding: 10px 4px;
   color: var(--text);
   font-family: 'JetBrains Mono', monospace;
-  font-size: 16px;
-  font-weight: 500;
-  text-align: center;
-  outline: none;
-  transition: all 0.2s;
+  font-size: 16px; font-weight: 500;
+  text-align: center; outline: none; transition: all 0.2s;
 }
-
 .set-input:focus { border-color: var(--active); box-shadow: 0 0 0 3px rgba(74,142,255,0.15); }
-.set-input.hit { border-color: var(--done); background: rgba(46,204,113,0.08); color: var(--done); }
-.set-input.miss { border-color: var(--danger); background: rgba(231,76,60,0.08); color: var(--danger); }
-
+.set-input.has-value { border-color: var(--done); background: rgba(46,204,113,0.08); color: var(--done); }
 .set-input::placeholder { color: var(--text3); font-size: 12px; }
 .set-input::-webkit-inner-spin-button,
 .set-input::-webkit-outer-spin-button { -webkit-appearance: none; }
 .set-input { -moz-appearance: textfield; }
 
-/* ===== MEMO ===== */
 .memo-area {
-  width: 100%;
-  background: var(--bg);
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 12px;
-  color: var(--text);
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 14px;
-  resize: vertical;
-  min-height: 60px;
-  outline: none;
-  transition: border-color 0.2s;
+  width: 100%; background: var(--bg);
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  padding: 12px; color: var(--text);
+  font-family: 'Space Grotesk', sans-serif; font-size: 14px;
+  resize: vertical; min-height: 60px; outline: none; transition: border-color 0.2s;
 }
-
 .memo-area:focus { border-color: var(--active); }
 .memo-area::placeholder { color: var(--text3); }
 
-/* ===== BUTTONS ===== */
 .btn-row { display: flex; gap: 10px; margin-top: 16px; }
-
 .btn {
-  flex: 1;
-  padding: 14px;
-  border: none;
-  border-radius: var(--radius-sm);
+  flex: 1; padding: 14px; border: none; border-radius: var(--radius-sm);
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
+  font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;
 }
-
 .btn-primary { background: var(--accent); color: #fff; }
 .btn-primary:hover { background: var(--accent2); }
 .btn-secondary { background: var(--bg3); color: var(--text2); border: 1px solid var(--border); }
@@ -366,21 +254,12 @@ body {
 .btn-done { background: var(--done); color: #fff; }
 .btn-sm { padding: 10px 16px; font-size: 13px; flex: unset; }
 
-/* ===== HISTORY ===== */
 .history-section { margin-top: 32px; }
-
 .history-item {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 14px 16px;
-  margin-bottom: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 13px;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 8px;
+  display: flex; justify-content: space-between; align-items: center; font-size: 13px;
 }
-
 .history-item .date { color: var(--text3); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
 .history-item .info { color: var(--text2); }
 .history-item .info strong { color: var(--text); }
@@ -388,10 +267,6 @@ body {
 
 .empty-state { text-align: center; padding: 40px 20px; color: var(--text3); font-size: 14px; }
 
-/* ===== FOOTER ===== */
-.footer-actions { margin-top: 24px; display: flex; gap: 10px; }
-
-/* ===== TOAST ===== */
 .toast {
   position: fixed; bottom: 24px; left: 50%;
   transform: translateX(-50%) translateY(100px);
@@ -403,49 +278,9 @@ body {
 }
 .toast.show { transform: translateX(-50%) translateY(0); }
 
-/* ===== MODAL ===== */
-.modal-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.6);
-  z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px;
-}
-.modal-overlay.open { display: flex; }
-.modal {
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 24px; max-width: 400px; width: 100%;
-}
-.modal h3 { font-size: 18px; margin-bottom: 12px; }
-.modal p { font-size: 14px; color: var(--text2); margin-bottom: 20px; line-height: 1.5; }
-
-/* ===== ONBOARDING ===== */
-.onboard-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.8);
-  z-index: 1001; display: none; align-items: center; justify-content: center; padding: 20px;
-}
-.onboard-overlay.open { display: flex; }
-.onboard-card {
-  background: var(--bg2); border: 1px solid var(--border2);
-  border-radius: var(--radius); padding: 32px 24px; max-width: 380px; width: 100%; text-align: center;
-}
-.onboard-card h2 {
-  font-size: 20px; font-weight: 700; margin-bottom: 8px;
-  background: linear-gradient(135deg, var(--accent), var(--active));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-}
-.onboard-card p { font-size: 14px; color: var(--text2); margin-bottom: 24px; line-height: 1.5; }
-.onboard-input {
-  font-family: 'JetBrains Mono', monospace; font-size: 40px; font-weight: 700;
-  background: var(--bg); border: 2px solid var(--border2); border-radius: var(--radius-sm);
-  color: var(--accent); text-align: center; width: 140px; padding: 12px; outline: none;
-  -moz-appearance: textfield;
-}
-.onboard-input:focus { border-color: var(--active); }
-.onboard-input::-webkit-inner-spin-button,
-.onboard-input::-webkit-outer-spin-button { -webkit-appearance: none; }
-.onboard-unit { font-size: 18px; color: var(--text2); margin-left: 8px; }
-
-/* ===== RESPONSIVE ===== */
 @media (max-width: 480px) {
   .sets-grid { gap: 6px; }
+  .set-toggle { padding: 8px 2px; font-size: 14px; }
   .set-input { padding: 8px 2px; font-size: 14px; }
   .set-target { font-size: 16px; }
   .stat-grid { gap: 6px; }
@@ -458,7 +293,6 @@ body {
 <body>
 
 <div class="container" id="app">
-  <!-- Header -->
   <div class="header">
     <h1>100 Push-Ups</h1>
     <p>USNA 6-Week Program by CAPT Mike Prevost, USN</p>
@@ -476,7 +310,7 @@ body {
     </div>
     <div class="stat-card">
       <div class="label">최초 측정</div>
-      <div id="initial-display">
+      <div>
         <input type="number" class="initial-input" id="initial-input"
           placeholder="?" min="0" inputmode="numeric"
           onchange="updateInitialMax(this.value)"
@@ -487,11 +321,10 @@ body {
     <div class="stat-card">
       <div class="label">추정 최대</div>
       <div class="value green" id="stat-estimated">-</div>
-      <div class="sub-text none" id="stat-delta"></div>
+      <div class="sub-text muted" id="stat-delta"></div>
     </div>
   </div>
 
-  <!-- Progress -->
   <div class="progress-wrap">
     <div class="label">
       <span>6주 프로그램 진행률</span>
@@ -502,14 +335,10 @@ body {
     </div>
   </div>
 
-  <!-- Week Tabs -->
   <div class="section-title">주차 선택</div>
   <div class="week-tabs" id="week-tabs"></div>
-
-  <!-- Day Tabs -->
   <div class="day-tabs" id="day-tabs"></div>
 
-  <!-- Workout Card -->
   <div class="workout-card" id="workout-card" style="display:none;">
     <div class="workout-header">
       <div class="workout-title" id="workout-title">Week 1 · Day 1</div>
@@ -523,12 +352,10 @@ body {
     </div>
   </div>
 
-  <!-- No Initial Max -->
   <div class="empty-state" id="empty-state">
     최초 측정 푸쉬업 개수를 입력하면 프로그램이 시작됩니다
   </div>
 
-  <!-- History -->
   <div class="history-section">
     <div class="section-title" style="display:flex;justify-content:space-between;align-items:center;">
       <span>기록</span>
@@ -536,40 +363,64 @@ body {
     </div>
     <div id="history-list" style="margin-top:12px;"></div>
   </div>
-
-  <!-- Footer -->
-  <div class="footer-actions">
-    <button class="btn btn-secondary" onclick="showResetModal()">초기화</button>
-  </div>
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast"></div>
-
-<!-- Reset Modal -->
-<div class="modal-overlay" id="reset-modal">
-  <div class="modal">
-    <h3>데이터 초기화</h3>
-    <p>모든 진행 상황과 기록이 삭제됩니다. 정말 초기화할까요?</p>
-    <div class="btn-row">
-      <button class="btn btn-secondary" onclick="closeResetModal()">취소</button>
-      <button class="btn btn-primary" style="background:var(--danger);" onclick="resetAll()">초기화</button>
-    </div>
-  </div>
-</div>
 
 <script>
 // ===== PROGRAM DATA =====
-const COLUMNS = ['< 6','6-10','11-20','21-25','26-35','36-50','50-75','75-100','> 100'];
-const COL_BOUNDS = [[0,5],[6,10],[11,20],[21,25],[26,35],[36,50],[51,75],[76,100],[101,999]];
+// 3 phases, each with 3 columns
+const PHASE_COLS = [
+  ['< 6', '6-10', '11-20'],
+  ['21-25', '26-35', '36-50'],
+  ['50-75', '75-100', '> 100']
+];
 
+const PHASE_BOUNDS = [
+  [[0,5],[6,10],[11,999]],
+  [[0,25],[26,35],[36,999]],
+  [[0,75],[76,100],[101,999]]
+];
+
+// PROGRAM[week][day] = [set1, set2, set3, set4, null]
+// Each set = [col0_val, col1_val, col2_val] or null for MAX
 const PROGRAM = [
-  [[2,6,10,12,14,25,35,45,55],[3,6,12,17,18,30,40,55,65],[2,4,7,13,14,25,30,35,35],[2,4,7,13,14,25,24,30,30],null],
-  [[3,6,10,13,15,26,36,46,56],[4,8,12,18,19,31,41,56,66],[2,6,8,14,15,26,31,36,36],[3,6,8,14,15,26,25,31,31],null],
-  [[4,8,11,14,16,27,37,47,57],[5,10,15,19,20,32,42,57,67],[4,7,9,15,16,27,32,37,37],[4,7,9,15,16,27,26,32,32],null],
-  [[4,8,12,15,17,28,38,48,58],[6,10,15,20,21,33,43,58,68],[5,8,10,16,17,28,33,38,38],[4,8,10,16,17,28,27,33,33],null],
-  [[5,8,12,16,18,29,39,49,59],[7,11,16,21,22,34,44,59,69],[5,8,10,17,18,29,34,39,39],[4,8,10,17,18,29,28,34,34],null],
-  [[5,8,12,17,19,30,40,50,60],[8,12,17,22,23,35,45,60,70],[6,8,11,18,19,30,35,40,40],[5,8,10,18,19,30,29,35,35],null]
+  // Week 1 (Phase 0: <6, 6-10, 11-20)
+  [
+    [[2,6,10],[3,6,12],[2,4,7],[2,4,7],null],
+    [[3,6,10],[4,8,12],[2,6,8],[3,6,8],null],
+    [[4,8,11],[5,10,15],[4,7,9],[4,7,9],null],
+  ],
+  // Week 2 (Phase 0)
+  [
+    [[4,8,12],[6,10,15],[5,8,10],[4,8,10],null],
+    [[5,8,12],[7,11,16],[5,8,10],[4,8,10],null],
+    [[5,8,12],[8,12,17],[6,8,11],[5,8,10],null],
+  ],
+  // Week 3 (Phase 1: 21-25, 26-35, 36-50)
+  [
+    [[12,14,25],[17,18,30],[13,14,25],[13,14,25],null],
+    [[13,15,26],[18,19,31],[14,15,26],[14,15,26],null],
+    [[14,16,27],[19,20,32],[15,16,27],[15,16,27],null],
+  ],
+  // Week 4 (Phase 1)
+  [
+    [[15,17,28],[20,21,33],[16,17,28],[16,17,28],null],
+    [[16,18,29],[21,22,34],[17,18,29],[17,18,29],null],
+    [[17,19,30],[22,23,35],[18,19,30],[18,19,30],null],
+  ],
+  // Week 5 (Phase 2: 50-75, 75-100, >100)
+  [
+    [[35,45,55],[40,55,65],[30,35,35],[24,30,30],null],
+    [[36,46,56],[41,56,66],[31,36,36],[25,31,31],null],
+    [[37,47,57],[42,57,67],[32,37,37],[26,32,32],null],
+  ],
+  // Week 6 (Phase 2)
+  [
+    [[38,48,58],[43,58,68],[33,38,38],[27,33,33],null],
+    [[39,49,59],[44,59,69],[34,39,39],[28,34,34],null],
+    [[40,50,60],[45,60,70],[35,40,40],[29,35,35],null],
+  ],
 ];
 
 const DAY_LABELS = ['Day 1', 'Day 2', 'Day 3'];
@@ -579,11 +430,10 @@ let state = loadState();
 
 function defaultState() {
   return {
-    initialMax: null,   // user's initial test result
+    initialMax: null,
     weekIdx: 0,
     dayIdx: 0,
     completedDays: {},
-    completedColumns: [],
     history: [],
     currentSets: [null,null,null,null,null],
     currentMemo: '',
@@ -593,7 +443,7 @@ function defaultState() {
 
 function loadState() {
   try {
-    const s = JSON.parse(localStorage.getItem('pushup100_v3'));
+    const s = JSON.parse(localStorage.getItem('pushup100_v4'));
     if (s && s.history !== undefined) {
       if (!s.weekEstimates) s.weekEstimates = {};
       if (s.initialMax === undefined) s.initialMax = null;
@@ -604,7 +454,7 @@ function loadState() {
 }
 
 function saveState() {
-  localStorage.setItem('pushup100_v3', JSON.stringify(state));
+  localStorage.setItem('pushup100_v4', JSON.stringify(state));
 }
 
 function getCompletedDays(weekIdx) {
@@ -616,11 +466,44 @@ function isWeekComplete(weekIdx) {
 }
 
 function countCompletedWeeks() {
-  let count = 0;
-  for (let w = 0; w < 6; w++) {
-    if (isWeekComplete(w)) count++;
+  let c = 0;
+  for (let w = 0; w < 6; w++) if (isWeekComplete(w)) c++;
+  return c;
+}
+
+// ===== PHASE & COLUMN =====
+function getPhase(weekIdx) {
+  return Math.floor(weekIdx / 2);
+}
+
+function getColInPhase(max, phase) {
+  if (max === null) return -1;
+  const bounds = PHASE_BOUNDS[phase];
+  for (let i = 0; i < bounds.length; i++) {
+    if (max >= bounds[i][0] && max <= bounds[i][1]) return i;
   }
-  return count;
+  return 2; // highest column
+}
+
+function getMaxForWeek(weekIdx) {
+  if (state.initialMax === null) return null;
+  let runningMax = state.initialMax;
+  for (let w = 0; w < weekIdx; w++) {
+    const est = state.weekEstimates[w];
+    if (est !== undefined && est > runningMax) runningMax = est;
+  }
+  return runningMax;
+}
+
+function getColIdxForWeek(weekIdx) {
+  const max = getMaxForWeek(weekIdx);
+  return getColInPhase(max, getPhase(weekIdx));
+}
+
+function getColLabelForWeek(weekIdx) {
+  const ci = getColIdxForWeek(weekIdx);
+  if (ci < 0) return '';
+  return PHASE_COLS[getPhase(weekIdx)][ci];
 }
 
 // ===== ESTIMATION =====
@@ -634,10 +517,7 @@ function estimateFromSets(sets) {
 
 function calcWeekEstimate(weekIdx) {
   if (!isWeekComplete(weekIdx)) return null;
-  const colIdx = getColIdxForWeek(weekIdx);
-  const weekHistory = state.history.filter(h =>
-    h.weekIdx === weekIdx && h.completed && h.colIdx === colIdx
-  );
+  const weekHistory = state.history.filter(h => h.weekIdx === weekIdx && h.completed);
   if (weekHistory.length < 3) return null;
   let maxEst = 0;
   for (const h of weekHistory) {
@@ -656,7 +536,6 @@ function recalcAllEstimates() {
   }
 }
 
-// Get estimated max: monotonically increasing, floored by initialMax
 function getCurrentEstimatedMax() {
   if (state.initialMax === null) return null;
   let runningMax = state.initialMax;
@@ -667,35 +546,13 @@ function getCurrentEstimatedMax() {
   return runningMax;
 }
 
-// Get the effective max for a specific week (for column assignment)
-function getMaxForWeek(weekIdx) {
-  if (state.initialMax === null) return null;
-  let runningMax = state.initialMax;
-  // Use estimates from weeks BEFORE this one
-  for (let w = 0; w < weekIdx; w++) {
-    const est = state.weekEstimates[w];
-    if (est !== undefined && est > runningMax) runningMax = est;
-  }
-  return runningMax;
-}
-
-// Map max to column index
-function maxToColIdx(max) {
-  if (max === null) return -1;
-  for (let i = 0; i < COL_BOUNDS.length; i++) {
-    if (max >= COL_BOUNDS[i][0] && max <= COL_BOUNDS[i][1]) return i;
-  }
-  return 8;
-}
-
-// Get column index for a specific week
-function getColIdxForWeek(weekIdx) {
-  return maxToColIdx(getMaxForWeek(weekIdx));
-}
-
-// Get current column index (for active week)
-function getCurrentColIdx() {
-  return getColIdxForWeek(state.weekIdx);
+// ===== WORKOUT DATA =====
+function getDayData(weekIdx, dayIdx, colIdx) {
+  const day = PROGRAM[weekIdx][dayIdx];
+  return day.map(set => {
+    if (set === null) return null; // MAX
+    return set[colIdx];
+  });
 }
 
 // ===== RENDER =====
@@ -709,38 +566,37 @@ function render() {
 }
 
 function renderStats() {
-  // Week progress
   document.getElementById('stat-week').textContent = `${countCompletedWeeks()}/6`;
 
-  // Total pushups
   const totalPushups = state.history.reduce((sum, h) => sum + (h.total || 0), 0);
   document.getElementById('stat-total').textContent = totalPushups.toLocaleString();
 
-  // Initial max input
   const input = document.getElementById('initial-input');
   if (state.initialMax !== null && input !== document.activeElement) {
     input.value = state.initialMax;
   }
 
-  // Estimated max
   const estEl = document.getElementById('stat-estimated');
   const deltaEl = document.getElementById('stat-delta');
   const estimated = getCurrentEstimatedMax();
+  const hasCompletedWeek = Object.keys(state.weekEstimates).length > 0;
 
-  if (estimated !== null) {
+  if (estimated !== null && hasCompletedWeek) {
     estEl.textContent = estimated;
-
     if (state.initialMax !== null && estimated > state.initialMax) {
-      const delta = estimated - state.initialMax;
       deltaEl.className = 'sub-text';
-      deltaEl.textContent = `최초 대비 +${delta}개`;
+      deltaEl.textContent = `최초 대비 +${estimated - state.initialMax}개`;
     } else {
-      deltaEl.className = 'sub-text none';
-      deltaEl.textContent = '최초 측정과 동일';
+      deltaEl.className = 'sub-text muted';
+      deltaEl.textContent = '';
     }
+  } else if (state.initialMax !== null) {
+    estEl.textContent = state.initialMax;
+    deltaEl.className = 'sub-text muted';
+    deltaEl.textContent = 'Week 1 측정이 완료되면 계산됩니다';
   } else {
     estEl.textContent = '-';
-    deltaEl.className = 'sub-text none';
+    deltaEl.className = 'sub-text muted';
     deltaEl.textContent = '';
   }
 }
@@ -748,13 +604,11 @@ function renderStats() {
 function renderWeekTabs() {
   const el = document.getElementById('week-tabs');
   if (state.initialMax === null) { el.innerHTML = ''; return; }
-
   el.innerHTML = Array.from({length:6}, (_, i) => {
     let cls = 'week-tab';
     if (isWeekComplete(i)) cls += ' done';
     if (i === state.weekIdx) cls += ' active';
-    const colIdx = getColIdxForWeek(i);
-    const colLabel = colIdx >= 0 ? COLUMNS[colIdx] : '';
+    const colLabel = getColLabelForWeek(i);
     return `<button class="${cls}" onclick="selectWeek(${i})">
       <div>W${i+1}</div>
       <div style="font-size:10px;opacity:0.7;margin-top:2px">${colLabel}</div>
@@ -777,62 +631,65 @@ function renderDayTabs() {
 function renderWorkout() {
   const card = document.getElementById('workout-card');
   const empty = document.getElementById('empty-state');
-  const colIdx = getCurrentColIdx();
+  const colIdx = getColIdxForWeek(state.weekIdx);
 
   if (state.initialMax === null || colIdx < 0) {
     card.style.display = 'none';
     empty.style.display = 'block';
-    empty.textContent = state.initialMax === null
-      ? '최초 측정 푸쉬업 개수를 입력하면 프로그램이 시작됩니다'
-      : '데이터를 불러오는 중...';
     return;
   }
   card.style.display = 'block';
   empty.style.display = 'none';
 
+  const phase = getPhase(state.weekIdx);
+  const colLabel = PHASE_COLS[phase][colIdx];
   document.getElementById('workout-title').textContent =
-    `Week ${state.weekIdx+1} · ${DAY_LABELS[state.dayIdx]} · ${COLUMNS[colIdx]}`;
+    `Week ${state.weekIdx+1} · ${DAY_LABELS[state.dayIdx]} · ${colLabel}`;
 
-  const week = PROGRAM[state.weekIdx];
+  const targets = getDayData(state.weekIdx, state.dayIdx, colIdx);
   const grid = document.getElementById('sets-grid');
 
-  grid.innerHTML = Array.from({length: 5}, (_, s) => {
-    const isMax = week[s] === null;
-    const target = isMax ? null : week[s][colIdx];
+  grid.innerHTML = targets.map((target, s) => {
+    const isMax = target === null;
     const val = state.currentSets[s];
-    const valNum = val !== null && val !== '' ? parseInt(val) : null;
 
-    let inputCls = 'set-input';
-    if (valNum !== null && !isMax && target !== null) {
-      inputCls += valNum >= target ? ' hit' : ' miss';
+    if (isMax) {
+      // Set 5: number input
+      const hasVal = val !== null && val !== '' && val !== 0;
+      return `
+        <div class="set-item">
+          <div class="set-label">Set ${s+1}</div>
+          <div class="set-target max-label">MAX</div>
+          <input type="number" class="set-input${hasVal ? ' has-value' : ''}"
+            value="${hasVal ? val : ''}"
+            placeholder="MAX" min="0" inputmode="numeric"
+            oninput="updateSet(${s}, this.value)">
+        </div>`;
+    } else {
+      // Sets 1-4: toggle button
+      const isDone = val !== null && val !== '' && val !== 0;
+      return `
+        <div class="set-item">
+          <div class="set-label">Set ${s+1}</div>
+          <div class="set-target">${target}</div>
+          <button class="set-toggle${isDone ? ' done' : ''}"
+            onclick="toggleSet(${s}, ${target})">${isDone ? target : '-'}</button>
+        </div>`;
     }
-
-    return `
-      <div class="set-item">
-        <div class="set-label">Set ${s+1}</div>
-        <div class="set-target ${isMax ? 'max-label' : ''}">${isMax ? 'MAX' : target}</div>
-        <input type="number" class="${inputCls}"
-          value="${val !== null && val !== '' ? val : ''}"
-          placeholder="${isMax ? 'MAX' : target}"
-          min="0" inputmode="numeric"
-          oninput="updateSet(${s}, this.value)">
-      </div>`;
   }).join('');
 
   document.getElementById('memo').value = state.currentMemo || '';
 
-  const allFilled = state.currentSets.every(v => v !== null && v !== '');
-  const isDone = getCompletedDays(state.weekIdx).includes(state.dayIdx);
-  document.getElementById('btn-complete').style.display = (allFilled && !isDone) ? 'block' : 'none';
-  document.getElementById('btn-save').textContent = isDone ? '수정 저장' : '저장';
+  const allFilled = state.currentSets.every(v => v !== null && v !== '' && v !== 0);
+  const isDayDone = getCompletedDays(state.weekIdx).includes(state.dayIdx);
+  document.getElementById('btn-complete').style.display = (allFilled && !isDayDone) ? 'block' : 'none';
+  document.getElementById('btn-save').textContent = isDayDone ? '수정 저장' : '저장';
 }
 
 function renderProgress() {
-  let totalCompletedDays = 0;
-  for (let w = 0; w < 6; w++) {
-    totalCompletedDays += getCompletedDays(w).length;
-  }
-  const pct = Math.min(100, Math.round(totalCompletedDays / 18 * 100));
+  let total = 0;
+  for (let w = 0; w < 6; w++) total += getCompletedDays(w).length;
+  const pct = Math.min(100, Math.round(total / 18 * 100));
   document.getElementById('progress-pct').textContent = `${pct}%`;
   document.getElementById('progress-fill').style.width = `${pct}%`;
 }
@@ -845,10 +702,11 @@ function renderHistory() {
   }
   el.innerHTML = [...state.history].reverse().slice(0, 20).map(h => {
     const sets = h.sets.map((v,i) => i === 4 ? `<strong style="color:var(--danger)">${v}</strong>` : v).join(' · ');
+    const colLabel = h.colLabel || '';
     return `
       <div class="history-item">
         <div>
-          <div class="info"><strong>${COLUMNS[h.colIdx]}</strong> · W${h.weekIdx+1} ${DAY_LABELS[h.dayIdx]}</div>
+          <div class="info"><strong>${colLabel}</strong> · W${h.weekIdx+1} ${DAY_LABELS[h.dayIdx]}</div>
           <div class="date">${h.date}</div>
         </div>
         <div style="text-align:right">
@@ -914,9 +772,8 @@ function findNextIncomplete() {
 }
 
 function loadCurrentFromHistory() {
-  const colIdx = getCurrentColIdx();
   const match = state.history.find(h =>
-    h.colIdx === colIdx && h.weekIdx === state.weekIdx && h.dayIdx === state.dayIdx
+    h.weekIdx === state.weekIdx && h.dayIdx === state.dayIdx
   );
   if (match) {
     state.currentSets = [...match.sets];
@@ -924,33 +781,33 @@ function loadCurrentFromHistory() {
   }
 }
 
+function toggleSet(idx, target) {
+  if (state.currentSets[idx] !== null && state.currentSets[idx] !== 0) {
+    state.currentSets[idx] = null;
+  } else {
+    state.currentSets[idx] = target;
+  }
+  saveState();
+  renderWorkout();
+}
+
 function updateSet(idx, val) {
   state.currentSets[idx] = val === '' ? null : parseInt(val);
-
-  const colIdx = getCurrentColIdx();
-  const week = PROGRAM[state.weekIdx];
-  const isMax = week[idx] === null;
-  const target = isMax ? null : week[idx][colIdx];
-  const input = document.querySelectorAll('.set-input')[idx];
-  const valNum = val === '' ? null : parseInt(val);
-
-  input.className = 'set-input';
-  if (valNum !== null && !isMax && target !== null) {
-    input.classList.add(valNum >= target ? 'hit' : 'miss');
-  }
-
-  const allFilled = state.currentSets.every(v => v !== null && v !== '');
-  const isDone = getCompletedDays(state.weekIdx).includes(state.dayIdx);
-  document.getElementById('btn-complete').style.display = (allFilled && !isDone) ? 'block' : 'none';
-
   saveState();
+  renderWorkout();
 }
 
 function saveWorkout() {
-  const colIdx = getCurrentColIdx();
+  const colIdx = getColIdxForWeek(state.weekIdx);
   if (colIdx < 0) return;
 
-  const sets = state.currentSets.map(v => (v !== null && v !== '') ? parseInt(v) : 0);
+  const phase = getPhase(state.weekIdx);
+  const colLabel = PHASE_COLS[phase][colIdx];
+  const targets = getDayData(state.weekIdx, state.dayIdx, colIdx);
+  const sets = state.currentSets.map((v, i) => {
+    if (v !== null && v !== '' && v !== 0) return parseInt(v);
+    return 0;
+  });
   const total = sets.reduce((a,b) => a+b, 0);
   const memo = document.getElementById('memo').value;
   state.currentMemo = memo;
@@ -959,11 +816,11 @@ function saveWorkout() {
   const date = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
 
   const existIdx = state.history.findIndex(h =>
-    h.colIdx === colIdx && h.weekIdx === state.weekIdx && h.dayIdx === state.dayIdx
+    h.weekIdx === state.weekIdx && h.dayIdx === state.dayIdx
   );
 
   const record = {
-    date, colIdx,
+    date, colIdx, colLabel,
     weekIdx: state.weekIdx, dayIdx: state.dayIdx,
     sets, memo, total,
     completed: getCompletedDays(state.weekIdx).includes(state.dayIdx)
@@ -983,21 +840,21 @@ function saveWorkout() {
 }
 
 function completeDay() {
-  const colIdx = getCurrentColIdx();
+  const colIdx = getColIdxForWeek(state.weekIdx);
   const days = getCompletedDays(state.weekIdx);
   if (!days.includes(state.dayIdx)) {
     if (!state.completedDays[state.weekIdx]) state.completedDays[state.weekIdx] = [];
     state.completedDays[state.weekIdx].push(state.dayIdx);
 
     const existIdx = state.history.findIndex(h =>
-      h.colIdx === colIdx && h.weekIdx === state.weekIdx && h.dayIdx === state.dayIdx
+      h.weekIdx === state.weekIdx && h.dayIdx === state.dayIdx
     );
     if (existIdx >= 0) {
       state.history[existIdx].completed = true;
     } else {
       saveWorkout();
       const newIdx = state.history.findIndex(h =>
-        h.colIdx === colIdx && h.weekIdx === state.weekIdx && h.dayIdx === state.dayIdx
+        h.weekIdx === state.weekIdx && h.dayIdx === state.dayIdx
       );
       if (newIdx >= 0) state.history[newIdx].completed = true;
     }
@@ -1006,10 +863,8 @@ function completeDay() {
 
     if (isWeekComplete(state.weekIdx)) {
       const est = getCurrentEstimatedMax();
-      if (countCompletedWeeks() >= 6) {
-        showToast(`6주 프로그램 완료! 추정 Max: ${est}개`);
-      } else {
-        showToast(`Week ${state.weekIdx+1} 완료! 추정 Max: ${est}개`);
+      showToast(`Week ${state.weekIdx+1} 완료! 추정 Max: ${est}개`);
+      if (countCompletedWeeks() < 6) {
         findNextIncomplete();
         state.currentSets = [null,null,null,null,null];
         state.currentMemo = '';
@@ -1038,27 +893,15 @@ function exportCSV() {
   if (state.history.length === 0) { showToast('내보낼 기록이 없습니다'); return; }
   const header = 'Date,Column,Week,Day,Set1,Set2,Set3,Set4,Set5(MAX),Total,Memo';
   const rows = state.history.map(h =>
-    `"${h.date}","${COLUMNS[h.colIdx]}","Week ${h.weekIdx+1}","${DAY_LABELS[h.dayIdx]}",${h.sets.join(',')},${h.total},"${(h.memo||'').replace(/"/g,'""')}"`
+    `"${h.date}","${h.colLabel || ''}","Week ${h.weekIdx+1}","${DAY_LABELS[h.dayIdx]}",${h.sets.join(',')},${h.total},"${(h.memo||'').replace(/"/g,'""')}"`
   );
   const csv = [header, ...rows].join('\n');
-  const blob = new Blob(['\uFEFF' + csv], {type: 'text/csv;charset=utf-8;'});
+  const blob = new Blob(['\uFEFF' + csv], {type:'text/csv;charset=utf-8;'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url; a.download = `pushup100_${new Date().toISOString().slice(0,10)}.csv`;
   a.click(); URL.revokeObjectURL(url);
   showToast('CSV 내보내기 완료');
-}
-
-function showResetModal() { document.getElementById('reset-modal').classList.add('open'); }
-function closeResetModal() { document.getElementById('reset-modal').classList.remove('open'); }
-
-function resetAll() {
-  state = defaultState();
-  saveState();
-  closeResetModal();
-  document.getElementById('initial-input').value = '';
-  render();
-  showToast('초기화 완료');
 }
 
 function showToast(msg) {
