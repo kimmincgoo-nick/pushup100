@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>100 Push-Ups Program</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --bg2: #12121a;
+  --bg3: #1a1a26;
+  --bg4: #22222f;
+  --text: #e8e8f0;
+  --text2: #9898a8;
+  --text3: #606070;
+  --accent: #ff6b35;
+  --accent2: #ff8c5a;
+  --active: #4a8eff;
+  --active2: #6aa4ff;
+  --done: #2ecc71;
+  --done2: #4ae68a;
+  --danger: #e74c3c;
+  --border: #2a2a3a;
+  --border2: #3a3a4a;
+  --shadow: rgba(0,0,0,0.4);
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px 16px 100px;
+}
+
+/* ===== HEADER ===== */
+.header {
+  text-align: center;
+  padding: 32px 0 24px;
+  position: relative;
+}
+
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, var(--accent), var(--active));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 6px;
+}
+
+.header p {
+  font-size: 13px;
+  color: var(--text2);
+  font-weight: 400;
+}
+
+/* ===== DASHBOARD ===== */
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin: 24px 0;
+}
+
+.stat-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 12px;
+  text-align: center;
+}
+
+.stat-card .label {
+  font-size: 11px;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+.stat-card .value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.stat-card .value.blue { color: var(--active); }
+.stat-card .value.green { color: var(--done); }
+
+.progress-wrap {
+  margin: 16px 0 24px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.progress-wrap .label {
+  font-size: 12px;
+  color: var(--text2);
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--bg4);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--done));
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+/* ===== COLUMN SELECTOR ===== */
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text2);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.col-selector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.col-btn {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 8px;
+  color: var(--text2);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.col-btn:hover { border-color: var(--active); color: var(--text); }
+.col-btn.active { background: var(--active); border-color: var(--active); color: #fff; }
+.col-btn.completed { background: var(--done); border-color: var(--done); color: #fff; opacity: 0.8; }
+
+/* ===== BLOCK TABS ===== */
+.block-tabs {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.block-tab {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 4px;
+  color: var(--text2);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.block-tab:hover { border-color: var(--active); color: var(--text); }
+.block-tab.active { background: var(--active); border-color: var(--active); color: #fff; }
+.block-tab.done { background: rgba(46,204,113,0.15); border-color: var(--done); color: var(--done); }
+.block-tab.done.active { background: var(--done); color: #fff; }
+
+/* ===== WORKOUT CARD ===== */
+.workout-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.workout-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.workout-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.rest-badge {
+  font-size: 11px;
+  color: var(--text3);
+  background: var(--bg4);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.sets-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.set-item {
+  text-align: center;
+}
+
+.set-label {
+  font-size: 11px;
+  color: var(--text3);
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.set-target {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.set-target.max-label {
+  color: var(--danger);
+  font-size: 14px;
+}
+
+.set-input {
+  width: 100%;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 4px;
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.set-input:focus { border-color: var(--active); box-shadow: 0 0 0 3px rgba(74,142,255,0.15); }
+.set-input.hit { border-color: var(--done); background: rgba(46,204,113,0.08); color: var(--done); }
+.set-input.miss { border-color: var(--danger); background: rgba(231,76,60,0.08); color: var(--danger); }
+
+.set-input::placeholder { color: var(--text3); font-size: 12px; }
+.set-input::-webkit-inner-spin-button,
+.set-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+.set-input { -moz-appearance: textfield; }
+
+/* ===== MEMO ===== */
+.memo-area {
+  width: 100%;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  color: var(--text);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  resize: vertical;
+  min-height: 60px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.memo-area:focus { border-color: var(--active); }
+.memo-area::placeholder { color: var(--text3); }
+
+/* ===== BUTTONS ===== */
+.btn-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.btn {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--accent2); }
+
+.btn-secondary {
+  background: var(--bg3);
+  color: var(--text2);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover { background: var(--bg4); color: var(--text); }
+
+.btn-done {
+  background: var(--done);
+  color: #fff;
+}
+
+.btn-sm {
+  padding: 10px 16px;
+  font-size: 13px;
+  flex: unset;
+}
+
+/* ===== HISTORY ===== */
+.history-section {
+  margin-top: 32px;
+}
+
+.history-item {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+.history-item .date {
+  color: var(--text3);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+}
+
+.history-item .info {
+  color: var(--text2);
+}
+
+.history-item .info strong {
+  color: var(--text);
+}
+
+.history-item .total {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text3);
+  font-size: 14px;
+}
+
+/* ===== FOOTER ACTIONS ===== */
+.footer-actions {
+  margin-top: 24px;
+  display: flex;
+  gap: 10px;
+}
+
+/* ===== TOAST ===== */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--done);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 999;
+  transition: transform 0.3s ease;
+  box-shadow: 0 8px 24px rgba(46,204,113,0.3);
+}
+
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ===== MODAL ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-overlay.open { display: flex; }
+
+.modal {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.modal h3 {
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+.modal p {
+  font-size: 14px;
+  color: var(--text2);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 480px) {
+  .col-selector { grid-template-columns: repeat(3, 1fr); }
+  .sets-grid { gap: 6px; }
+  .set-input { padding: 8px 2px; font-size: 14px; }
+  .set-target { font-size: 16px; }
+  .dashboard { gap: 6px; }
+  .stat-card { padding: 12px 8px; }
+  .stat-card .value { font-size: 18px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container" id="app">
+  <!-- Header -->
+  <div class="header">
+    <h1>💯 100 Push-Ups</h1>
+    <p>USNA Program by CAPT Mike Prevost, USN</p>
+  </div>
+
+  <!-- Dashboard -->
+  <div class="dashboard">
+    <div class="stat-card">
+      <div class="label">완료 블록</div>
+      <div class="value blue" id="stat-blocks">0/6</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">누적 푸쉬업</div>
+      <div class="value" id="stat-total">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">워크아웃</div>
+      <div class="value green" id="stat-sessions">0</div>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="label">
+      <span>전체 진행률</span>
+      <span id="progress-pct">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <!-- Column Selector -->
+  <div class="section-title">현재 최대 푸쉬업 개수</div>
+  <div class="col-selector" id="col-selector"></div>
+
+  <!-- Block Tabs -->
+  <div class="section-title">워크아웃 블록</div>
+  <div class="block-tabs" id="block-tabs"></div>
+
+  <!-- Workout Card -->
+  <div class="workout-card" id="workout-card" style="display:none;">
+    <div class="workout-header">
+      <div class="workout-title" id="workout-title">Block 1</div>
+      <div class="rest-badge">⏱ 휴식 30–60초</div>
+    </div>
+
+    <div class="sets-grid" id="sets-grid"></div>
+
+    <textarea class="memo-area" id="memo" placeholder="오늘의 컨디션, 특이사항 메모..."></textarea>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" id="btn-save" onclick="saveWorkout()">💾 저장</button>
+      <button class="btn btn-done" id="btn-complete" onclick="completeBlock()" style="display:none;">✅ 블록 완료</button>
+    </div>
+  </div>
+
+  <!-- No Column Selected -->
+  <div class="empty-state" id="empty-state">
+    👆 위에서 현재 최대 푸쉬업 개수를 선택하세요
+  </div>
+
+  <!-- History -->
+  <div class="history-section">
+    <div class="section-title" style="display:flex;justify-content:space-between;align-items:center;">
+      <span>기록</span>
+      <button class="btn btn-secondary btn-sm" onclick="exportCSV()">📥 CSV 내보내기</button>
+    </div>
+    <div id="history-list" style="margin-top:12px;"></div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer-actions">
+    <button class="btn btn-secondary" onclick="showResetModal()">🔄 초기화</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Reset Modal -->
+<div class="modal-overlay" id="reset-modal">
+  <div class="modal">
+    <h3>⚠️ 데이터 초기화</h3>
+    <p>모든 진행 상황과 기록이 삭제됩니다. 정말 초기화할까요?</p>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="closeResetModal()">취소</button>
+      <button class="btn btn-primary" style="background:var(--danger);" onclick="resetAll()">초기화</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== PROGRAM DATA =====
+const COLUMNS = ['< 6','6–10','11–20','21–25','26–35','36–50','50–75','75–100','> 100'];
+
+const PROGRAM = [
+  // Block 1
+  [[2,6,10,12,14,25,35,45,55],[3,6,12,17,18,30,40,55,65],[2,4,7,13,14,25,30,35,35],[2,4,7,13,14,25,24,30,30],null],
+  // Block 2
+  [[3,6,10,13,15,26,36,46,56],[4,8,12,18,19,31,41,56,66],[2,6,8,14,15,26,31,36,36],[3,6,8,14,15,26,25,31,31],null],
+  // Block 3
+  [[4,8,11,14,16,27,37,47,57],[5,10,15,19,20,32,42,57,67],[4,7,9,15,16,27,32,37,37],[4,7,9,15,16,27,26,32,32],null],
+  // Block 4
+  [[4,8,12,15,17,28,38,48,58],[6,10,15,20,21,33,43,58,68],[5,8,10,16,17,28,33,38,38],[4,8,10,16,17,28,27,33,33],null],
+  // Block 5
+  [[5,8,12,16,18,29,39,49,59],[7,11,16,21,22,34,44,59,69],[5,8,10,17,18,29,34,39,39],[4,8,10,17,18,29,28,34,34],null],
+  // Block 6
+  [[5,8,12,17,19,30,40,50,60],[8,12,17,22,23,35,45,60,70],[6,8,11,18,19,30,35,40,40],[5,8,10,18,19,30,29,35,35],null]
+];
+
+// ===== STATE =====
+let state = loadState();
+
+function defaultState() {
+  return {
+    colIdx: -1,
+    blockIdx: 0,
+    completedBlocks: [],     // array of completed block indices for current column
+    completedColumns: [],    // array of completed column indices
+    history: [],             // { date, colIdx, blockIdx, sets:[5 numbers], memo, total }
+    currentSets: [null,null,null,null,null],
+    currentMemo: ''
+  };
+}
+
+function loadState() {
+  try {
+    const s = JSON.parse(localStorage.getItem('pushup100'));
+    if (s && s.history) return s;
+  } catch(e) {}
+  return defaultState();
+}
+
+function saveState() {
+  localStorage.setItem('pushup100', JSON.stringify(state));
+}
+
+// ===== RENDER =====
+function render() {
+  renderColumnSelector();
+  renderBlockTabs();
+  renderWorkout();
+  renderDashboard();
+  renderHistory();
+}
+
+function renderColumnSelector() {
+  const el = document.getElementById('col-selector');
+  el.innerHTML = COLUMNS.map((label, i) => {
+    let cls = 'col-btn';
+    if (state.completedColumns.includes(i)) cls += ' completed';
+    if (i === state.colIdx) cls += ' active';
+    return `<button class="${cls}" onclick="selectColumn(${i})">${label}</button>`;
+  }).join('');
+}
+
+function renderBlockTabs() {
+  const el = document.getElementById('block-tabs');
+  if (state.colIdx < 0) { el.innerHTML = ''; return; }
+  el.innerHTML = Array.from({length:6}, (_, i) => {
+    let cls = 'block-tab';
+    if (state.completedBlocks.includes(i)) cls += ' done';
+    if (i === state.blockIdx) cls += ' active';
+    return `<button class="${cls}" onclick="selectBlock(${i})">B${i+1}</button>`;
+  }).join('');
+}
+
+function renderWorkout() {
+  const card = document.getElementById('workout-card');
+  const empty = document.getElementById('empty-state');
+
+  if (state.colIdx < 0) {
+    card.style.display = 'none';
+    empty.style.display = 'block';
+    return;
+  }
+  card.style.display = 'block';
+  empty.style.display = 'none';
+
+  document.getElementById('workout-title').textContent =
+    `Block ${state.blockIdx+1} · ${COLUMNS[state.colIdx]}`;
+
+  const block = PROGRAM[state.blockIdx];
+  const grid = document.getElementById('sets-grid');
+
+  grid.innerHTML = Array.from({length: 5}, (_, s) => {
+    const isMax = block[s] === null;
+    const target = isMax ? null : block[s][state.colIdx];
+    const val = state.currentSets[s];
+    const valNum = val !== null && val !== '' ? parseInt(val) : null;
+
+    let inputCls = 'set-input';
+    if (valNum !== null && !isMax && target !== null) {
+      inputCls += valNum >= target ? ' hit' : ' miss';
+    }
+
+    return `
+      <div class="set-item">
+        <div class="set-label">Set ${s+1}</div>
+        <div class="set-target ${isMax ? 'max-label' : ''}">${isMax ? 'MAX' : target}</div>
+        <input type="number" class="${inputCls}" 
+          value="${val !== null && val !== '' ? val : ''}"
+          placeholder="${isMax ? 'MAX' : target}"
+          min="0" inputmode="numeric"
+          oninput="updateSet(${s}, this.value)">
+      </div>`;
+  }).join('');
+
+  document.getElementById('memo').value = state.currentMemo || '';
+
+  // Show complete button if all sets filled
+  const allFilled = state.currentSets.every(v => v !== null && v !== '');
+  const isDone = state.completedBlocks.includes(state.blockIdx);
+  document.getElementById('btn-complete').style.display = (allFilled && !isDone) ? 'block' : 'none';
+  document.getElementById('btn-save').textContent = isDone ? '💾 수정 저장' : '💾 저장';
+}
+
+function renderDashboard() {
+  const blocksCompleted = state.completedBlocks.length;
+  document.getElementById('stat-blocks').textContent = `${blocksCompleted}/6`;
+
+  const totalPushups = state.history.reduce((sum, h) => sum + (h.total || 0), 0);
+  document.getElementById('stat-total').textContent = totalPushups.toLocaleString();
+
+  document.getElementById('stat-sessions').textContent = state.history.length;
+
+  // Progress: total columns completed * 6 blocks + current blocks
+  const totalBlocks = state.completedColumns.length * 6 + blocksCompleted;
+  const maxBlocks = 9 * 6;
+  const pct = Math.min(100, Math.round(totalBlocks / maxBlocks * 100));
+  document.getElementById('progress-pct').textContent = `${pct}%`;
+  document.getElementById('progress-fill').style.width = `${pct}%`;
+}
+
+function renderHistory() {
+  const el = document.getElementById('history-list');
+  if (state.history.length === 0) {
+    el.innerHTML = '<div class="empty-state">아직 기록이 없습니다</div>';
+    return;
+  }
+  el.innerHTML = [...state.history].reverse().slice(0, 20).map(h => {
+    const sets = h.sets.map((v,i) => i === 4 ? `<strong style="color:var(--danger)">${v}</strong>` : v).join(' · ');
+    return `
+      <div class="history-item">
+        <div>
+          <div class="info"><strong>${COLUMNS[h.colIdx]}</strong> · B${h.blockIdx+1}</div>
+          <div class="date">${h.date}</div>
+        </div>
+        <div style="text-align:right">
+          <div class="total">${h.total}회</div>
+          <div style="font-size:11px;color:var(--text3)">${sets}</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ===== ACTIONS =====
+function selectColumn(idx) {
+  if (state.colIdx !== idx) {
+    state.colIdx = idx;
+    state.blockIdx = 0;
+    state.completedBlocks = [];
+    state.currentSets = [null,null,null,null,null];
+    state.currentMemo = '';
+
+    // Restore completed blocks for this column from history
+    const colHistory = state.history.filter(h => h.colIdx === idx && h.completed);
+    state.completedBlocks = [...new Set(colHistory.map(h => h.blockIdx))];
+
+    // If all 6 blocks done, start at 0
+    if (state.completedBlocks.length >= 6) {
+      state.blockIdx = 0;
+    } else {
+      // Find first incomplete block
+      for (let i = 0; i < 6; i++) {
+        if (!state.completedBlocks.includes(i)) {
+          state.blockIdx = i;
+          break;
+        }
+      }
+    }
+
+    // Load current sets from latest history for this block
+    loadCurrentFromHistory();
+    saveState();
+  }
+  render();
+}
+
+function selectBlock(idx) {
+  state.blockIdx = idx;
+  state.currentSets = [null,null,null,null,null];
+  state.currentMemo = '';
+  loadCurrentFromHistory();
+  saveState();
+  render();
+}
+
+function loadCurrentFromHistory() {
+  const match = state.history.find(h => h.colIdx === state.colIdx && h.blockIdx === state.blockIdx);
+  if (match) {
+    state.currentSets = [...match.sets];
+    state.currentMemo = match.memo || '';
+  }
+}
+
+function updateSet(idx, val) {
+  state.currentSets[idx] = val === '' ? null : parseInt(val);
+
+  // Update input styling immediately
+  const block = PROGRAM[state.blockIdx];
+  const isMax = block[idx] === null;
+  const target = isMax ? null : block[idx][state.colIdx];
+  const input = document.querySelectorAll('.set-input')[idx];
+  const valNum = val === '' ? null : parseInt(val);
+
+  input.className = 'set-input';
+  if (valNum !== null && !isMax && target !== null) {
+    input.classList.add(valNum >= target ? 'hit' : 'miss');
+  }
+
+  // Show/hide complete button
+  const allFilled = state.currentSets.every(v => v !== null && v !== '');
+  const isDone = state.completedBlocks.includes(state.blockIdx);
+  document.getElementById('btn-complete').style.display = (allFilled && !isDone) ? 'block' : 'none';
+
+  saveState();
+}
+
+function saveWorkout() {
+  if (state.colIdx < 0) return;
+
+  const sets = state.currentSets.map(v => (v !== null && v !== '') ? parseInt(v) : 0);
+  const total = sets.reduce((a,b) => a+b, 0);
+  const memo = document.getElementById('memo').value;
+  state.currentMemo = memo;
+
+  const now = new Date();
+  const date = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+  // Check if already saved for this block
+  const existIdx = state.history.findIndex(h => h.colIdx === state.colIdx && h.blockIdx === state.blockIdx);
+
+  const record = {
+    date,
+    colIdx: state.colIdx,
+    blockIdx: state.blockIdx,
+    sets,
+    memo,
+    total,
+    completed: state.completedBlocks.includes(state.blockIdx)
+  };
+
+  if (existIdx >= 0) {
+    record.completed = state.history[existIdx].completed;
+    state.history[existIdx] = record;
+  } else {
+    state.history.push(record);
+  }
+
+  saveState();
+  render();
+  showToast('저장 완료! 💪');
+}
+
+function completeBlock() {
+  if (!state.completedBlocks.includes(state.blockIdx)) {
+    state.completedBlocks.push(state.blockIdx);
+
+    // Also update history record
+    const existIdx = state.history.findIndex(h => h.colIdx === state.colIdx && h.blockIdx === state.blockIdx);
+    if (existIdx >= 0) {
+      state.history[existIdx].completed = true;
+    } else {
+      saveWorkout();
+      const newIdx = state.history.findIndex(h => h.colIdx === state.colIdx && h.blockIdx === state.blockIdx);
+      if (newIdx >= 0) state.history[newIdx].completed = true;
+    }
+
+    // Check if all 6 blocks done
+    if (state.completedBlocks.length >= 6) {
+      if (!state.completedColumns.includes(state.colIdx)) {
+        state.completedColumns.push(state.colIdx);
+      }
+      showToast(`🎉 Column "${COLUMNS[state.colIdx]}" 완료! 다음 Column으로!`);
+    } else {
+      // Move to next incomplete block
+      for (let i = 0; i < 6; i++) {
+        if (!state.completedBlocks.includes(i)) {
+          state.blockIdx = i;
+          state.currentSets = [null,null,null,null,null];
+          state.currentMemo = '';
+          break;
+        }
+      }
+      showToast(`블록 완료! 다음 Block으로 이동 🔥`);
+    }
+
+    saveState();
+    render();
+  }
+}
+
+function exportCSV() {
+  if (state.history.length === 0) {
+    showToast('내보낼 기록이 없습니다');
+    return;
+  }
+
+  const header = 'Date,Column,Block,Set1,Set2,Set3,Set4,Set5(MAX),Total,Memo';
+  const rows = state.history.map(h =>
+    `"${h.date}","${COLUMNS[h.colIdx]}","Block ${h.blockIdx+1}",${h.sets.join(',')},${h.total},"${(h.memo||'').replace(/"/g,'""')}"`
+  );
+
+  const csv = [header, ...rows].join('\n');
+  const blob = new Blob(['\uFEFF' + csv], {type: 'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `pushup100_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('CSV 내보내기 완료 📥');
+}
+
+function showResetModal() {
+  document.getElementById('reset-modal').classList.add('open');
+}
+
+function closeResetModal() {
+  document.getElementById('reset-modal').classList.remove('open');
+}
+
+function resetAll() {
+  state = defaultState();
+  saveState();
+  closeResetModal();
+  render();
+  showToast('초기화 완료');
+}
+
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+// ===== INIT =====
+render();
+</script>
+</body>
+</html>
