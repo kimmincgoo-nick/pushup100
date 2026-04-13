@@ -294,6 +294,16 @@ body { font-family:'Space Grotesk',sans-serif; background:var(--bg); color:var(-
     </div>
   </div>
 </div>
+<div class="modal-overlay" id="delete-modal">
+  <div class="modal">
+    <h3>프로그램 삭제</h3>
+    <p>정말 삭제하시겠습니까? 삭제된 프로그램은 복구할 수 없습니다.</p>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="closeDeleteModal()">취소</button>
+      <button class="btn btn-primary" style="background:var(--danger);" onclick="confirmDelete()">삭제</button>
+    </div>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -566,13 +576,23 @@ function showArchiveModal(){
 }
 function closeArchiveModal(){document.getElementById('archive-modal').classList.remove('open');}
 
+let pendingDeleteIdx=null;
 function deleteArchive(idx){
+  pendingDeleteIdx=idx;
+  closeArchiveModal();
+  document.getElementById('delete-modal').classList.add('open');
+}
+function closeDeleteModal(){document.getElementById('delete-modal').classList.remove('open');showArchiveModal();}
+function confirmDelete(){
   const archives=getArchives();
-  if(idx<0||idx>=archives.length)return;
-  archives.splice(idx,1);
-  saveArchives(archives);
-  showArchiveModal(); // refresh list
-  showToast('삭제 완료');
+  if(pendingDeleteIdx!==null&&pendingDeleteIdx>=0&&pendingDeleteIdx<archives.length){
+    archives.splice(pendingDeleteIdx,1);
+    saveArchives(archives);
+    showToast('삭제 완료');
+  }
+  pendingDeleteIdx=null;
+  document.getElementById('delete-modal').classList.remove('open');
+  showArchiveModal();
 }
 
 function confirmRestore(idx){
