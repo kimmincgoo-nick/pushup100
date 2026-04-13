@@ -79,103 +79,19 @@ body {
   font-weight: 400;
 }
 
-/* ===== ESTIMATED MAX CARD ===== */
-.max-card {
-  background: linear-gradient(135deg, var(--bg2), var(--bg3));
-  border: 1px solid var(--border2);
-  border-radius: var(--radius);
-  padding: 24px 20px;
-  margin: 24px 0 16px;
-  text-align: center;
-  position: relative;
-}
-
-.max-card .max-label {
-  font-size: 12px;
-  color: var(--text3);
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  margin-bottom: 8px;
-}
-
-.max-card .max-value {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 48px;
-  font-weight: 700;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  line-height: 1.1;
-  cursor: pointer;
-}
-
-.max-card .max-value:hover {
-  opacity: 0.8;
-}
-
-.max-card .max-unit {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 16px;
-  -webkit-text-fill-color: var(--text2);
-  font-weight: 400;
-  margin-left: 4px;
-}
-
-.max-card .max-delta {
-  font-size: 13px;
-  color: var(--done);
-  margin-top: 6px;
-  font-weight: 600;
-}
-
-.max-card .max-delta.none {
-  color: var(--text3);
-  font-weight: 400;
-}
-
-.max-card .max-hint {
-  font-size: 11px;
-  color: var(--text3);
-  margin-top: 8px;
-}
-
-.max-card .max-source {
-  font-size: 11px;
-  color: var(--text3);
-  margin-top: 4px;
-  font-style: italic;
-}
-
-/* ===== MAX EDIT INLINE ===== */
-.max-edit-input {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 48px;
-  font-weight: 700;
-  background: transparent;
-  border: none;
-  border-bottom: 2px solid var(--accent);
-  color: var(--accent);
-  text-align: center;
-  width: 120px;
-  outline: none;
-  -moz-appearance: textfield;
-}
-.max-edit-input::-webkit-inner-spin-button,
-.max-edit-input::-webkit-outer-spin-button { -webkit-appearance: none; }
-
-/* ===== DASHBOARD ===== */
-.dashboard {
+/* ===== STAT GRID (2x2) ===== */
+.stat-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
-  margin: 0 0 16px;
+  margin: 24px 0 16px;
 }
 
 .stat-card {
   background: var(--bg2);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 16px 12px;
+  padding: 16px 14px;
   text-align: center;
 }
 
@@ -189,7 +105,7 @@ body {
 
 .stat-card .value {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 600;
   color: var(--accent);
 }
@@ -197,6 +113,43 @@ body {
 .stat-card .value.blue { color: var(--active); }
 .stat-card .value.green { color: var(--done); }
 
+.stat-card .sub-text {
+  font-size: 12px;
+  color: var(--done);
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+.stat-card .sub-text.none {
+  color: var(--text3);
+  font-weight: 400;
+}
+
+/* ===== INITIAL MAX INPUT ===== */
+.initial-input {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  border-bottom: 2px dashed var(--border2);
+  color: var(--active);
+  text-align: center;
+  width: 70px;
+  outline: none;
+  padding: 2px 0;
+  -moz-appearance: textfield;
+  transition: border-color 0.2s;
+}
+.initial-input:focus {
+  border-bottom-color: var(--active);
+  border-bottom-style: solid;
+}
+.initial-input::-webkit-inner-spin-button,
+.initial-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+.initial-input::placeholder { color: var(--text3); font-size: 16px; }
+
+/* ===== PROGRESS ===== */
 .progress-wrap {
   margin: 0 0 24px;
   background: var(--bg2);
@@ -237,32 +190,6 @@ body {
   text-transform: uppercase;
   letter-spacing: 1px;
 }
-
-/* ===== COLUMN SELECTOR ===== */
-.col-selector {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-bottom: 24px;
-}
-
-.col-btn {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 12px 8px;
-  color: var(--text2);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-  text-align: center;
-}
-
-.col-btn:hover { border-color: var(--active); color: var(--text); }
-.col-btn.active { background: var(--active); border-color: var(--active); color: #fff; }
-.col-btn.completed { background: var(--done); border-color: var(--done); color: #fff; opacity: 0.8; }
 
 /* ===== WEEK TABS ===== */
 .week-tabs {
@@ -352,9 +279,7 @@ body {
   margin-bottom: 16px;
 }
 
-.set-item {
-  text-align: center;
-}
+.set-item { text-align: center; }
 
 .set-label {
   font-size: 11px;
@@ -420,11 +345,7 @@ body {
 .memo-area::placeholder { color: var(--text3); }
 
 /* ===== BUTTONS ===== */
-.btn-row {
-  display: flex;
-  gap: 10px;
-  margin-top: 16px;
-}
+.btn-row { display: flex; gap: 10px; margin-top: 16px; }
 
 .btn {
   flex: 1;
@@ -438,34 +359,15 @@ body {
   transition: all 0.2s;
 }
 
-.btn-primary {
-  background: var(--accent);
-  color: #fff;
-}
+.btn-primary { background: var(--accent); color: #fff; }
 .btn-primary:hover { background: var(--accent2); }
-
-.btn-secondary {
-  background: var(--bg3);
-  color: var(--text2);
-  border: 1px solid var(--border);
-}
+.btn-secondary { background: var(--bg3); color: var(--text2); border: 1px solid var(--border); }
 .btn-secondary:hover { background: var(--bg4); color: var(--text); }
-
-.btn-done {
-  background: var(--done);
-  color: #fff;
-}
-
-.btn-sm {
-  padding: 10px 16px;
-  font-size: 13px;
-  flex: unset;
-}
+.btn-done { background: var(--done); color: #fff; }
+.btn-sm { padding: 10px 16px; font-size: 13px; flex: unset; }
 
 /* ===== HISTORY ===== */
-.history-section {
-  margin-top: 32px;
-}
+.history-section { margin-top: 32px; }
 
 .history-item {
   background: var(--bg2);
@@ -479,105 +381,77 @@ body {
   font-size: 13px;
 }
 
-.history-item .date {
-  color: var(--text3);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-}
+.history-item .date { color: var(--text3); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+.history-item .info { color: var(--text2); }
+.history-item .info strong { color: var(--text); }
+.history-item .total { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-weight: 600; }
 
-.history-item .info {
-  color: var(--text2);
-}
+.empty-state { text-align: center; padding: 40px 20px; color: var(--text3); font-size: 14px; }
 
-.history-item .info strong {
-  color: var(--text);
-}
-
-.history-item .total {
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--accent);
-  font-weight: 600;
-}
-
-.empty-state {
-  text-align: center;
-  padding: 40px 20px;
-  color: var(--text3);
-  font-size: 14px;
-}
-
-/* ===== FOOTER ACTIONS ===== */
-.footer-actions {
-  margin-top: 24px;
-  display: flex;
-  gap: 10px;
-}
+/* ===== FOOTER ===== */
+.footer-actions { margin-top: 24px; display: flex; gap: 10px; }
 
 /* ===== TOAST ===== */
 .toast {
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
+  position: fixed; bottom: 24px; left: 50%;
   transform: translateX(-50%) translateY(100px);
-  background: var(--done);
-  color: #fff;
-  padding: 12px 24px;
-  border-radius: var(--radius);
-  font-size: 14px;
-  font-weight: 600;
-  z-index: 999;
+  background: var(--done); color: #fff;
+  padding: 12px 24px; border-radius: var(--radius);
+  font-size: 14px; font-weight: 600; z-index: 999;
   transition: transform 0.3s ease;
   box-shadow: 0 8px 24px rgba(46,204,113,0.3);
 }
-
 .toast.show { transform: translateX(-50%) translateY(0); }
 
 /* ===== MODAL ===== */
 .modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  z-index: 1000;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+  position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+  z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px;
 }
-
 .modal-overlay.open { display: flex; }
-
 .modal {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 24px;
-  max-width: 400px;
-  width: 100%;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 24px; max-width: 400px; width: 100%;
 }
+.modal h3 { font-size: 18px; margin-bottom: 12px; }
+.modal p { font-size: 14px; color: var(--text2); margin-bottom: 20px; line-height: 1.5; }
 
-.modal h3 {
-  font-size: 18px;
-  margin-bottom: 12px;
+/* ===== ONBOARDING ===== */
+.onboard-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+  z-index: 1001; display: none; align-items: center; justify-content: center; padding: 20px;
 }
-
-.modal p {
-  font-size: 14px;
-  color: var(--text2);
-  margin-bottom: 20px;
-  line-height: 1.5;
+.onboard-overlay.open { display: flex; }
+.onboard-card {
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: var(--radius); padding: 32px 24px; max-width: 380px; width: 100%; text-align: center;
 }
+.onboard-card h2 {
+  font-size: 20px; font-weight: 700; margin-bottom: 8px;
+  background: linear-gradient(135deg, var(--accent), var(--active));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.onboard-card p { font-size: 14px; color: var(--text2); margin-bottom: 24px; line-height: 1.5; }
+.onboard-input {
+  font-family: 'JetBrains Mono', monospace; font-size: 40px; font-weight: 700;
+  background: var(--bg); border: 2px solid var(--border2); border-radius: var(--radius-sm);
+  color: var(--accent); text-align: center; width: 140px; padding: 12px; outline: none;
+  -moz-appearance: textfield;
+}
+.onboard-input:focus { border-color: var(--active); }
+.onboard-input::-webkit-inner-spin-button,
+.onboard-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+.onboard-unit { font-size: 18px; color: var(--text2); margin-left: 8px; }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 480px) {
-  .col-selector { grid-template-columns: repeat(3, 1fr); }
   .sets-grid { gap: 6px; }
   .set-input { padding: 8px 2px; font-size: 14px; }
   .set-target { font-size: 16px; }
-  .dashboard { gap: 6px; }
-  .stat-card { padding: 12px 8px; }
-  .stat-card .value { font-size: 18px; }
-  .max-card .max-value { font-size: 36px; }
-  .max-edit-input { font-size: 36px; width: 90px; }
+  .stat-grid { gap: 6px; }
+  .stat-card { padding: 12px 10px; }
+  .stat-card .value { font-size: 20px; }
+  .initial-input { font-size: 20px; width: 60px; }
 }
 </style>
 </head>
@@ -590,19 +464,8 @@ body {
     <p>USNA 6-Week Program by CAPT Mike Prevost, USN</p>
   </div>
 
-  <!-- Estimated Max Card -->
-  <div class="max-card" id="max-card">
-    <div class="max-label">추정 최대 푸쉬업</div>
-    <div id="max-display">
-      <span class="max-value" id="max-value" onclick="startEditMax()">-<span class="max-unit">개</span></span>
-    </div>
-    <div class="max-delta none" id="max-delta">아직 데이터가 없습니다</div>
-    <div class="max-hint" id="max-hint">숫자를 탭하면 직접 수정할 수 있습니다</div>
-    <div class="max-source" id="max-source"></div>
-  </div>
-
-  <!-- Dashboard -->
-  <div class="dashboard">
+  <!-- Stat Grid 2x2 -->
+  <div class="stat-grid">
     <div class="stat-card">
       <div class="label">진행 주차</div>
       <div class="value blue" id="stat-week">0/6</div>
@@ -612,11 +475,23 @@ body {
       <div class="value" id="stat-total">0</div>
     </div>
     <div class="stat-card">
-      <div class="label">운동 횟수</div>
-      <div class="value green" id="stat-sessions">0</div>
+      <div class="label">최초 측정</div>
+      <div id="initial-display">
+        <input type="number" class="initial-input" id="initial-input"
+          placeholder="?" min="0" inputmode="numeric"
+          onchange="updateInitialMax(this.value)"
+          onkeydown="if(event.key==='Enter')this.blur()">
+        <span style="font-size:13px;color:var(--text3)">개</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="label">추정 최대</div>
+      <div class="value green" id="stat-estimated">-</div>
+      <div class="sub-text none" id="stat-delta"></div>
     </div>
   </div>
 
+  <!-- Progress -->
   <div class="progress-wrap">
     <div class="label">
       <span>6주 프로그램 진행률</span>
@@ -626,10 +501,6 @@ body {
       <div class="progress-fill" id="progress-fill" style="width:0%"></div>
     </div>
   </div>
-
-  <!-- Column Selector -->
-  <div class="section-title">현재 최대 푸쉬업 개수</div>
-  <div class="col-selector" id="col-selector"></div>
 
   <!-- Week Tabs -->
   <div class="section-title">주차 선택</div>
@@ -644,20 +515,17 @@ body {
       <div class="workout-title" id="workout-title">Week 1 · Day 1</div>
       <div class="rest-badge">세트 간 휴식 30-60초</div>
     </div>
-
     <div class="sets-grid" id="sets-grid"></div>
-
     <textarea class="memo-area" id="memo" placeholder="오늘의 컨디션, 특이사항 메모..."></textarea>
-
     <div class="btn-row">
       <button class="btn btn-primary" id="btn-save" onclick="saveWorkout()">저장</button>
       <button class="btn btn-done" id="btn-complete" onclick="completeDay()" style="display:none;">Day 완료</button>
     </div>
   </div>
 
-  <!-- No Column Selected -->
+  <!-- No Initial Max -->
   <div class="empty-state" id="empty-state">
-    위에서 현재 최대 푸쉬업 개수를 선택하세요
+    최초 측정 푸쉬업 개수를 입력하면 프로그램이 시작됩니다
   </div>
 
   <!-- History -->
@@ -693,14 +561,8 @@ body {
 <script>
 // ===== PROGRAM DATA =====
 const COLUMNS = ['< 6','6-10','11-20','21-25','26-35','36-50','50-75','75-100','> 100'];
+const COL_BOUNDS = [[0,5],[6,10],[11,20],[21,25],[26,35],[36,50],[51,75],[76,100],[101,999]];
 
-// Column boundaries: [min, max] for each column index
-const COL_BOUNDS = [
-  [0, 5], [6, 10], [11, 20], [21, 25], [26, 35],
-  [36, 50], [51, 75], [76, 100], [101, 999]
-];
-
-// PROGRAM[week][set] = array of 9 column values, or null for MAX
 const PROGRAM = [
   [[2,6,10,12,14,25,35,45,55],[3,6,12,17,18,30,40,55,65],[2,4,7,13,14,25,30,35,35],[2,4,7,13,14,25,24,30,30],null],
   [[3,6,10,13,15,26,36,46,56],[4,8,12,18,19,31,41,56,66],[2,6,8,14,15,26,31,36,36],[3,6,8,14,15,26,25,31,31],null],
@@ -714,11 +576,10 @@ const DAY_LABELS = ['Day 1', 'Day 2', 'Day 3'];
 
 // ===== STATE =====
 let state = loadState();
-let isEditingMax = false;
 
 function defaultState() {
   return {
-    colIdx: -1,
+    initialMax: null,   // user's initial test result
     weekIdx: 0,
     dayIdx: 0,
     completedDays: {},
@@ -726,17 +587,16 @@ function defaultState() {
     history: [],
     currentSets: [null,null,null,null,null],
     currentMemo: '',
-    manualMax: null,  // user override, null = use auto estimate
-    weekEstimates: {} // { weekIdx: estimatedMax } - auto-calculated per completed week
+    weekEstimates: {}
   };
 }
 
 function loadState() {
   try {
-    const s = JSON.parse(localStorage.getItem('pushup100_v2'));
-    if (s && s.history !== undefined && s.completedDays !== undefined) {
+    const s = JSON.parse(localStorage.getItem('pushup100_v3'));
+    if (s && s.history !== undefined) {
       if (!s.weekEstimates) s.weekEstimates = {};
-      if (s.manualMax === undefined) s.manualMax = null;
+      if (s.initialMax === undefined) s.initialMax = null;
       return s;
     }
   } catch(e) {}
@@ -744,7 +604,7 @@ function loadState() {
 }
 
 function saveState() {
-  localStorage.setItem('pushup100_v2', JSON.stringify(state));
+  localStorage.setItem('pushup100_v3', JSON.stringify(state));
 }
 
 function getCompletedDays(weekIdx) {
@@ -764,8 +624,6 @@ function countCompletedWeeks() {
 }
 
 // ===== ESTIMATION =====
-// Estimate fresh max from a single workout's sets
-// Formula: Set5(MAX) + (Set1+Set2+Set3+Set4) * 0.3
 function estimateFromSets(sets) {
   if (!sets || sets.length < 5) return null;
   const s5 = sets[4];
@@ -774,16 +632,13 @@ function estimateFromSets(sets) {
   return Math.round(s5 + priorVol * 0.3);
 }
 
-// Calculate estimate for a completed week (max of 3 days' estimates)
 function calcWeekEstimate(weekIdx) {
   if (!isWeekComplete(weekIdx)) return null;
-
+  const colIdx = getColIdxForWeek(weekIdx);
   const weekHistory = state.history.filter(h =>
-    h.colIdx === state.colIdx && h.weekIdx === weekIdx && h.completed
+    h.weekIdx === weekIdx && h.completed && h.colIdx === colIdx
   );
-
   if (weekHistory.length < 3) return null;
-
   let maxEst = 0;
   for (const h of weekHistory) {
     const est = estimateFromSets(h.sets);
@@ -792,204 +647,124 @@ function calcWeekEstimate(weekIdx) {
   return maxEst > 0 ? maxEst : null;
 }
 
-// Recalculate all week estimates (called after state changes)
 function recalcAllEstimates() {
   for (let w = 0; w < 6; w++) {
     if (isWeekComplete(w)) {
       const est = calcWeekEstimate(w);
-      if (est !== null) {
-        state.weekEstimates[w] = est;
-      }
+      if (est !== null) state.weekEstimates[w] = est;
     }
   }
 }
 
-// Get the current estimated max (monotonically increasing across weeks)
+// Get estimated max: monotonically increasing, floored by initialMax
 function getCurrentEstimatedMax() {
-  let runningMax = 0;
+  if (state.initialMax === null) return null;
+  let runningMax = state.initialMax;
   for (let w = 0; w < 6; w++) {
     const est = state.weekEstimates[w];
-    if (est !== undefined && est > runningMax) {
-      runningMax = est;
-    }
+    if (est !== undefined && est > runningMax) runningMax = est;
   }
-  return runningMax > 0 ? runningMax : null;
+  return runningMax;
 }
 
-// Get the latest completed week's index
-function getLatestCompletedWeek() {
-  for (let w = 5; w >= 0; w--) {
-    if (state.weekEstimates[w] !== undefined) return w;
-  }
-  return -1;
-}
-
-// Get estimate for a specific week (with monotonic floor from previous weeks)
-function getMonotonicEstimate(weekIdx) {
-  let runningMax = 0;
-  for (let w = 0; w <= weekIdx; w++) {
+// Get the effective max for a specific week (for column assignment)
+function getMaxForWeek(weekIdx) {
+  if (state.initialMax === null) return null;
+  let runningMax = state.initialMax;
+  // Use estimates from weeks BEFORE this one
+  for (let w = 0; w < weekIdx; w++) {
     const est = state.weekEstimates[w];
-    if (est !== undefined && est > runningMax) {
-      runningMax = est;
-    }
+    if (est !== undefined && est > runningMax) runningMax = est;
   }
-  return runningMax > 0 ? runningMax : null;
+  return runningMax;
 }
 
-// Get previous week's running max (for delta calculation)
-function getPreviousWeekMax() {
-  const latestWeek = getLatestCompletedWeek();
-  if (latestWeek <= 0) return null;
-
-  let runningMax = 0;
-  for (let w = 0; w < latestWeek; w++) {
-    const est = state.weekEstimates[w];
-    if (est !== undefined && est > runningMax) {
-      runningMax = est;
-    }
-  }
-  return runningMax > 0 ? runningMax : null;
-}
-
-// Get the effective max (manual override or auto estimate)
-function getEffectiveMax() {
-  if (state.manualMax !== null) return state.manualMax;
-  return getCurrentEstimatedMax();
-}
-
-// Map estimated max to column index
+// Map max to column index
 function maxToColIdx(max) {
   if (max === null) return -1;
   for (let i = 0; i < COL_BOUNDS.length; i++) {
     if (max >= COL_BOUNDS[i][0] && max <= COL_BOUNDS[i][1]) return i;
   }
-  return 8; // > 100
+  return 8;
+}
+
+// Get column index for a specific week
+function getColIdxForWeek(weekIdx) {
+  return maxToColIdx(getMaxForWeek(weekIdx));
+}
+
+// Get current column index (for active week)
+function getCurrentColIdx() {
+  return getColIdxForWeek(state.weekIdx);
 }
 
 // ===== RENDER =====
 function render() {
-  renderMaxCard();
-  renderColumnSelector();
+  renderStats();
   renderWeekTabs();
   renderDayTabs();
   renderWorkout();
-  renderDashboard();
+  renderProgress();
   renderHistory();
 }
 
-function renderMaxCard() {
-  const display = document.getElementById('max-display');
-  const deltaEl = document.getElementById('max-delta');
-  const hintEl = document.getElementById('max-hint');
-  const sourceEl = document.getElementById('max-source');
+function renderStats() {
+  // Week progress
+  document.getElementById('stat-week').textContent = `${countCompletedWeeks()}/6`;
 
-  if (isEditingMax) return; // don't re-render while editing
+  // Total pushups
+  const totalPushups = state.history.reduce((sum, h) => sum + (h.total || 0), 0);
+  document.getElementById('stat-total').textContent = totalPushups.toLocaleString();
 
-  const autoMax = getCurrentEstimatedMax();
-  const effectiveMax = getEffectiveMax();
-  const prevMax = getPreviousWeekMax();
+  // Initial max input
+  const input = document.getElementById('initial-input');
+  if (state.initialMax !== null && input !== document.activeElement) {
+    input.value = state.initialMax;
+  }
 
-  if (effectiveMax !== null) {
-    display.innerHTML = `<span class="max-value" onclick="startEditMax()">${effectiveMax}<span class="max-unit">개</span></span>`;
+  // Estimated max
+  const estEl = document.getElementById('stat-estimated');
+  const deltaEl = document.getElementById('stat-delta');
+  const estimated = getCurrentEstimatedMax();
 
-    if (prevMax !== null && effectiveMax > prevMax) {
-      const delta = effectiveMax - prevMax;
-      deltaEl.className = 'max-delta';
-      deltaEl.textContent = `지난주 대비 +${delta}개`;
-    } else if (prevMax !== null) {
-      deltaEl.className = 'max-delta none';
-      deltaEl.textContent = '지난주와 동일';
+  if (estimated !== null) {
+    estEl.textContent = estimated;
+
+    if (state.initialMax !== null && estimated > state.initialMax) {
+      const delta = estimated - state.initialMax;
+      deltaEl.className = 'sub-text';
+      deltaEl.textContent = `최초 대비 +${delta}개`;
     } else {
-      deltaEl.className = 'max-delta none';
-      deltaEl.textContent = '첫 번째 주 완료 기준';
-    }
-
-    hintEl.textContent = '숫자를 탭하면 직접 수정할 수 있습니다';
-
-    if (state.manualMax !== null) {
-      sourceEl.textContent = `직접 설정값 (자동 추정: ${autoMax !== null ? autoMax + '개' : '데이터 없음'})`;
-    } else {
-      const latestWeek = getLatestCompletedWeek();
-      sourceEl.textContent = latestWeek >= 0 ? `Week ${latestWeek + 1} 완료 기준 자동 추정` : '';
+      deltaEl.className = 'sub-text none';
+      deltaEl.textContent = '최초 측정과 동일';
     }
   } else {
-    display.innerHTML = `<span class="max-value" onclick="startEditMax()">-<span class="max-unit">개</span></span>`;
-    deltaEl.className = 'max-delta none';
-    deltaEl.textContent = '한 주(3일)를 완료하면 자동으로 추정됩니다';
-    hintEl.textContent = '숫자를 탭하면 직접 입력할 수 있습니다';
-    sourceEl.textContent = '';
+    estEl.textContent = '-';
+    deltaEl.className = 'sub-text none';
+    deltaEl.textContent = '';
   }
-}
-
-function startEditMax() {
-  isEditingMax = true;
-  const display = document.getElementById('max-display');
-  const current = getEffectiveMax();
-  display.innerHTML = `
-    <input type="number" class="max-edit-input" id="max-edit-input"
-      value="${current !== null ? current : ''}"
-      placeholder="0" min="0" inputmode="numeric"
-      onkeydown="if(event.key==='Enter')finishEditMax()">
-    <div style="margin-top:10px;display:flex;gap:8px;justify-content:center;">
-      <button class="btn btn-primary btn-sm" onclick="finishEditMax()">확인</button>
-      <button class="btn btn-secondary btn-sm" onclick="cancelEditMax()">취소</button>
-      ${state.manualMax !== null ? '<button class="btn btn-secondary btn-sm" onclick="resetToAuto()">자동으로</button>' : ''}
-    </div>
-  `;
-  const input = document.getElementById('max-edit-input');
-  input.focus();
-  input.select();
-}
-
-function finishEditMax() {
-  const input = document.getElementById('max-edit-input');
-  const val = parseInt(input.value);
-  if (!isNaN(val) && val > 0) {
-    state.manualMax = val;
-    saveState();
-    showToast(`최대 푸쉬업: ${val}개로 설정`);
-  }
-  isEditingMax = false;
-  render();
-}
-
-function cancelEditMax() {
-  isEditingMax = false;
-  render();
-}
-
-function resetToAuto() {
-  state.manualMax = null;
-  saveState();
-  isEditingMax = false;
-  showToast('자동 추정으로 전환');
-  render();
-}
-
-function renderColumnSelector() {
-  const el = document.getElementById('col-selector');
-  el.innerHTML = COLUMNS.map((label, i) => {
-    let cls = 'col-btn';
-    if (state.completedColumns.includes(i)) cls += ' completed';
-    if (i === state.colIdx) cls += ' active';
-    return `<button class="${cls}" onclick="selectColumn(${i})">${label}</button>`;
-  }).join('');
 }
 
 function renderWeekTabs() {
   const el = document.getElementById('week-tabs');
-  if (state.colIdx < 0) { el.innerHTML = ''; return; }
+  if (state.initialMax === null) { el.innerHTML = ''; return; }
+
   el.innerHTML = Array.from({length:6}, (_, i) => {
     let cls = 'week-tab';
     if (isWeekComplete(i)) cls += ' done';
     if (i === state.weekIdx) cls += ' active';
-    return `<button class="${cls}" onclick="selectWeek(${i})">W${i+1}</button>`;
+    const colIdx = getColIdxForWeek(i);
+    const colLabel = colIdx >= 0 ? COLUMNS[colIdx] : '';
+    return `<button class="${cls}" onclick="selectWeek(${i})">
+      <div>W${i+1}</div>
+      <div style="font-size:10px;opacity:0.7;margin-top:2px">${colLabel}</div>
+    </button>`;
   }).join('');
 }
 
 function renderDayTabs() {
   const el = document.getElementById('day-tabs');
-  if (state.colIdx < 0) { el.innerHTML = ''; return; }
+  if (state.initialMax === null) { el.innerHTML = ''; return; }
   const days = getCompletedDays(state.weekIdx);
   el.innerHTML = DAY_LABELS.map((label, i) => {
     let cls = 'day-tab';
@@ -1002,24 +777,28 @@ function renderDayTabs() {
 function renderWorkout() {
   const card = document.getElementById('workout-card');
   const empty = document.getElementById('empty-state');
+  const colIdx = getCurrentColIdx();
 
-  if (state.colIdx < 0) {
+  if (state.initialMax === null || colIdx < 0) {
     card.style.display = 'none';
     empty.style.display = 'block';
+    empty.textContent = state.initialMax === null
+      ? '최초 측정 푸쉬업 개수를 입력하면 프로그램이 시작됩니다'
+      : '데이터를 불러오는 중...';
     return;
   }
   card.style.display = 'block';
   empty.style.display = 'none';
 
   document.getElementById('workout-title').textContent =
-    `Week ${state.weekIdx+1} · ${DAY_LABELS[state.dayIdx]} · ${COLUMNS[state.colIdx]}`;
+    `Week ${state.weekIdx+1} · ${DAY_LABELS[state.dayIdx]} · ${COLUMNS[colIdx]}`;
 
   const week = PROGRAM[state.weekIdx];
   const grid = document.getElementById('sets-grid');
 
   grid.innerHTML = Array.from({length: 5}, (_, s) => {
     const isMax = week[s] === null;
-    const target = isMax ? null : week[s][state.colIdx];
+    const target = isMax ? null : week[s][colIdx];
     const val = state.currentSets[s];
     const valNum = val !== null && val !== '' ? parseInt(val) : null;
 
@@ -1048,16 +827,7 @@ function renderWorkout() {
   document.getElementById('btn-save').textContent = isDone ? '수정 저장' : '저장';
 }
 
-function renderDashboard() {
-  const completedWeeks = countCompletedWeeks();
-  document.getElementById('stat-week').textContent = `${completedWeeks}/6`;
-
-  const totalPushups = state.history.reduce((sum, h) => sum + (h.total || 0), 0);
-  document.getElementById('stat-total').textContent = totalPushups.toLocaleString();
-
-  const totalSessions = state.history.filter(h => h.completed).length;
-  document.getElementById('stat-sessions').textContent = totalSessions;
-
+function renderProgress() {
   let totalCompletedDays = 0;
   for (let w = 0; w < 6; w++) {
     totalCompletedDays += getCompletedDays(w).length;
@@ -1090,30 +860,20 @@ function renderHistory() {
 }
 
 // ===== ACTIONS =====
-function selectColumn(idx) {
-  if (state.colIdx !== idx) {
-    state.colIdx = idx;
-    state.weekIdx = 0;
-    state.dayIdx = 0;
-    state.completedDays = {};
-    state.weekEstimates = {};
-    state.currentSets = [null,null,null,null,null];
-    state.currentMemo = '';
-
-    const colHistory = state.history.filter(h => h.colIdx === idx && h.completed);
-    colHistory.forEach(h => {
-      if (!state.completedDays[h.weekIdx]) state.completedDays[h.weekIdx] = [];
-      if (!state.completedDays[h.weekIdx].includes(h.dayIdx)) {
-        state.completedDays[h.weekIdx].push(h.dayIdx);
-      }
-    });
-
+function updateInitialMax(val) {
+  const num = parseInt(val);
+  if (!isNaN(num) && num > 0) {
+    state.initialMax = num;
     recalcAllEstimates();
     findNextIncomplete();
-    loadCurrentFromHistory();
     saveState();
+    render();
+    showToast(`최초 측정: ${num}개`);
+  } else if (val === '') {
+    state.initialMax = null;
+    saveState();
+    render();
   }
-  render();
 }
 
 function selectWeek(idx) {
@@ -1154,8 +914,9 @@ function findNextIncomplete() {
 }
 
 function loadCurrentFromHistory() {
+  const colIdx = getCurrentColIdx();
   const match = state.history.find(h =>
-    h.colIdx === state.colIdx && h.weekIdx === state.weekIdx && h.dayIdx === state.dayIdx
+    h.colIdx === colIdx && h.weekIdx === state.weekIdx && h.dayIdx === state.dayIdx
   );
   if (match) {
     state.currentSets = [...match.sets];
@@ -1166,9 +927,10 @@ function loadCurrentFromHistory() {
 function updateSet(idx, val) {
   state.currentSets[idx] = val === '' ? null : parseInt(val);
 
+  const colIdx = getCurrentColIdx();
   const week = PROGRAM[state.weekIdx];
   const isMax = week[idx] === null;
-  const target = isMax ? null : week[idx][state.colIdx];
+  const target = isMax ? null : week[idx][colIdx];
   const input = document.querySelectorAll('.set-input')[idx];
   const valNum = val === '' ? null : parseInt(val);
 
@@ -1185,7 +947,8 @@ function updateSet(idx, val) {
 }
 
 function saveWorkout() {
-  if (state.colIdx < 0) return;
+  const colIdx = getCurrentColIdx();
+  if (colIdx < 0) return;
 
   const sets = state.currentSets.map(v => (v !== null && v !== '') ? parseInt(v) : 0);
   const total = sets.reduce((a,b) => a+b, 0);
@@ -1196,17 +959,13 @@ function saveWorkout() {
   const date = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
 
   const existIdx = state.history.findIndex(h =>
-    h.colIdx === state.colIdx && h.weekIdx === state.weekIdx && h.dayIdx === state.dayIdx
+    h.colIdx === colIdx && h.weekIdx === state.weekIdx && h.dayIdx === state.dayIdx
   );
 
   const record = {
-    date,
-    colIdx: state.colIdx,
-    weekIdx: state.weekIdx,
-    dayIdx: state.dayIdx,
-    sets,
-    memo,
-    total,
+    date, colIdx,
+    weekIdx: state.weekIdx, dayIdx: state.dayIdx,
+    sets, memo, total,
     completed: getCompletedDays(state.weekIdx).includes(state.dayIdx)
   };
 
@@ -1217,47 +976,40 @@ function saveWorkout() {
     state.history.push(record);
   }
 
-  // Recalculate estimates if this week is complete
   recalcAllEstimates();
-
   saveState();
   render();
   showToast('저장 완료!');
 }
 
 function completeDay() {
+  const colIdx = getCurrentColIdx();
   const days = getCompletedDays(state.weekIdx);
   if (!days.includes(state.dayIdx)) {
     if (!state.completedDays[state.weekIdx]) state.completedDays[state.weekIdx] = [];
     state.completedDays[state.weekIdx].push(state.dayIdx);
 
     const existIdx = state.history.findIndex(h =>
-      h.colIdx === state.colIdx && h.weekIdx === state.weekIdx && h.dayIdx === state.dayIdx
+      h.colIdx === colIdx && h.weekIdx === state.weekIdx && h.dayIdx === state.dayIdx
     );
     if (existIdx >= 0) {
       state.history[existIdx].completed = true;
     } else {
       saveWorkout();
       const newIdx = state.history.findIndex(h =>
-        h.colIdx === state.colIdx && h.weekIdx === state.weekIdx && h.dayIdx === state.dayIdx
+        h.colIdx === colIdx && h.weekIdx === state.weekIdx && h.dayIdx === state.dayIdx
       );
       if (newIdx >= 0) state.history[newIdx].completed = true;
     }
 
-    // Recalculate estimates
     recalcAllEstimates();
 
     if (isWeekComplete(state.weekIdx)) {
-      const weekEst = getMonotonicEstimate(state.weekIdx);
-      if (weekEst) {
-        showToast(`Week ${state.weekIdx+1} 완료! 추정 Max: ${weekEst}개`);
-      }
-
+      const est = getCurrentEstimatedMax();
       if (countCompletedWeeks() >= 6) {
-        if (!state.completedColumns.includes(state.colIdx)) {
-          state.completedColumns.push(state.colIdx);
-        }
+        showToast(`6주 프로그램 완료! 추정 Max: ${est}개`);
       } else {
+        showToast(`Week ${state.weekIdx+1} 완료! 추정 Max: ${est}개`);
         findNextIncomplete();
         state.currentSets = [null,null,null,null,null];
         state.currentMemo = '';
@@ -1283,39 +1035,28 @@ function completeDay() {
 }
 
 function exportCSV() {
-  if (state.history.length === 0) {
-    showToast('내보낼 기록이 없습니다');
-    return;
-  }
-
+  if (state.history.length === 0) { showToast('내보낼 기록이 없습니다'); return; }
   const header = 'Date,Column,Week,Day,Set1,Set2,Set3,Set4,Set5(MAX),Total,Memo';
   const rows = state.history.map(h =>
     `"${h.date}","${COLUMNS[h.colIdx]}","Week ${h.weekIdx+1}","${DAY_LABELS[h.dayIdx]}",${h.sets.join(',')},${h.total},"${(h.memo||'').replace(/"/g,'""')}"`
   );
-
   const csv = [header, ...rows].join('\n');
   const blob = new Blob(['\uFEFF' + csv], {type: 'text/csv;charset=utf-8;'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url;
-  a.download = `pushup100_${new Date().toISOString().slice(0,10)}.csv`;
-  a.click();
-  URL.revokeObjectURL(url);
+  a.href = url; a.download = `pushup100_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click(); URL.revokeObjectURL(url);
   showToast('CSV 내보내기 완료');
 }
 
-function showResetModal() {
-  document.getElementById('reset-modal').classList.add('open');
-}
-
-function closeResetModal() {
-  document.getElementById('reset-modal').classList.remove('open');
-}
+function showResetModal() { document.getElementById('reset-modal').classList.add('open'); }
+function closeResetModal() { document.getElementById('reset-modal').classList.remove('open'); }
 
 function resetAll() {
   state = defaultState();
   saveState();
   closeResetModal();
+  document.getElementById('initial-input').value = '';
   render();
   showToast('초기화 완료');
 }
