@@ -279,6 +279,79 @@ body {
 .modal h3 { font-size: 18px; margin-bottom: 12px; }
 .modal p { font-size: 14px; color: var(--text2); margin-bottom: 20px; line-height: 1.5; }
 
+/* ===== START OVERLAY ===== */
+.workout-wrapper { position: relative; }
+
+.start-overlay {
+  position: absolute; inset: 0;
+  background: rgba(10,10,15,0.82);
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; z-index: 10;
+  transition: opacity 0.3s;
+}
+.start-overlay:hover { background: rgba(10,10,15,0.7); }
+.start-overlay-text {
+  font-size: 16px; font-weight: 600; color: var(--text);
+  padding: 16px 28px;
+  border: 2px solid var(--active);
+  border-radius: var(--radius);
+  background: rgba(74,142,255,0.1);
+}
+
+/* ===== TIMER MODAL ===== */
+.timer-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+  z-index: 1002; display: none; align-items: center; justify-content: center; padding: 20px;
+}
+.timer-overlay.open { display: flex; }
+.timer-card {
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: var(--radius); padding: 32px 24px;
+  max-width: 340px; width: 100%; text-align: center;
+}
+.timer-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 72px; font-weight: 700;
+  color: var(--active); line-height: 1;
+  margin: 16px 0;
+}
+.timer-value.warning { color: var(--accent); }
+.timer-value.ready { color: var(--done); font-size: 28px; }
+.timer-hint {
+  font-size: 13px; color: var(--text2); margin-bottom: 8px; line-height: 1.4;
+}
+.timer-bar-wrap {
+  width: 100%; height: 6px; background: var(--bg4);
+  border-radius: 3px; overflow: hidden; margin: 16px 0;
+}
+.timer-bar-fill {
+  height: 100%; background: var(--active);
+  border-radius: 3px; transition: width 1s linear;
+}
+.timer-bar-fill.warning { background: var(--accent); }
+
+/* ===== SET LOCKED ===== */
+.set-toggle.locked {
+  opacity: 0.3; cursor: not-allowed;
+}
+.set-toggle.locked:hover { border-color: var(--border); }
+.set-input.locked {
+  opacity: 0.3; pointer-events: none;
+}
+
+.set-item { position: relative; }
+.set-tooltip {
+  display: none;
+  position: absolute; bottom: -28px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg4); color: var(--text3);
+  font-size: 10px; white-space: nowrap;
+  padding: 4px 8px; border-radius: 4px;
+  z-index: 5;
+}
+.set-item:hover .set-tooltip { display: block; }
+
 .toast {
   position: fixed; bottom: 24px; left: 50%;
   transform: translateX(-50%) translateY(100px);
@@ -351,16 +424,22 @@ body {
   <div class="week-tabs" id="week-tabs"></div>
   <div class="day-tabs" id="day-tabs"></div>
 
-  <div class="workout-card" id="workout-card" style="display:none;">
-    <div class="workout-header">
-      <div class="workout-title" id="workout-title">Week 1 · Day 1</div>
-      <div class="rest-badge">세트 간 휴식 30-60초</div>
+  <div class="workout-wrapper" id="workout-wrapper" style="display:none;">
+    <div class="workout-card" id="workout-card">
+      <div class="workout-header">
+        <div class="workout-title" id="workout-title">Week 1 · Day 1</div>
+        <div class="rest-badge">세트 간 휴식 30-60초</div>
+      </div>
+      <div class="sets-grid" id="sets-grid"></div>
+      <textarea class="memo-area" id="memo" placeholder="오늘의 컨디션, 특이사항 메모..."></textarea>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btn-save" onclick="saveWorkout()">저장</button>
+        <button class="btn btn-done" id="btn-complete" onclick="completeDay()" style="display:none;">Day 완료</button>
+      </div>
     </div>
-    <div class="sets-grid" id="sets-grid"></div>
-    <textarea class="memo-area" id="memo" placeholder="오늘의 컨디션, 특이사항 메모..."></textarea>
-    <div class="btn-row">
-      <button class="btn btn-primary" id="btn-save" onclick="saveWorkout()">저장</button>
-      <button class="btn btn-done" id="btn-complete" onclick="completeDay()" style="display:none;">Day 완료</button>
+    <!-- Start overlay -->
+    <div class="start-overlay" id="start-overlay" onclick="startWorkout()">
+      <div class="start-overlay-text">클릭하면 운동이 시작됩니다</div>
     </div>
   </div>
 
@@ -391,6 +470,29 @@ body {
     <div class="btn-row">
       <button class="btn btn-secondary" onclick="closeResetModal()">취소</button>
       <button class="btn btn-primary" style="background:var(--danger);" onclick="resetAll()">초기화</button>
+    </div>
+  </div>
+</div>
+
+<!-- Timer Modal -->
+<div class="timer-overlay" id="timer-modal">
+  <div class="timer-card">
+    <div class="timer-hint" id="timer-hint">최소 30초, 최대 60초를 휴식해주세요</div>
+    <div class="timer-value" id="timer-value">60</div>
+    <div class="timer-bar-wrap">
+      <div class="timer-bar-fill" id="timer-bar" style="width:100%"></div>
+    </div>
+    <button class="btn btn-secondary" id="timer-close-btn" onclick="closeTimer()" style="margin-top:12px;">닫기</button>
+  </div>
+</div>
+
+<!-- Guide Modal (auto-dismiss) -->
+<div class="timer-overlay" id="guide-modal">
+  <div class="timer-card">
+    <div style="font-size:18px;font-weight:600;margin-bottom:12px;">운동 시작!</div>
+    <div style="font-size:14px;color:var(--text2);line-height:1.6;">
+      Set 1을 수행하고 '완료' 버튼을 눌러주세요!<br>
+      이후 Set 수행을 위한 타이머가 실행됩니다.
     </div>
   </div>
 </div>
@@ -659,17 +761,23 @@ function renderDayTabs() {
 }
 
 function renderWorkout() {
-  const card = document.getElementById('workout-card');
+  const wrapper = document.getElementById('workout-wrapper');
   const empty = document.getElementById('empty-state');
+  const overlay = document.getElementById('start-overlay');
   const colIdx = getColIdxForWeek(state.weekIdx);
 
   if (state.initialMax === null || colIdx < 0) {
-    card.style.display = 'none';
+    wrapper.style.display = 'none';
     empty.style.display = 'block';
     return;
   }
-  card.style.display = 'block';
+  wrapper.style.display = 'block';
   empty.style.display = 'none';
+
+  // Show start overlay if workout not started and no sets done yet
+  const isDayDone = getCompletedDays(state.weekIdx).includes(state.dayIdx);
+  const hasAnySet = state.currentSets.some(v => v !== null && v !== '' && v !== 0);
+  overlay.style.display = (!workoutStarted && !isDayDone && !hasAnySet) ? 'flex' : 'none';
 
   const phase = getPhase(state.weekIdx);
   const colLabel = PHASE_COLS[phase][colIdx];
@@ -682,28 +790,32 @@ function renderWorkout() {
   grid.innerHTML = targets.map((target, s) => {
     const isMax = target === null;
     const val = state.currentSets[s];
+    // Check if previous sets are all done (for locking)
+    const prevDone = s === 0 ? true : state.currentSets.slice(0, s).every(v => v !== null && v !== '' && v !== 0);
+    const locked = !prevDone;
 
     if (isMax) {
-      // Set 5: number input
       const hasVal = val !== null && val !== '' && val !== 0;
       return `
         <div class="set-item">
           <div class="set-label">Set ${s+1}</div>
           <div class="set-target max-label">MAX</div>
-          <input type="number" class="set-input${hasVal ? ' has-value' : ''}"
+          <input type="number" class="set-input${hasVal ? ' has-value' : ''}${locked ? ' locked' : ''}"
             value="${hasVal ? val : ''}"
             placeholder="MAX" min="0" inputmode="numeric"
+            ${locked ? 'disabled' : ''}
             oninput="updateSet(${s}, this.value)">
+          ${locked ? '<div class="set-tooltip">이전 세트를 먼저 완료해주세요</div>' : ''}
         </div>`;
     } else {
-      // Sets 1-4: toggle button
       const isDone = val !== null && val !== '' && val !== 0;
       return `
         <div class="set-item">
           <div class="set-label">Set ${s+1}</div>
           <div class="set-target">${target}</div>
-          <button class="set-toggle${isDone ? ' done' : ''}"
-            onclick="toggleSet(${s}, ${target})">완료</button>
+          <button class="set-toggle${isDone ? ' done' : ''}${locked ? ' locked' : ''}"
+            onclick="${locked ? '' : `toggleSet(${s}, ${target})`}">완료</button>
+          ${locked ? '<div class="set-tooltip">이전 세트를 먼저 완료해주세요</div>' : ''}
         </div>`;
     }
   }).join('');
@@ -711,7 +823,6 @@ function renderWorkout() {
   document.getElementById('memo').value = state.currentMemo || '';
 
   const allFilled = state.currentSets.every(v => v !== null && v !== '' && v !== 0);
-  const isDayDone = getCompletedDays(state.weekIdx).includes(state.dayIdx);
   document.getElementById('btn-complete').style.display = (allFilled && !isDayDone) ? 'block' : 'none';
   document.getElementById('btn-save').textContent = isDayDone ? '수정 저장' : '저장';
 }
@@ -765,6 +876,7 @@ function updateInitialMax(val) {
 }
 
 function selectWeek(idx) {
+  workoutStarted = false;
   state.weekIdx = idx;
   state.dayIdx = 0;
   const days = getCompletedDays(idx);
@@ -779,6 +891,7 @@ function selectWeek(idx) {
 }
 
 function selectDay(idx) {
+  workoutStarted = false;
   state.dayIdx = idx;
   state.currentSets = [null,null,null,null,null];
   state.currentMemo = '';
@@ -811,11 +924,80 @@ function loadCurrentFromHistory() {
   }
 }
 
+// ===== WORKOUT START & TIMER =====
+let workoutStarted = false;
+let timerInterval = null;
+let timerSeconds = 60;
+
+function startWorkout() {
+  workoutStarted = true;
+  document.getElementById('start-overlay').style.display = 'none';
+
+  // Show guide modal, auto-dismiss after 2.5s
+  const guide = document.getElementById('guide-modal');
+  guide.classList.add('open');
+  setTimeout(() => guide.classList.remove('open'), 2500);
+}
+
+function showTimer() {
+  timerSeconds = 60;
+  const modal = document.getElementById('timer-modal');
+  const valEl = document.getElementById('timer-value');
+  const barEl = document.getElementById('timer-bar');
+  const hintEl = document.getElementById('timer-hint');
+  const closeBtn = document.getElementById('timer-close-btn');
+
+  hintEl.textContent = '최소 30초, 최대 60초를 휴식해주세요';
+  valEl.textContent = '60';
+  valEl.className = 'timer-value';
+  barEl.style.width = '100%';
+  barEl.className = 'timer-bar-fill';
+  closeBtn.textContent = '닫기';
+  closeBtn.onclick = closeTimer;
+
+  modal.classList.add('open');
+
+  timerInterval = setInterval(() => {
+    timerSeconds--;
+    valEl.textContent = timerSeconds;
+    barEl.style.width = `${(timerSeconds / 60) * 100}%`;
+
+    if (timerSeconds <= 30) {
+      valEl.className = 'timer-value warning';
+      barEl.className = 'timer-bar-fill warning';
+    }
+
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      valEl.textContent = '다음 Set 시작!';
+      valEl.className = 'timer-value ready';
+      barEl.style.width = '0%';
+      hintEl.textContent = '충분히 휴식했습니다';
+      closeBtn.textContent = '시작';
+      closeBtn.onclick = closeTimer;
+    }
+  }, 1000);
+}
+
+function closeTimer() {
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  document.getElementById('timer-modal').classList.remove('open');
+}
+
 function toggleSet(idx, target) {
+  // Check lock
+  if (idx > 0) {
+    const prevDone = state.currentSets.slice(0, idx).every(v => v !== null && v !== '' && v !== 0);
+    if (!prevDone) return;
+  }
+
   if (state.currentSets[idx] !== null && state.currentSets[idx] !== 0) {
     state.currentSets[idx] = null;
   } else {
     state.currentSets[idx] = target;
+    // Show timer after completing sets 1-4 (not after undoing)
+    if (idx < 4) showTimer();
   }
   saveState();
   renderWorkout();
@@ -824,14 +1006,12 @@ function toggleSet(idx, target) {
 function updateSet(idx, val) {
   state.currentSets[idx] = val === '' ? null : parseInt(val);
 
-  // Update input styling without re-rendering the whole grid
-  const input = document.querySelectorAll('.set-input')[0];
+  const input = document.querySelectorAll('.set-input:not(.locked)')[0];
   if (input) {
     const hasVal = val !== '' && val !== null;
     input.classList.toggle('has-value', hasVal);
   }
 
-  // Show/hide complete button
   const allFilled = state.currentSets.every(v => v !== null && v !== '' && v !== 0);
   const isDayDone = getCompletedDays(state.weekIdx).includes(state.dayIdx);
   document.getElementById('btn-complete').style.display = (allFilled && !isDayDone) ? 'block' : 'none';
