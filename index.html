@@ -309,7 +309,7 @@ body {
       <div class="value" id="stat-total">0</div>
     </div>
     <div class="stat-card">
-      <div class="label">최초 측정</div>
+      <div class="label">최초 측정 푸쉬업</div>
       <div>
         <input type="number" class="initial-input" id="initial-input"
           placeholder="?" min="0" inputmode="numeric"
@@ -319,7 +319,7 @@ body {
       </div>
     </div>
     <div class="stat-card">
-      <div class="label">추정 최대</div>
+      <div class="label">추정 최대 푸쉬업</div>
       <div class="value green" id="stat-estimated">-</div>
       <div class="sub-text muted" id="stat-delta"></div>
     </div>
@@ -359,7 +359,7 @@ body {
   <div class="history-section">
     <div class="section-title" style="display:flex;justify-content:space-between;align-items:center;">
       <span>기록</span>
-      <button class="btn btn-secondary btn-sm" onclick="exportCSV()">CSV 내보내기</button>
+      <button style="background:none;border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:11px;color:var(--text3);cursor:pointer;font-family:'Space Grotesk',sans-serif;" onclick="exportCSV()">CSV 내보내기</button>
     </div>
     <div id="history-list" style="margin-top:12px;"></div>
   </div>
