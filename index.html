@@ -559,12 +559,21 @@ function showArchiveModal(){
         <span>누적 ${ar.totalPushups}회</span>
         <span>${ar.weeksCompleted}주 완료</span>
       </div>
-      <div style="margin-top:10px;"><button class="btn btn-secondary btn-sm" onclick="confirmRestore(${idx})">복원</button></div>
+      <div style="margin-top:10px;display:flex;gap:8px;"><button class="btn btn-secondary btn-sm" onclick="confirmRestore(${idx})">복원</button><button class="btn btn-sm" style="background:var(--danger);color:#fff;" onclick="deleteArchive(${idx})">삭제</button></div>
     </div>`;
   }).join('');}
   document.getElementById('archive-modal').classList.add('open');
 }
 function closeArchiveModal(){document.getElementById('archive-modal').classList.remove('open');}
+
+function deleteArchive(idx){
+  const archives=getArchives();
+  if(idx<0||idx>=archives.length)return;
+  archives.splice(idx,1);
+  saveArchives(archives);
+  showArchiveModal(); // refresh list
+  showToast('삭제 완료');
+}
 
 function confirmRestore(idx){
   closeArchiveModal();
