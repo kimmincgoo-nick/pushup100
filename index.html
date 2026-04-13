@@ -364,8 +364,10 @@ body {
     </div>
   </div>
 
-  <div class="empty-state" id="empty-state">
-    최초 측정 푸쉬업 개수를 입력하면 프로그램이 시작됩니다
+  <div id="empty-state" style="display:none;">
+    <button class="btn btn-secondary" style="width:100%;padding:16px;cursor:default;" onclick="document.getElementById('initial-input').focus()">
+      최초 측정 푸쉬업 개수를 입력하면 프로그램이 시작됩니다
+    </button>
   </div>
 
   <div class="history-section">
