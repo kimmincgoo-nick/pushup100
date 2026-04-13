@@ -359,13 +359,13 @@ body {
   <div class="history-section">
     <div class="section-title" style="display:flex;justify-content:space-between;align-items:center;">
       <span>기록</span>
-      <button style="background:none;border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:11px;color:var(--text3);cursor:pointer;font-family:'Space Grotesk',sans-serif;" onclick="exportCSV()">CSV 내보내기</button>
+      <button style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:11px;color:var(--text3);cursor:pointer;font-family:'Space Grotesk',sans-serif;" onclick="exportCSV()">CSV 내보내기</button>
     </div>
     <div id="history-list" style="margin-top:12px;"></div>
   </div>
 
-  <div style="margin-top:32px;text-align:center;">
-    <button style="background:none;border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:11px;color:var(--text3);cursor:pointer;font-family:'Space Grotesk',sans-serif;" onclick="showResetModal()">초기화</button>
+  <div style="margin-top:32px;">
+    <button class="btn btn-secondary" style="width:100%;" onclick="showResetModal()">초기화</button>
   </div>
 </div>
 
