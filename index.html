@@ -7,387 +7,164 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0a0a0f;
-  --bg2: #12121a;
-  --bg3: #1a1a26;
-  --bg4: #22222f;
-  --text: #e8e8f0;
-  --text2: #9898a8;
-  --text3: #606070;
-  --accent: #ff6b35;
-  --accent2: #ff8c5a;
-  --active: #4a8eff;
-  --active2: #6aa4ff;
-  --done: #2ecc71;
-  --done2: #4ae68a;
+  --bg: #0a0a0f; --bg2: #12121a; --bg3: #1a1a26; --bg4: #22222f;
+  --text: #e8e8f0; --text2: #9898a8; --text3: #606070;
+  --accent: #ff6b35; --accent2: #ff8c5a;
+  --active: #4a8eff; --active2: #6aa4ff;
+  --done: #2ecc71; --done2: #4ae68a;
   --danger: #e74c3c;
-  --border: #2a2a3a;
-  --border2: #3a3a4a;
-  --radius: 12px;
-  --radius-sm: 8px;
+  --border: #2a2a3a; --border2: #3a3a4a;
+  --radius: 12px; --radius-sm: 8px;
 }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Space Grotesk',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; -webkit-font-smoothing:antialiased; }
+.container { max-width:700px; margin:0 auto; padding:20px 16px 100px; }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+.header { text-align:center; padding:32px 0 24px; position:relative; }
+.header::after { content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:60px; height:3px; background:var(--accent); border-radius:2px; }
+.header h1 { font-size:28px; font-weight:700; letter-spacing:-0.5px; background:linear-gradient(135deg,var(--accent),var(--active)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:6px; }
+.header p { font-size:13px; color:var(--text2); }
 
-body {
-  font-family: 'Space Grotesk', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
-}
+.stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:24px 0 16px; }
+.stat-card { background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius); padding:16px 14px; text-align:center; }
+.stat-card .label { font-size:11px; color:var(--text3); text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
+.stat-card .value { font-family:'JetBrains Mono',monospace; font-size:24px; font-weight:600; color:var(--accent); }
+.stat-card .value.blue { color:var(--active); }
+.stat-card .value.green { color:var(--done); }
+.stat-card .sub-text { font-size:12px; color:var(--done); margin-top:4px; font-weight:600; }
+.stat-card .sub-text.muted { color:var(--text3); font-weight:400; }
+.initial-input { font-family:'JetBrains Mono',monospace; font-size:24px; font-weight:600; background:transparent; border:none; border-bottom:2px dashed var(--border2); color:var(--active); text-align:center; width:70px; outline:none; padding:2px 0; -moz-appearance:textfield; }
+.initial-input:focus { border-bottom-color:var(--active); border-bottom-style:solid; }
+.initial-input::-webkit-inner-spin-button,.initial-input::-webkit-outer-spin-button { -webkit-appearance:none; }
+.initial-input::placeholder { color:var(--text3); font-size:16px; }
 
-.container {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 20px 16px 100px;
-}
+.progress-wrap { margin:0 0 24px; background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius); padding:16px; }
+.progress-wrap .label { font-size:12px; color:var(--text2); margin-bottom:8px; display:flex; justify-content:space-between; }
+.progress-bar { width:100%; height:8px; background:var(--bg4); border-radius:4px; overflow:hidden; }
+.progress-fill { height:100%; background:linear-gradient(90deg,var(--accent),var(--done)); border-radius:4px; transition:width 0.5s ease; }
 
-.header {
-  text-align: center;
-  padding: 32px 0 24px;
-  position: relative;
-}
-.header::after {
-  content: '';
-  position: absolute; bottom: 0; left: 50%;
-  transform: translateX(-50%);
-  width: 60px; height: 3px;
-  background: var(--accent); border-radius: 2px;
-}
-.header h1 {
-  font-size: 28px; font-weight: 700; letter-spacing: -0.5px;
-  background: linear-gradient(135deg, var(--accent), var(--active));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  margin-bottom: 6px;
-}
-.header p { font-size: 13px; color: var(--text2); }
+.section-title { font-size:14px; font-weight:600; color:var(--text2); margin-bottom:10px; text-transform:uppercase; letter-spacing:1px; }
 
-/* ===== STAT GRID 2x2 ===== */
-.stat-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin: 24px 0 16px;
-}
-.stat-card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px 14px;
-  text-align: center;
-}
-.stat-card .label {
-  font-size: 11px; color: var(--text3);
-  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;
-}
-.stat-card .value {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 24px; font-weight: 600; color: var(--accent);
-}
-.stat-card .value.blue { color: var(--active); }
-.stat-card .value.green { color: var(--done); }
-.stat-card .sub-text {
-  font-size: 12px; color: var(--done); margin-top: 4px; font-weight: 600;
-}
-.stat-card .sub-text.muted {
-  color: var(--text3); font-weight: 400;
-}
+.week-tabs { display:flex; gap:6px; margin-bottom:12px; overflow-x:auto; padding-bottom:4px; }
+.week-tab { background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius-sm); padding:10px 8px; min-width:52px; color:var(--text2); font-size:12px; font-weight:600; cursor:pointer; transition:all 0.2s; text-align:center; flex-shrink:0; }
+.week-tab:hover { border-color:var(--active); color:var(--text); }
+.week-tab.active { background:var(--active); border-color:var(--active); color:#fff; }
+.week-tab.done { background:rgba(46,204,113,0.15); border-color:var(--done); color:var(--done); }
+.week-tab.done.active { background:var(--done); color:#fff; }
+.week-tab.extra { border-color:var(--accent); color:var(--accent); }
+.week-tab.extra.active { background:var(--accent); color:#fff; }
+.week-tab.final { border-color:var(--danger); color:var(--danger); }
+.week-tab.final.active { background:var(--danger); color:#fff; }
 
-.initial-input {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 24px; font-weight: 600;
-  background: transparent; border: none;
-  border-bottom: 2px dashed var(--border2);
-  color: var(--active); text-align: center;
-  width: 70px; outline: none; padding: 2px 0;
-  -moz-appearance: textfield; transition: border-color 0.2s;
-}
-.initial-input:focus { border-bottom-color: var(--active); border-bottom-style: solid; }
-.initial-input::-webkit-inner-spin-button,
-.initial-input::-webkit-outer-spin-button { -webkit-appearance: none; }
-.initial-input::placeholder { color: var(--text3); font-size: 16px; }
+.day-tabs { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:20px; }
+.day-tab { background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius-sm); padding:10px 8px; color:var(--text2); font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s; text-align:center; }
+.day-tab:hover { border-color:var(--active); color:var(--text); }
+.day-tab.active { background:var(--active); border-color:var(--active); color:#fff; }
+.day-tab.done { background:rgba(46,204,113,0.15); border-color:var(--done); color:var(--done); }
+.day-tab.done.active { background:var(--done); color:#fff; }
 
-/* ===== PROGRESS ===== */
-.progress-wrap {
-  margin: 0 0 24px;
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 16px;
-}
-.progress-wrap .label {
-  font-size: 12px; color: var(--text2); margin-bottom: 8px;
-  display: flex; justify-content: space-between;
-}
-.progress-bar {
-  width: 100%; height: 8px;
-  background: var(--bg4); border-radius: 4px; overflow: hidden;
-}
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--accent), var(--done));
-  border-radius: 4px; transition: width 0.5s ease;
-}
+.workout-wrapper { position:relative; }
+.workout-card { background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius); padding:20px; margin-bottom:16px; }
+.workout-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+.workout-title { font-size:16px; font-weight:600; }
+.rest-badge { font-size:11px; color:var(--text3); background:var(--bg4); padding:4px 10px; border-radius:20px; }
+.sets-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-bottom:16px; }
+.set-item { text-align:center; position:relative; }
+.set-label { font-size:11px; color:var(--text3); margin-bottom:4px; font-weight:500; }
+.set-target { font-family:'JetBrains Mono',monospace; font-size:18px; font-weight:600; color:var(--accent); margin-bottom:6px; }
+.set-target.max-label { color:var(--danger); font-size:14px; }
+.set-toggle { width:100%; background:var(--bg); border:1.5px solid var(--border); border-radius:var(--radius-sm); padding:10px 4px; color:var(--text3); font-family:'JetBrains Mono',monospace; font-size:16px; font-weight:500; text-align:center; cursor:pointer; transition:all 0.2s; outline:none; }
+.set-toggle:hover { border-color:var(--active); color:var(--text2); }
+.set-toggle.done { border-color:var(--done); background:rgba(46,204,113,0.08); color:var(--done); }
+.set-toggle.locked { opacity:0.3; cursor:not-allowed; }
+.set-toggle.locked:hover { border-color:var(--border); }
+.set-input { width:100%; background:var(--bg); border:1.5px solid var(--border); border-radius:var(--radius-sm); padding:10px 4px; color:var(--text); font-family:'JetBrains Mono',monospace; font-size:16px; font-weight:500; text-align:center; outline:none; transition:all 0.2s; -moz-appearance:textfield; }
+.set-input:focus { border-color:var(--active); box-shadow:0 0 0 3px rgba(74,142,255,0.15); }
+.set-input.has-value { border-color:var(--done); background:rgba(46,204,113,0.08); color:var(--done); }
+.set-input.locked { opacity:0.3; pointer-events:none; }
+.set-input::-webkit-inner-spin-button,.set-input::-webkit-outer-spin-button { -webkit-appearance:none; }
+.set-input::placeholder { color:var(--text3); font-size:12px; }
+.set-tooltip { display:none; position:absolute; bottom:-28px; left:50%; transform:translateX(-50%); background:var(--bg4); color:var(--text3); font-size:10px; white-space:nowrap; padding:4px 8px; border-radius:4px; z-index:5; }
+.set-item:hover .set-tooltip { display:block; }
 
-.section-title {
-  font-size: 14px; font-weight: 600; color: var(--text2);
-  margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;
-}
+.start-overlay { position:absolute; inset:0; background:rgba(10,10,15,0.82); border-radius:var(--radius); display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:10; transition:opacity 0.3s; }
+.start-overlay:hover { background:rgba(10,10,15,0.7); }
+.start-overlay-text { font-size:16px; font-weight:600; color:var(--text); padding:16px 28px; border:2px solid var(--active); border-radius:var(--radius); background:rgba(74,142,255,0.1); }
 
-/* ===== WEEK TABS ===== */
-.week-tabs {
-  display: grid; grid-template-columns: repeat(6, 1fr);
-  gap: 6px; margin-bottom: 12px;
-}
-.week-tab {
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: var(--radius-sm); padding: 10px 4px;
-  color: var(--text2); font-size: 12px; font-weight: 600;
-  cursor: pointer; transition: all 0.2s; text-align: center;
-}
-.week-tab:hover { border-color: var(--active); color: var(--text); }
-.week-tab.active { background: var(--active); border-color: var(--active); color: #fff; }
-.week-tab.done { background: rgba(46,204,113,0.15); border-color: var(--done); color: var(--done); }
-.week-tab.done.active { background: var(--done); color: #fff; }
+.memo-area { width:100%; background:var(--bg); border:1.5px solid var(--border); border-radius:var(--radius-sm); padding:12px; color:var(--text); font-family:'Space Grotesk',sans-serif; font-size:14px; resize:vertical; min-height:60px; outline:none; transition:border-color 0.2s; }
+.memo-area:focus { border-color:var(--active); }
+.memo-area::placeholder { color:var(--text3); }
 
-/* ===== DAY TABS ===== */
-.day-tabs {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 8px; margin-bottom: 20px;
-}
-.day-tab {
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: var(--radius-sm); padding: 10px 8px;
-  color: var(--text2); font-size: 13px; font-weight: 600;
-  cursor: pointer; transition: all 0.2s; text-align: center;
-}
-.day-tab:hover { border-color: var(--active); color: var(--text); }
-.day-tab.active { background: var(--active); border-color: var(--active); color: #fff; }
-.day-tab.done { background: rgba(46,204,113,0.15); border-color: var(--done); color: var(--done); }
-.day-tab.done.active { background: var(--done); color: #fff; }
+.btn-row { display:flex; gap:10px; margin-top:16px; }
+.btn { flex:1; padding:14px; border:none; border-radius:var(--radius-sm); font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.2s; }
+.btn-primary { background:var(--accent); color:#fff; }
+.btn-primary:hover { background:var(--accent2); }
+.btn-secondary { background:var(--bg3); color:var(--text2); border:1px solid var(--border); }
+.btn-secondary:hover { background:var(--bg4); color:var(--text); }
+.btn-done { background:var(--done); color:#fff; }
+.btn-sm { padding:10px 16px; font-size:13px; flex:unset; }
 
-/* ===== WORKOUT CARD ===== */
-.workout-card {
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 20px; margin-bottom: 16px;
-}
-.workout-header {
-  display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;
-}
-.workout-title { font-size: 16px; font-weight: 600; }
-.rest-badge {
-  font-size: 11px; color: var(--text3);
-  background: var(--bg4); padding: 4px 10px; border-radius: 20px;
-}
+/* Final Test */
+.final-test-card { background:var(--bg2); border:2px solid var(--accent); border-radius:var(--radius); padding:32px 24px; margin-bottom:16px; text-align:center; }
+.final-test-card h2 { font-size:20px; margin-bottom:8px; background:linear-gradient(135deg,var(--accent),var(--active)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.final-test-card p { font-size:14px; color:var(--text2); margin-bottom:20px; line-height:1.5; }
+.final-input { font-family:'JetBrains Mono',monospace; font-size:40px; font-weight:700; background:var(--bg); border:2px solid var(--border2); border-radius:var(--radius-sm); color:var(--accent); text-align:center; width:140px; padding:12px; outline:none; -moz-appearance:textfield; }
+.final-input:focus { border-color:var(--active); }
+.final-input::-webkit-inner-spin-button,.final-input::-webkit-outer-spin-button { -webkit-appearance:none; }
 
-.sets-grid {
-  display: grid; grid-template-columns: repeat(5, 1fr);
-  gap: 8px; margin-bottom: 16px;
-}
-.set-item { text-align: center; }
-.set-label {
-  font-size: 11px; color: var(--text3); margin-bottom: 4px; font-weight: 500;
-}
-.set-target {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 18px; font-weight: 600; color: var(--accent); margin-bottom: 6px;
-}
-.set-target.max-label { color: var(--danger); font-size: 14px; }
+/* Celebration */
+.celebrate-card { background:linear-gradient(135deg,rgba(46,204,113,0.15),rgba(74,142,255,0.1)); border:2px solid var(--done); border-radius:var(--radius); padding:40px 24px; text-align:center; margin-bottom:16px; }
+.celebrate-card h2 { font-size:24px; color:var(--done); margin-bottom:12px; }
+.celebrate-card .big-num { font-family:'JetBrains Mono',monospace; font-size:64px; font-weight:700; color:var(--done); }
+.celebrate-card p { font-size:14px; color:var(--text2); margin-top:12px; }
 
-/* Set toggle button (Sets 1-4) */
-.set-toggle {
-  width: 100%;
-  background: var(--bg);
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 10px 4px;
-  color: var(--text3);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 16px; font-weight: 500;
-  text-align: center;
-  cursor: pointer; transition: all 0.2s;
-  outline: none;
-}
-.set-toggle:hover { border-color: var(--active); color: var(--text2); }
-.set-toggle.done {
-  border-color: var(--done); background: rgba(46,204,113,0.08); color: var(--done);
-}
+.history-section { margin-top:32px; }
+.history-item { background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px 16px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; font-size:13px; }
+.history-item .date { color:var(--text3); font-family:'JetBrains Mono',monospace; font-size:12px; }
+.history-item .info { color:var(--text2); }
+.history-item .info strong { color:var(--text); }
+.history-item .total { font-family:'JetBrains Mono',monospace; color:var(--accent); font-weight:600; }
+.empty-state { text-align:center; padding:40px 20px; color:var(--text3); font-size:14px; }
 
-/* Set input (Set 5 MAX) */
-.set-input {
-  width: 100%;
-  background: var(--bg);
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 10px 4px;
-  color: var(--text);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 16px; font-weight: 500;
-  text-align: center; outline: none; transition: all 0.2s;
-}
-.set-input:focus { border-color: var(--active); box-shadow: 0 0 0 3px rgba(74,142,255,0.15); }
-.set-input.has-value { border-color: var(--done); background: rgba(46,204,113,0.08); color: var(--done); }
-.set-input::placeholder { color: var(--text3); font-size: 12px; }
-.set-input::-webkit-inner-spin-button,
-.set-input::-webkit-outer-spin-button { -webkit-appearance: none; }
-.set-input { -moz-appearance: textfield; }
+.modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:1000; display:none; align-items:center; justify-content:center; padding:20px; }
+.modal-overlay.open { display:flex; }
+.modal { background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius); padding:24px; max-width:400px; width:100%; }
+.modal h3 { font-size:18px; margin-bottom:12px; }
+.modal p { font-size:14px; color:var(--text2); margin-bottom:20px; line-height:1.5; }
 
-.memo-area {
-  width: 100%; background: var(--bg);
-  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
-  padding: 12px; color: var(--text);
-  font-family: 'Space Grotesk', sans-serif; font-size: 14px;
-  resize: vertical; min-height: 60px; outline: none; transition: border-color 0.2s;
-}
-.memo-area:focus { border-color: var(--active); }
-.memo-area::placeholder { color: var(--text3); }
+.timer-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:1002; display:none; align-items:center; justify-content:center; padding:20px; }
+.timer-overlay.open { display:flex; }
+.timer-card { background:var(--bg2); border:1px solid var(--border2); border-radius:var(--radius); padding:32px 24px; max-width:340px; width:100%; text-align:center; }
+.timer-value { font-family:'JetBrains Mono',monospace; font-size:72px; font-weight:700; color:var(--active); line-height:1; margin:16px 0; }
+.timer-value.warning { color:var(--accent); }
+.timer-value.ready { color:var(--done); font-size:28px; }
+.timer-hint { font-size:13px; color:var(--text2); margin-bottom:8px; line-height:1.4; }
+.timer-bar-wrap { width:100%; height:6px; background:var(--bg4); border-radius:3px; overflow:hidden; margin:16px 0; }
+.timer-bar-fill { height:100%; background:var(--active); border-radius:3px; transition:width 1s linear; }
+.timer-bar-fill.warning { background:var(--accent); }
 
-.btn-row { display: flex; gap: 10px; margin-top: 16px; }
-.btn {
-  flex: 1; padding: 14px; border: none; border-radius: var(--radius-sm);
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;
-}
-.btn-primary { background: var(--accent); color: #fff; }
-.btn-primary:hover { background: var(--accent2); }
-.btn-secondary { background: var(--bg3); color: var(--text2); border: 1px solid var(--border); }
-.btn-secondary:hover { background: var(--bg4); color: var(--text); }
-.btn-done { background: var(--done); color: #fff; }
-.btn-sm { padding: 10px 16px; font-size: 13px; flex: unset; }
+.toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(100px); background:var(--done); color:#fff; padding:12px 24px; border-radius:var(--radius); font-size:14px; font-weight:600; z-index:999; transition:transform 0.3s ease; box-shadow:0 8px 24px rgba(46,204,113,0.3); }
+.toast.show { transform:translateX(-50%) translateY(0); }
 
-.history-section { margin-top: 32px; }
-.history-item {
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 8px;
-  display: flex; justify-content: space-between; align-items: center; font-size: 13px;
-}
-.history-item .date { color: var(--text3); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
-.history-item .info { color: var(--text2); }
-.history-item .info strong { color: var(--text); }
-.history-item .total { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-weight: 600; }
-
-.empty-state { text-align: center; padding: 40px 20px; color: var(--text3); font-size: 14px; }
-
-.modal-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.6);
-  z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px;
-}
-.modal-overlay.open { display: flex; }
-.modal {
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 24px; max-width: 400px; width: 100%;
-}
-.modal h3 { font-size: 18px; margin-bottom: 12px; }
-.modal p { font-size: 14px; color: var(--text2); margin-bottom: 20px; line-height: 1.5; }
-
-/* ===== START OVERLAY ===== */
-.workout-wrapper { position: relative; }
-
-.start-overlay {
-  position: absolute; inset: 0;
-  background: rgba(10,10,15,0.82);
-  border-radius: var(--radius);
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; z-index: 10;
-  transition: opacity 0.3s;
-}
-.start-overlay:hover { background: rgba(10,10,15,0.7); }
-.start-overlay-text {
-  font-size: 16px; font-weight: 600; color: var(--text);
-  padding: 16px 28px;
-  border: 2px solid var(--active);
-  border-radius: var(--radius);
-  background: rgba(74,142,255,0.1);
-}
-
-/* ===== TIMER MODAL ===== */
-.timer-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.7);
-  z-index: 1002; display: none; align-items: center; justify-content: center; padding: 20px;
-}
-.timer-overlay.open { display: flex; }
-.timer-card {
-  background: var(--bg2); border: 1px solid var(--border2);
-  border-radius: var(--radius); padding: 32px 24px;
-  max-width: 340px; width: 100%; text-align: center;
-}
-.timer-value {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 72px; font-weight: 700;
-  color: var(--active); line-height: 1;
-  margin: 16px 0;
-}
-.timer-value.warning { color: var(--accent); }
-.timer-value.ready { color: var(--done); font-size: 28px; }
-.timer-hint {
-  font-size: 13px; color: var(--text2); margin-bottom: 8px; line-height: 1.4;
-}
-.timer-bar-wrap {
-  width: 100%; height: 6px; background: var(--bg4);
-  border-radius: 3px; overflow: hidden; margin: 16px 0;
-}
-.timer-bar-fill {
-  height: 100%; background: var(--active);
-  border-radius: 3px; transition: width 1s linear;
-}
-.timer-bar-fill.warning { background: var(--accent); }
-
-/* ===== SET LOCKED ===== */
-.set-toggle.locked {
-  opacity: 0.3; cursor: not-allowed;
-}
-.set-toggle.locked:hover { border-color: var(--border); }
-.set-input.locked {
-  opacity: 0.3; pointer-events: none;
-}
-
-.set-item { position: relative; }
-.set-tooltip {
-  display: none;
-  position: absolute; bottom: -28px; left: 50%;
-  transform: translateX(-50%);
-  background: var(--bg4); color: var(--text3);
-  font-size: 10px; white-space: nowrap;
-  padding: 4px 8px; border-radius: 4px;
-  z-index: 5;
-}
-.set-item:hover .set-tooltip { display: block; }
-
-.toast {
-  position: fixed; bottom: 24px; left: 50%;
-  transform: translateX(-50%) translateY(100px);
-  background: var(--done); color: #fff;
-  padding: 12px 24px; border-radius: var(--radius);
-  font-size: 14px; font-weight: 600; z-index: 999;
-  transition: transform 0.3s ease;
-  box-shadow: 0 8px 24px rgba(46,204,113,0.3);
-}
-.toast.show { transform: translateX(-50%) translateY(0); }
-
-@media (max-width: 480px) {
-  .sets-grid { gap: 6px; }
-  .set-toggle { padding: 8px 2px; font-size: 14px; }
-  .set-input { padding: 8px 2px; font-size: 14px; }
-  .set-target { font-size: 16px; }
-  .stat-grid { gap: 6px; }
-  .stat-card { padding: 12px 10px; }
-  .stat-card .value { font-size: 20px; }
-  .initial-input { font-size: 20px; width: 60px; }
+@media (max-width:480px) {
+  .sets-grid { gap:6px; } .set-toggle,.set-input { padding:8px 2px; font-size:14px; }
+  .set-target { font-size:16px; } .stat-grid { gap:6px; } .stat-card { padding:12px 10px; }
+  .stat-card .value { font-size:20px; } .initial-input { font-size:20px; width:60px; }
+  .celebrate-card .big-num { font-size:48px; } .final-input { font-size:32px; width:110px; }
 }
 </style>
 </head>
 <body>
-
 <div class="container" id="app">
   <div class="header">
     <h1>100 Push-Ups</h1>
-    <p>USNA 6-Week Program by CAPT Mike Prevost, USN</p>
+    <p>USNA 8-Week 100 Push-Ups Program</p>
   </div>
 
-  <!-- Stat Grid 2x2 -->
   <div class="stat-grid">
     <div class="stat-card">
       <div class="label">진행 주차</div>
-      <div class="value blue" id="stat-week">0/6</div>
+      <div class="value blue" id="stat-week">Week 1</div>
     </div>
     <div class="stat-card">
       <div class="label">누적 푸쉬업</div>
@@ -396,10 +173,7 @@ body {
     <div class="stat-card">
       <div class="label">최초 측정 푸쉬업</div>
       <div>
-        <input type="number" class="initial-input" id="initial-input"
-          placeholder="?" min="0" inputmode="numeric"
-          onchange="updateInitialMax(this.value)"
-          onkeydown="if(event.key==='Enter')this.blur()">
+        <input type="number" class="initial-input" id="initial-input" placeholder="?" min="0" inputmode="numeric" onchange="updateInitialMax(this.value)" onkeydown="if(event.key==='Enter')this.blur()">
         <span style="font-size:13px;color:var(--text3)">개</span>
       </div>
     </div>
@@ -411,13 +185,8 @@ body {
   </div>
 
   <div class="progress-wrap">
-    <div class="label">
-      <span>6주 프로그램 진행률</span>
-      <span id="progress-pct">0%</span>
-    </div>
-    <div class="progress-bar">
-      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
-    </div>
+    <div class="label"><span>프로그램 진행률</span><span id="progress-pct">0%</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
   </div>
 
   <div class="section-title">주차 선택</div>
@@ -427,7 +196,7 @@ body {
   <div class="workout-wrapper" id="workout-wrapper" style="display:none;">
     <div class="workout-card" id="workout-card">
       <div class="workout-header">
-        <div class="workout-title" id="workout-title">Week 1 · Day 1</div>
+        <div class="workout-title" id="workout-title"></div>
         <div class="rest-badge">세트 간 휴식 30-60초</div>
       </div>
       <div class="sets-grid" id="sets-grid"></div>
@@ -437,9 +206,29 @@ body {
         <button class="btn btn-done" id="btn-complete" onclick="completeDay()" style="display:none;">Day 완료</button>
       </div>
     </div>
-    <!-- Start overlay -->
     <div class="start-overlay" id="start-overlay" onclick="startWorkout()">
       <div class="start-overlay-text">클릭하면 운동이 시작됩니다</div>
+    </div>
+  </div>
+
+  <!-- Final Test -->
+  <div id="final-test-area" style="display:none;">
+    <div class="final-test-card" id="final-test-card">
+      <h2>Final Test</h2>
+      <p>8주 프로그램을 완료했습니다!<br>한 세트로 최대한 많이 해보세요.</p>
+      <div><input type="number" class="final-input" id="final-input" placeholder="0" min="0" inputmode="numeric"><span style="font-size:16px;color:var(--text2);margin-left:8px;">개</span></div>
+      <div class="btn-row" style="justify-content:center;margin-top:20px;">
+        <button class="btn btn-primary btn-sm" onclick="submitFinalTest()">결과 제출</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Celebration -->
+  <div id="celebrate-area" style="display:none;">
+    <div class="celebrate-card">
+      <h2>100 Push-Ups 달성!</h2>
+      <div class="big-num" id="celebrate-num">100</div>
+      <p>축하합니다! 목표를 달성했습니다.</p>
     </div>
   </div>
 
@@ -462,7 +251,20 @@ body {
   </div>
 </div>
 
-<!-- Reset Modal -->
+<div class="timer-overlay" id="timer-modal">
+  <div class="timer-card">
+    <div class="timer-hint" id="timer-hint">최소 30초, 최대 60초를 휴식해주세요</div>
+    <div class="timer-value" id="timer-value">60</div>
+    <div class="timer-bar-wrap"><div class="timer-bar-fill" id="timer-bar" style="width:100%"></div></div>
+    <button class="btn btn-secondary" id="timer-close-btn" onclick="closeTimer()" style="margin-top:12px;">닫기</button>
+  </div>
+</div>
+<div class="timer-overlay" id="guide-modal">
+  <div class="timer-card">
+    <div style="font-size:18px;font-weight:600;margin-bottom:12px;">운동 시작!</div>
+    <div style="font-size:14px;color:var(--text2);line-height:1.6;">Set 1을 수행하고 '완료' 버튼을 눌러주세요!<br>이후 Set 수행을 위한 타이머가 실행됩니다.</div>
+  </div>
+</div>
 <div class="modal-overlay" id="reset-modal">
   <div class="modal">
     <h3>데이터 초기화</h3>
@@ -473,678 +275,208 @@ body {
     </div>
   </div>
 </div>
-
-<!-- Timer Modal -->
-<div class="timer-overlay" id="timer-modal">
-  <div class="timer-card">
-    <div class="timer-hint" id="timer-hint">최소 30초, 최대 60초를 휴식해주세요</div>
-    <div class="timer-value" id="timer-value">60</div>
-    <div class="timer-bar-wrap">
-      <div class="timer-bar-fill" id="timer-bar" style="width:100%"></div>
-    </div>
-    <button class="btn btn-secondary" id="timer-close-btn" onclick="closeTimer()" style="margin-top:12px;">닫기</button>
-  </div>
-</div>
-
-<!-- Guide Modal (auto-dismiss) -->
-<div class="timer-overlay" id="guide-modal">
-  <div class="timer-card">
-    <div style="font-size:18px;font-weight:600;margin-bottom:12px;">운동 시작!</div>
-    <div style="font-size:14px;color:var(--text2);line-height:1.6;">
-      Set 1을 수행하고 '완료' 버튼을 눌러주세요!<br>
-      이후 Set 수행을 위한 타이머가 실행됩니다.
-    </div>
-  </div>
-</div>
-
 <div class="toast" id="toast"></div>
 
 <script>
-// ===== PROGRAM DATA =====
-// 3 phases, each with 3 columns
+// ===== PROGRAM DATA (8 weeks) =====
 const PHASE_COLS = [
-  ['< 6', '6-10', '11-20'],
-  ['21-25', '26-35', '36-50'],
-  ['50-75', '75-100', '> 100']
+  ['< 6','6-10','11-20'],
+  ['21-25','26-35','36-50'],
+  ['36-45','46-60','61-85'],
+  ['50-75','75-100','> 100']
 ];
-
 const PHASE_BOUNDS = [
   [[0,5],[6,10],[11,999]],
   [[0,25],[26,35],[36,999]],
+  [[0,45],[46,60],[61,999]],
   [[0,75],[76,100],[101,999]]
 ];
-
-// PROGRAM[week][day] = [set1, set2, set3, set4, null]
-// Each set = [col0_val, col1_val, col2_val] or null for MAX
+// PROGRAM[week 0-7][day 0-2] = [s1,s2,s3,s4,null]  each s=[c0,c1,c2]
 const PROGRAM = [
-  // Week 1 (Phase 0: <6, 6-10, 11-20)
-  [
-    [[2,6,10],[3,6,12],[2,4,7],[2,4,7],null],
-    [[3,6,10],[4,8,12],[2,6,8],[3,6,8],null],
-    [[4,8,11],[5,10,15],[4,7,9],[4,7,9],null],
-  ],
-  // Week 2 (Phase 0)
-  [
-    [[4,8,12],[6,10,15],[5,8,10],[4,8,10],null],
-    [[5,8,12],[7,11,16],[5,8,10],[4,8,10],null],
-    [[5,8,12],[8,12,17],[6,8,11],[5,8,10],null],
-  ],
-  // Week 3 (Phase 1: 21-25, 26-35, 36-50)
-  [
-    [[12,14,25],[17,18,30],[13,14,25],[13,14,25],null],
-    [[13,15,26],[18,19,31],[14,15,26],[14,15,26],null],
-    [[14,16,27],[19,20,32],[15,16,27],[15,16,27],null],
-  ],
-  // Week 4 (Phase 1)
-  [
-    [[15,17,28],[20,21,33],[16,17,28],[16,17,28],null],
-    [[16,18,29],[21,22,34],[17,18,29],[17,18,29],null],
-    [[17,19,30],[22,23,35],[18,19,30],[18,19,30],null],
-  ],
-  // Week 5 (Phase 2: 50-75, 75-100, >100)
-  [
-    [[35,45,55],[40,55,65],[30,35,35],[24,30,30],null],
-    [[36,46,56],[41,56,66],[31,36,36],[25,31,31],null],
-    [[37,47,57],[42,57,67],[32,37,37],[26,32,32],null],
-  ],
-  // Week 6 (Phase 2)
-  [
-    [[38,48,58],[43,58,68],[33,38,38],[27,33,33],null],
-    [[39,49,59],[44,59,69],[34,39,39],[28,34,34],null],
-    [[40,50,60],[45,60,70],[35,40,40],[29,35,35],null],
-  ],
+  // W1 Phase0
+  [[[2,6,10],[3,6,12],[2,4,7],[2,4,7],null],[[3,6,10],[4,8,12],[2,6,8],[3,6,8],null],[[4,8,11],[5,10,15],[4,7,9],[4,7,9],null]],
+  // W2 Phase0
+  [[[4,8,12],[6,10,15],[5,8,10],[4,8,10],null],[[5,8,12],[7,11,16],[5,8,10],[4,8,10],null],[[5,8,12],[8,12,17],[6,8,11],[5,8,10],null]],
+  // W3 Phase1
+  [[[12,14,25],[17,18,30],[13,14,25],[13,14,25],null],[[13,15,26],[18,19,31],[14,15,26],[14,15,26],null],[[14,16,27],[19,20,32],[15,16,27],[15,16,27],null]],
+  // W4 Phase1
+  [[[15,17,28],[20,21,33],[16,17,28],[16,17,28],null],[[16,18,29],[21,22,34],[17,18,29],[17,18,29],null],[[17,19,30],[22,23,35],[18,19,30],[18,19,30],null]],
+  // W5 Phase2 (NEW intermediate)
+  [[[25,32,40],[30,38,48],[22,28,32],[20,24,28],null],[[26,33,41],[31,39,49],[23,29,33],[21,25,29],null],[[27,34,42],[32,40,50],[24,30,34],[22,26,30],null]],
+  // W6 Phase2
+  [[[28,35,43],[33,42,52],[25,31,35],[23,27,31],null],[[29,36,44],[34,43,53],[26,32,36],[24,28,32],null],[[30,37,45],[35,44,54],[27,33,37],[25,29,33],null]],
+  // W7 Phase3
+  [[[35,45,55],[40,55,65],[30,35,35],[24,30,30],null],[[36,46,56],[41,56,66],[31,36,36],[25,31,31],null],[[37,47,57],[42,57,67],[32,37,37],[26,32,32],null]],
+  // W8 Phase3
+  [[[38,48,58],[43,58,68],[33,38,38],[27,33,33],null],[[39,49,59],[44,59,69],[34,39,39],[28,34,34],null],[[40,50,60],[45,60,70],[35,40,40],[29,35,35],null]],
 ];
-
-const DAY_LABELS = ['Day 1', 'Day 2', 'Day 3'];
+const TOTAL_BASE_WEEKS = 8;
+const DAY_LABELS = ['Day 1','Day 2','Day 3'];
 
 // ===== STATE =====
 let state = loadState();
+let workoutStarted = false;
+let timerInterval = null;
 
 function defaultState() {
-  return {
-    initialMax: null,
-    weekIdx: 0,
-    dayIdx: 0,
-    completedDays: {},
-    history: [],
-    currentSets: [null,null,null,null,null],
-    currentMemo: '',
-    weekEstimates: {}
-  };
+  return { initialMax:null, weekIdx:0, dayIdx:0, completedDays:{}, history:[], currentSets:[null,null,null,null,null], currentMemo:'', weekEstimates:{}, finalTestResult:null, programComplete:false, extraWeekCount:0 };
 }
-
 function loadState() {
-  try {
-    const s = JSON.parse(localStorage.getItem('pushup100_v4'));
-    if (s && s.history !== undefined) {
-      if (!s.weekEstimates) s.weekEstimates = {};
-      if (s.initialMax === undefined) s.initialMax = null;
-      return s;
-    }
-  } catch(e) {}
+  try { const s=JSON.parse(localStorage.getItem('pushup100_v5')); if(s&&s.history!==undefined){if(!s.weekEstimates)s.weekEstimates={};if(s.finalTestResult===undefined)s.finalTestResult=null;if(s.programComplete===undefined)s.programComplete=false;if(s.extraWeekCount===undefined)s.extraWeekCount=0;return s;}}catch(e){}
   return defaultState();
 }
+function saveState(){localStorage.setItem('pushup100_v5',JSON.stringify(state));}
+function getCompletedDays(w){return state.completedDays[w]||[];}
+function isWeekComplete(w){return getCompletedDays(w).length>=3;}
+function getTotalWeeks(){return TOTAL_BASE_WEEKS+state.extraWeekCount;}
+function getPhase(w){if(w>=6)return 3;return Math.floor(w/2);}
+function getProgramWeek(w){return w>=TOTAL_BASE_WEEKS?7:w;} // Extra weeks use W8 data
+function getColInPhase(max,phase){if(max===null)return -1;const b=PHASE_BOUNDS[phase];for(let i=0;i<b.length;i++)if(max>=b[i][0]&&max<=b[i][1])return i;return 2;}
+function getMaxForWeek(w){if(state.initialMax===null)return null;let m=state.initialMax;for(let i=0;i<w;i++){const e=state.weekEstimates[i];if(e!==undefined&&e>m)m=e;}return m;}
+function getColIdxForWeek(w){return getColInPhase(getMaxForWeek(w),getPhase(w));}
+function getColLabelForWeek(w){const c=getColIdxForWeek(w);return c<0?'':PHASE_COLS[getPhase(w)][c];}
+function getWeekLabel(w){if(w<TOTAL_BASE_WEEKS)return `W${w+1}`;return `E${w-TOTAL_BASE_WEEKS+1}`;}
+function getWeekFullLabel(w){if(w<TOTAL_BASE_WEEKS)return `Week ${w+1}`;return `Extra ${w-TOTAL_BASE_WEEKS+1}`;}
+function getDayData(w,d,col){const pw=getProgramWeek(w);const day=PROGRAM[pw][d];return day.map(s=>s===null?null:s[col]);}
 
-function saveState() {
-  localStorage.setItem('pushup100_v4', JSON.stringify(state));
-}
+// ===== ESTIMATION (coefficient 0.32) =====
+function estimateFromSets(sets){if(!sets||sets.length<5)return null;const s5=sets[4],pv=sets[0]+sets[1]+sets[2]+sets[3];if(s5===0&&pv===0)return null;return Math.round(s5+pv*0.32);}
+function calcWeekEstimate(w){if(!isWeekComplete(w))return null;const wh=state.history.filter(h=>h.weekIdx===w&&h.completed);if(wh.length<3)return null;let mx=0;for(const h of wh){const e=estimateFromSets(h.sets);if(e!==null&&e>mx)mx=e;}return mx>0?mx:null;}
+function recalcAllEstimates(){for(let w=0;w<getTotalWeeks();w++)if(isWeekComplete(w)){const e=calcWeekEstimate(w);if(e!==null)state.weekEstimates[w]=e;}}
+function getCurrentEstimatedMax(){if(state.initialMax===null)return null;let m=state.initialMax;for(const k in state.weekEstimates){const e=state.weekEstimates[k];if(e>m)m=e;}return m;}
+function isReadyForFinalTest(){return isWeekComplete(TOTAL_BASE_WEEKS-1+state.extraWeekCount*(state.extraWeekCount>0?1:0))&&!state.programComplete&&state.finalTestResult===null;}
 
-function getCompletedDays(weekIdx) {
-  return state.completedDays[weekIdx] || [];
-}
-
-function isWeekComplete(weekIdx) {
-  return getCompletedDays(weekIdx).length >= 3;
-}
-
-function countCompletedWeeks() {
-  let c = 0;
-  for (let w = 0; w < 6; w++) if (isWeekComplete(w)) c++;
-  return c;
-}
-
-// ===== PHASE & COLUMN =====
-function getPhase(weekIdx) {
-  return Math.floor(weekIdx / 2);
-}
-
-function getColInPhase(max, phase) {
-  if (max === null) return -1;
-  const bounds = PHASE_BOUNDS[phase];
-  for (let i = 0; i < bounds.length; i++) {
-    if (max >= bounds[i][0] && max <= bounds[i][1]) return i;
-  }
-  return 2; // highest column
-}
-
-function getMaxForWeek(weekIdx) {
-  if (state.initialMax === null) return null;
-  let runningMax = state.initialMax;
-  for (let w = 0; w < weekIdx; w++) {
-    const est = state.weekEstimates[w];
-    if (est !== undefined && est > runningMax) runningMax = est;
-  }
-  return runningMax;
-}
-
-function getColIdxForWeek(weekIdx) {
-  const max = getMaxForWeek(weekIdx);
-  return getColInPhase(max, getPhase(weekIdx));
-}
-
-function getColLabelForWeek(weekIdx) {
-  const ci = getColIdxForWeek(weekIdx);
-  if (ci < 0) return '';
-  return PHASE_COLS[getPhase(weekIdx)][ci];
-}
-
-// ===== ESTIMATION =====
-function estimateFromSets(sets) {
-  if (!sets || sets.length < 5) return null;
-  const s5 = sets[4];
-  const priorVol = sets[0] + sets[1] + sets[2] + sets[3];
-  if (s5 === 0 && priorVol === 0) return null;
-  return Math.round(s5 + priorVol * 0.3);
-}
-
-function calcWeekEstimate(weekIdx) {
-  if (!isWeekComplete(weekIdx)) return null;
-  const weekHistory = state.history.filter(h => h.weekIdx === weekIdx && h.completed);
-  if (weekHistory.length < 3) return null;
-  let maxEst = 0;
-  for (const h of weekHistory) {
-    const est = estimateFromSets(h.sets);
-    if (est !== null && est > maxEst) maxEst = est;
-  }
-  return maxEst > 0 ? maxEst : null;
-}
-
-function recalcAllEstimates() {
-  for (let w = 0; w < 6; w++) {
-    if (isWeekComplete(w)) {
-      const est = calcWeekEstimate(w);
-      if (est !== null) state.weekEstimates[w] = est;
-    }
-  }
-}
-
-function getCurrentEstimatedMax() {
-  if (state.initialMax === null) return null;
-  let runningMax = state.initialMax;
-  for (let w = 0; w < 6; w++) {
-    const est = state.weekEstimates[w];
-    if (est !== undefined && est > runningMax) runningMax = est;
-  }
-  return runningMax;
-}
-
-// ===== WORKOUT DATA =====
-function getDayData(weekIdx, dayIdx, colIdx) {
-  const day = PROGRAM[weekIdx][dayIdx];
-  return day.map(set => {
-    if (set === null) return null; // MAX
-    return set[colIdx];
-  });
-}
+// Check if all base weeks + current extra weeks are done
+function allCurrentWeeksDone(){const total=getTotalWeeks();for(let w=0;w<total;w++)if(!isWeekComplete(w))return false;return true;}
 
 // ===== RENDER =====
-function render() {
-  renderStats();
-  renderWeekTabs();
-  renderDayTabs();
-  renderWorkout();
-  renderProgress();
-  renderHistory();
+function render(){renderStats();renderWeekTabs();renderDayTabs();renderWorkout();renderProgress();renderHistory();}
+
+function renderStats(){
+  document.getElementById('stat-week').textContent=getWeekFullLabel(state.weekIdx);
+  document.getElementById('stat-total').textContent=state.history.reduce((s,h)=>s+(h.total||0),0).toLocaleString();
+  const inp=document.getElementById('initial-input');
+  if(state.initialMax!==null&&inp!==document.activeElement)inp.value=state.initialMax;
+  const estEl=document.getElementById('stat-estimated'),deltaEl=document.getElementById('stat-delta');
+  const est=getCurrentEstimatedMax(),hasEst=Object.keys(state.weekEstimates).length>0;
+  if(est!==null&&hasEst){estEl.textContent=est;if(state.initialMax!==null&&est>state.initialMax){deltaEl.className='sub-text';deltaEl.textContent=`최초 대비 +${est-state.initialMax}개`;}else{deltaEl.className='sub-text muted';deltaEl.textContent='';}}
+  else if(state.initialMax!==null){estEl.textContent=state.initialMax;deltaEl.className='sub-text muted';deltaEl.textContent='Week 1 측정이 완료되면 계산됩니다';}
+  else{estEl.textContent='-';deltaEl.className='sub-text muted';deltaEl.textContent='';}
 }
 
-function renderStats() {
-  document.getElementById('stat-week').textContent = `Week ${state.weekIdx + 1}`;
-
-  const totalPushups = state.history.reduce((sum, h) => sum + (h.total || 0), 0);
-  document.getElementById('stat-total').textContent = totalPushups.toLocaleString();
-
-  const input = document.getElementById('initial-input');
-  if (state.initialMax !== null && input !== document.activeElement) {
-    input.value = state.initialMax;
+function renderWeekTabs(){
+  const el=document.getElementById('week-tabs');
+  if(state.initialMax===null){el.innerHTML='';return;}
+  const total=getTotalWeeks();
+  let html='';
+  for(let i=0;i<total;i++){
+    let cls='week-tab';const isExtra=i>=TOTAL_BASE_WEEKS;
+    if(isWeekComplete(i))cls+=' done';
+    if(i===state.weekIdx)cls+=' active';
+    if(isExtra)cls+=' extra';
+    const col=getColLabelForWeek(i);
+    html+=`<button class="${cls}" onclick="selectWeek(${i})"><div>${getWeekLabel(i)}</div><div style="font-size:10px;opacity:0.7;margin-top:2px">${col}</div></button>`;
   }
-
-  const estEl = document.getElementById('stat-estimated');
-  const deltaEl = document.getElementById('stat-delta');
-  const estimated = getCurrentEstimatedMax();
-  const hasCompletedWeek = Object.keys(state.weekEstimates).length > 0;
-
-  if (estimated !== null && hasCompletedWeek) {
-    estEl.textContent = estimated;
-    if (state.initialMax !== null && estimated > state.initialMax) {
-      deltaEl.className = 'sub-text';
-      deltaEl.textContent = `최초 대비 +${estimated - state.initialMax}개`;
-    } else {
-      deltaEl.className = 'sub-text muted';
-      deltaEl.textContent = '';
-    }
-  } else if (state.initialMax !== null) {
-    estEl.textContent = state.initialMax;
-    deltaEl.className = 'sub-text muted';
-    deltaEl.textContent = 'Week 1 측정이 완료되면 계산됩니다';
-  } else {
-    estEl.textContent = '-';
-    deltaEl.className = 'sub-text muted';
-    deltaEl.textContent = '';
+  // Final Test tab if all current weeks done
+  if(allCurrentWeeksDone()&&!state.programComplete){
+    let cls='week-tab final';
+    if(state.weekIdx===-1)cls+=' active';
+    html+=`<button class="${cls}" onclick="showFinalTest()"><div>Final</div><div style="font-size:10px;opacity:0.7;margin-top:2px">Test</div></button>`;
   }
+  el.innerHTML=html;
 }
 
-function renderWeekTabs() {
-  const el = document.getElementById('week-tabs');
-  if (state.initialMax === null) { el.innerHTML = ''; return; }
-  el.innerHTML = Array.from({length:6}, (_, i) => {
-    let cls = 'week-tab';
-    if (isWeekComplete(i)) cls += ' done';
-    if (i === state.weekIdx) cls += ' active';
-    const colLabel = getColLabelForWeek(i);
-    return `<button class="${cls}" onclick="selectWeek(${i})">
-      <div>W${i+1}</div>
-      <div style="font-size:10px;opacity:0.7;margin-top:2px">${colLabel}</div>
-    </button>`;
-  }).join('');
+function renderDayTabs(){
+  const el=document.getElementById('day-tabs');
+  if(state.initialMax===null||state.weekIdx<0){el.innerHTML='';return;}
+  const days=getCompletedDays(state.weekIdx);
+  el.innerHTML=DAY_LABELS.map((l,i)=>{let c='day-tab';if(days.includes(i))c+=' done';if(i===state.dayIdx)c+=' active';return `<button class="${c}" onclick="selectDay(${i})">${l}</button>`;}).join('');
 }
 
-function renderDayTabs() {
-  const el = document.getElementById('day-tabs');
-  if (state.initialMax === null) { el.innerHTML = ''; return; }
-  const days = getCompletedDays(state.weekIdx);
-  el.innerHTML = DAY_LABELS.map((label, i) => {
-    let cls = 'day-tab';
-    if (days.includes(i)) cls += ' done';
-    if (i === state.dayIdx) cls += ' active';
-    return `<button class="${cls}" onclick="selectDay(${i})">${label}</button>`;
-  }).join('');
-}
+function renderWorkout(){
+  const wrapper=document.getElementById('workout-wrapper');
+  const empty=document.getElementById('empty-state');
+  const finalArea=document.getElementById('final-test-area');
+  const celebArea=document.getElementById('celebrate-area');
+  const overlay=document.getElementById('start-overlay');
 
-function renderWorkout() {
-  const wrapper = document.getElementById('workout-wrapper');
-  const empty = document.getElementById('empty-state');
-  const overlay = document.getElementById('start-overlay');
-  const colIdx = getColIdxForWeek(state.weekIdx);
+  finalArea.style.display='none';celebArea.style.display='none';
 
-  if (state.initialMax === null || colIdx < 0) {
-    wrapper.style.display = 'none';
-    empty.style.display = 'block';
-    return;
-  }
-  wrapper.style.display = 'block';
-  empty.style.display = 'none';
+  if(state.programComplete){wrapper.style.display='none';empty.style.display='none';celebArea.style.display='block';document.getElementById('celebrate-num').textContent=state.finalTestResult;return;}
+  if(state.weekIdx===-1){wrapper.style.display='none';empty.style.display='none';finalArea.style.display='block';return;}
 
-  // Show start overlay if workout not started and no sets done yet
-  const isDayDone = getCompletedDays(state.weekIdx).includes(state.dayIdx);
-  const hasAnySet = state.currentSets.some(v => v !== null && v !== '' && v !== 0);
-  overlay.style.display = (!workoutStarted && !isDayDone && !hasAnySet) ? 'flex' : 'none';
+  const col=getColIdxForWeek(state.weekIdx);
+  if(state.initialMax===null||col<0){wrapper.style.display='none';empty.style.display='block';return;}
+  wrapper.style.display='block';empty.style.display='none';
 
-  const phase = getPhase(state.weekIdx);
-  const colLabel = PHASE_COLS[phase][colIdx];
-  document.getElementById('workout-title').textContent =
-    `Week ${state.weekIdx+1} · ${DAY_LABELS[state.dayIdx]} · ${colLabel}`;
+  const isDayDone=getCompletedDays(state.weekIdx).includes(state.dayIdx);
+  const hasAny=state.currentSets.some(v=>v!==null&&v!==''&&v!==0);
+  overlay.style.display=(!workoutStarted&&!isDayDone&&!hasAny)?'flex':'none';
 
-  const targets = getDayData(state.weekIdx, state.dayIdx, colIdx);
-  const grid = document.getElementById('sets-grid');
+  const phase=getPhase(state.weekIdx);
+  document.getElementById('workout-title').textContent=`${getWeekFullLabel(state.weekIdx)} · ${DAY_LABELS[state.dayIdx]} · ${PHASE_COLS[phase][col]}`;
 
-  grid.innerHTML = targets.map((target, s) => {
-    const isMax = target === null;
-    const val = state.currentSets[s];
-    // Check if previous sets are all done (for locking)
-    const prevDone = s === 0 ? true : state.currentSets.slice(0, s).every(v => v !== null && v !== '' && v !== 0);
-    const locked = !prevDone;
-
-    if (isMax) {
-      const hasVal = val !== null && val !== '' && val !== 0;
-      return `
-        <div class="set-item">
-          <div class="set-label">Set ${s+1}</div>
-          <div class="set-target max-label">MAX</div>
-          <input type="number" class="set-input${hasVal ? ' has-value' : ''}${locked ? ' locked' : ''}"
-            value="${hasVal ? val : ''}"
-            placeholder="MAX" min="0" inputmode="numeric"
-            ${locked ? 'disabled' : ''}
-            oninput="updateSet(${s}, this.value)">
-          ${locked ? '<div class="set-tooltip">이전 세트를 먼저 완료해주세요</div>' : ''}
-        </div>`;
-    } else {
-      const isDone = val !== null && val !== '' && val !== 0;
-      return `
-        <div class="set-item">
-          <div class="set-label">Set ${s+1}</div>
-          <div class="set-target">${target}</div>
-          <button class="set-toggle${isDone ? ' done' : ''}${locked ? ' locked' : ''}"
-            onclick="${locked ? '' : `toggleSet(${s}, ${target})`}">완료</button>
-          ${locked ? '<div class="set-tooltip">이전 세트를 먼저 완료해주세요</div>' : ''}
-        </div>`;
-    }
+  const targets=getDayData(state.weekIdx,state.dayIdx,col);
+  document.getElementById('sets-grid').innerHTML=targets.map((t,s)=>{
+    const isMax=t===null,val=state.currentSets[s];
+    const prevDone=s===0?true:state.currentSets.slice(0,s).every(v=>v!==null&&v!==''&&v!==0);
+    const locked=!prevDone;
+    if(isMax){const hv=val!==null&&val!==''&&val!==0;return `<div class="set-item"><div class="set-label">Set ${s+1}</div><div class="set-target max-label">MAX</div><input type="number" class="set-input${hv?' has-value':''}${locked?' locked':''}" value="${hv?val:''}" placeholder="MAX" min="0" inputmode="numeric" ${locked?'disabled':''} oninput="updateSet(${s},this.value)">${locked?'<div class="set-tooltip">이전 세트를 먼저 완료해주세요</div>':''}</div>`;}
+    const done=val!==null&&val!==''&&val!==0;
+    return `<div class="set-item"><div class="set-label">Set ${s+1}</div><div class="set-target">${t}</div><button class="set-toggle${done?' done':''}${locked?' locked':''}" onclick="${locked?'':(`toggleSet(${s},${t})`)}">완료</button>${locked?'<div class="set-tooltip">이전 세트를 먼저 완료해주세요</div>':''}</div>`;
   }).join('');
 
-  document.getElementById('memo').value = state.currentMemo || '';
-
-  const allFilled = state.currentSets.every(v => v !== null && v !== '' && v !== 0);
-  document.getElementById('btn-complete').style.display = (allFilled && !isDayDone) ? 'block' : 'none';
-  document.getElementById('btn-save').textContent = isDayDone ? '수정 저장' : '저장';
+  document.getElementById('memo').value=state.currentMemo||'';
+  const allFilled=state.currentSets.every(v=>v!==null&&v!==''&&v!==0);
+  document.getElementById('btn-complete').style.display=(allFilled&&!isDayDone)?'block':'none';
+  document.getElementById('btn-save').textContent=isDayDone?'수정 저장':'저장';
 }
 
-function renderProgress() {
-  let total = 0;
-  for (let w = 0; w < 6; w++) total += getCompletedDays(w).length;
-  const pct = Math.min(100, Math.round(total / 18 * 100));
-  document.getElementById('progress-pct').textContent = `${pct}%`;
-  document.getElementById('progress-fill').style.width = `${pct}%`;
+function renderProgress(){
+  const basedays=TOTAL_BASE_WEEKS*3;
+  let done=0;for(let w=0;w<getTotalWeeks();w++)done+=getCompletedDays(w).length;
+  const pct=state.programComplete?100:Math.min(100,Math.round(done/basedays*100));
+  document.getElementById('progress-pct').textContent=`${pct}%`;
+  document.getElementById('progress-fill').style.width=`${pct}%`;
 }
 
-function renderHistory() {
-  const el = document.getElementById('history-list');
-  if (state.history.length === 0) {
-    el.innerHTML = '<div class="empty-state">아직 기록이 없습니다</div>';
-    return;
-  }
-  el.innerHTML = [...state.history].reverse().slice(0, 20).map(h => {
-    const sets = h.sets.map((v,i) => i === 4 ? `<strong style="color:var(--danger)">${v}</strong>` : v).join(' · ');
-    const colLabel = h.colLabel || '';
-    return `
-      <div class="history-item">
-        <div>
-          <div class="info"><strong>${colLabel}</strong> · W${h.weekIdx+1} ${DAY_LABELS[h.dayIdx]}</div>
-          <div class="date">${h.date}</div>
-        </div>
-        <div style="text-align:right">
-          <div class="total">${h.total}회</div>
-          <div style="font-size:11px;color:var(--text3)">${sets}</div>
-        </div>
-      </div>`;
+function renderHistory(){
+  const el=document.getElementById('history-list');
+  if(state.history.length===0){el.innerHTML='<div class="empty-state">아직 기록이 없습니다</div>';return;}
+  el.innerHTML=[...state.history].reverse().slice(0,20).map(h=>{
+    const sets=h.sets.map((v,i)=>i===4?`<strong style="color:var(--danger)">${v}</strong>`:v).join(' · ');
+    return `<div class="history-item"><div><div class="info"><strong>${h.colLabel||''}</strong> · ${getWeekFullLabel(h.weekIdx)} ${DAY_LABELS[h.dayIdx]}</div><div class="date">${h.date}</div></div><div style="text-align:right"><div class="total">${h.total}회</div><div style="font-size:11px;color:var(--text3)">${sets}</div></div></div>`;
   }).join('');
 }
 
 // ===== ACTIONS =====
-function updateInitialMax(val) {
-  const num = parseInt(val);
-  if (!isNaN(num) && num > 0) {
-    state.initialMax = num;
-    recalcAllEstimates();
-    findNextIncomplete();
-    saveState();
-    render();
-    showToast(`최초 측정: ${num}개`);
-  } else if (val === '') {
-    state.initialMax = null;
-    saveState();
-    render();
-  }
-}
+function updateInitialMax(v){const n=parseInt(v);if(!isNaN(n)&&n>0){state.initialMax=n;recalcAllEstimates();findNextIncomplete();saveState();render();showToast(`최초 측정: ${n}개`);}else if(v===''){state.initialMax=null;saveState();render();}}
+function selectWeek(i){workoutStarted=false;state.weekIdx=i;state.dayIdx=0;const d=getCompletedDays(i);for(let j=0;j<3;j++)if(!d.includes(j)){state.dayIdx=j;break;}state.currentSets=[null,null,null,null,null];state.currentMemo='';loadCurrentFromHistory();saveState();render();}
+function selectDay(i){workoutStarted=false;state.dayIdx=i;state.currentSets=[null,null,null,null,null];state.currentMemo='';loadCurrentFromHistory();saveState();render();}
+function findNextIncomplete(){for(let w=0;w<getTotalWeeks();w++){const d=getCompletedDays(w);if(d.length<3){state.weekIdx=w;for(let j=0;j<3;j++)if(!d.includes(j)){state.dayIdx=j;return;}}}if(allCurrentWeeksDone()&&!state.programComplete){state.weekIdx=-1;}else{state.weekIdx=0;state.dayIdx=0;}}
+function loadCurrentFromHistory(){const m=state.history.find(h=>h.weekIdx===state.weekIdx&&h.dayIdx===state.dayIdx);if(m){state.currentSets=[...m.sets];state.currentMemo=m.memo||'';}}
 
-function selectWeek(idx) {
-  workoutStarted = false;
-  state.weekIdx = idx;
-  state.dayIdx = 0;
-  const days = getCompletedDays(idx);
-  for (let d = 0; d < 3; d++) {
-    if (!days.includes(d)) { state.dayIdx = d; break; }
-  }
-  state.currentSets = [null,null,null,null,null];
-  state.currentMemo = '';
-  loadCurrentFromHistory();
-  saveState();
-  render();
-}
+function startWorkout(){workoutStarted=true;document.getElementById('start-overlay').style.display='none';const g=document.getElementById('guide-modal');g.classList.add('open');setTimeout(()=>g.classList.remove('open'),2000);}
+function showTimer(){let sec=60;const m=document.getElementById('timer-modal'),v=document.getElementById('timer-value'),b=document.getElementById('timer-bar'),h=document.getElementById('timer-hint'),c=document.getElementById('timer-close-btn');h.textContent='최소 30초, 최대 60초를 휴식해주세요';v.textContent='60';v.className='timer-value';b.style.width='100%';b.className='timer-bar-fill';c.textContent='닫기';c.onclick=closeTimer;m.classList.add('open');timerInterval=setInterval(()=>{sec--;v.textContent=sec;b.style.width=`${sec/60*100}%`;if(sec<=30){v.className='timer-value warning';b.className='timer-bar-fill warning';}if(sec<=0){clearInterval(timerInterval);timerInterval=null;v.textContent='다음 Set 시작!';v.className='timer-value ready';b.style.width='0%';h.textContent='충분히 휴식했습니다';c.textContent='시작';c.onclick=closeTimer;}},1000);}
+function closeTimer(){if(timerInterval){clearInterval(timerInterval);timerInterval=null;}document.getElementById('timer-modal').classList.remove('open');}
 
-function selectDay(idx) {
-  workoutStarted = false;
-  state.dayIdx = idx;
-  state.currentSets = [null,null,null,null,null];
-  state.currentMemo = '';
-  loadCurrentFromHistory();
-  saveState();
-  render();
-}
+function toggleSet(idx,target){if(idx>0&&!state.currentSets.slice(0,idx).every(v=>v!==null&&v!==''&&v!==0))return;if(state.currentSets[idx]!==null&&state.currentSets[idx]!==0){state.currentSets[idx]=null;}else{state.currentSets[idx]=target;if(idx<4)showTimer();}saveState();renderWorkout();}
+function updateSet(idx,val){state.currentSets[idx]=val===''?null:parseInt(val);const inp=document.querySelectorAll('.set-input:not(.locked)')[0];if(inp){inp.classList.toggle('has-value',val!==''&&val!==null);}const af=state.currentSets.every(v=>v!==null&&v!==''&&v!==0);const dd=getCompletedDays(state.weekIdx).includes(state.dayIdx);document.getElementById('btn-complete').style.display=(af&&!dd)?'block':'none';saveState();}
 
-function findNextIncomplete() {
-  for (let w = 0; w < 6; w++) {
-    const days = getCompletedDays(w);
-    if (days.length < 3) {
-      state.weekIdx = w;
-      for (let d = 0; d < 3; d++) {
-        if (!days.includes(d)) { state.dayIdx = d; return; }
-      }
-    }
-  }
-  state.weekIdx = 0;
-  state.dayIdx = 0;
-}
+function saveWorkout(){const col=getColIdxForWeek(state.weekIdx);if(col<0)return;const phase=getPhase(state.weekIdx);const colLabel=PHASE_COLS[phase][col];const sets=state.currentSets.map(v=>(v!==null&&v!==''&&v!==0)?parseInt(v):0);const total=sets.reduce((a,b)=>a+b,0);const memo=document.getElementById('memo').value;state.currentMemo=memo;const now=new Date();const date=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;const ei=state.history.findIndex(h=>h.weekIdx===state.weekIdx&&h.dayIdx===state.dayIdx);const rec={date,colIdx:col,colLabel,weekIdx:state.weekIdx,dayIdx:state.dayIdx,sets,memo,total,completed:getCompletedDays(state.weekIdx).includes(state.dayIdx)};if(ei>=0){rec.completed=state.history[ei].completed;state.history[ei]=rec;}else state.history.push(rec);recalcAllEstimates();saveState();render();showToast('저장 완료!');}
 
-function loadCurrentFromHistory() {
-  const match = state.history.find(h =>
-    h.weekIdx === state.weekIdx && h.dayIdx === state.dayIdx
-  );
-  if (match) {
-    state.currentSets = [...match.sets];
-    state.currentMemo = match.memo || '';
-  }
-}
+function completeDay(){const col=getColIdxForWeek(state.weekIdx);const days=getCompletedDays(state.weekIdx);if(!days.includes(state.dayIdx)){if(!state.completedDays[state.weekIdx])state.completedDays[state.weekIdx]=[];state.completedDays[state.weekIdx].push(state.dayIdx);const ei=state.history.findIndex(h=>h.weekIdx===state.weekIdx&&h.dayIdx===state.dayIdx);if(ei>=0)state.history[ei].completed=true;else{saveWorkout();const ni=state.history.findIndex(h=>h.weekIdx===state.weekIdx&&h.dayIdx===state.dayIdx);if(ni>=0)state.history[ni].completed=true;}recalcAllEstimates();if(isWeekComplete(state.weekIdx)){const est=getCurrentEstimatedMax();if(allCurrentWeeksDone()&&!state.programComplete){showToast(`${getWeekFullLabel(state.weekIdx)} 완료! Final Test를 진행하세요`);state.weekIdx=-1;}else{showToast(`${getWeekFullLabel(state.weekIdx)} 완료! 추정 Max: ${est}개`);findNextIncomplete();state.currentSets=[null,null,null,null,null];state.currentMemo='';loadCurrentFromHistory();}}else{const ud=getCompletedDays(state.weekIdx);for(let d=0;d<3;d++)if(!ud.includes(d)){state.dayIdx=d;state.currentSets=[null,null,null,null,null];state.currentMemo='';loadCurrentFromHistory();break;}showToast(`${DAY_LABELS[state.dayIdx]} 시작!`);}saveState();render();}}
 
-// ===== WORKOUT START & TIMER =====
-let workoutStarted = false;
-let timerInterval = null;
-let timerSeconds = 60;
+// ===== FINAL TEST =====
+function showFinalTest(){state.weekIdx=-1;state.finalTestResult=null;saveState();render();}
+function submitFinalTest(){const v=parseInt(document.getElementById('final-input').value);if(isNaN(v)||v<=0){showToast('숫자를 입력해주세요');return;}state.finalTestResult=v;if(v>=100){state.programComplete=true;saveState();render();showToast('100 Push-Ups 달성! 축하합니다!');}else{state.extraWeekCount++;const newWeek=TOTAL_BASE_WEEKS+state.extraWeekCount-1;state.weekIdx=newWeek;state.dayIdx=0;state.finalTestResult=null;state.currentSets=[null,null,null,null,null];state.currentMemo='';saveState();render();showToast(`${v}개! Extra Week ${state.extraWeekCount} 시작!`);}}
 
-function startWorkout() {
-  workoutStarted = true;
-  document.getElementById('start-overlay').style.display = 'none';
+function exportCSV(){if(state.history.length===0){showToast('내보낼 기록이 없습니다');return;}const h='Date,Column,Week,Day,Set1,Set2,Set3,Set4,Set5(MAX),Total,Memo';const r=state.history.map(h=>`"${h.date}","${h.colLabel||''}","${getWeekFullLabel(h.weekIdx)}","${DAY_LABELS[h.dayIdx]}",${h.sets.join(',')},${h.total},"${(h.memo||'').replace(/"/g,'""')}"`);const csv=[h,...r].join('\n');const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`pushup100_${new Date().toISOString().slice(0,10)}.csv`;a.click();URL.revokeObjectURL(url);showToast('CSV 내보내기 완료');}
+function showResetModal(){document.getElementById('reset-modal').classList.add('open');}
+function closeResetModal(){document.getElementById('reset-modal').classList.remove('open');}
+function resetAll(){state=defaultState();saveState();closeResetModal();document.getElementById('initial-input').value='';document.getElementById('final-input').value='';render();showToast('초기화 완료');}
+function showToast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2500);}
 
-  // Show guide modal, auto-dismiss after 2.5s
-  const guide = document.getElementById('guide-modal');
-  guide.classList.add('open');
-  setTimeout(() => guide.classList.remove('open'), 2000);
-}
-
-function showTimer() {
-  timerSeconds = 60;
-  const modal = document.getElementById('timer-modal');
-  const valEl = document.getElementById('timer-value');
-  const barEl = document.getElementById('timer-bar');
-  const hintEl = document.getElementById('timer-hint');
-  const closeBtn = document.getElementById('timer-close-btn');
-
-  hintEl.textContent = '최소 30초, 최대 60초를 휴식해주세요';
-  valEl.textContent = '60';
-  valEl.className = 'timer-value';
-  barEl.style.width = '100%';
-  barEl.className = 'timer-bar-fill';
-  closeBtn.textContent = '닫기';
-  closeBtn.onclick = closeTimer;
-
-  modal.classList.add('open');
-
-  timerInterval = setInterval(() => {
-    timerSeconds--;
-    valEl.textContent = timerSeconds;
-    barEl.style.width = `${(timerSeconds / 60) * 100}%`;
-
-    if (timerSeconds <= 30) {
-      valEl.className = 'timer-value warning';
-      barEl.className = 'timer-bar-fill warning';
-    }
-
-    if (timerSeconds <= 0) {
-      clearInterval(timerInterval);
-      timerInterval = null;
-      valEl.textContent = '다음 Set 시작!';
-      valEl.className = 'timer-value ready';
-      barEl.style.width = '0%';
-      hintEl.textContent = '충분히 휴식했습니다';
-      closeBtn.textContent = '시작';
-      closeBtn.onclick = closeTimer;
-    }
-  }, 1000);
-}
-
-function closeTimer() {
-  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
-  document.getElementById('timer-modal').classList.remove('open');
-}
-
-function toggleSet(idx, target) {
-  // Check lock
-  if (idx > 0) {
-    const prevDone = state.currentSets.slice(0, idx).every(v => v !== null && v !== '' && v !== 0);
-    if (!prevDone) return;
-  }
-
-  if (state.currentSets[idx] !== null && state.currentSets[idx] !== 0) {
-    state.currentSets[idx] = null;
-  } else {
-    state.currentSets[idx] = target;
-    // Show timer after completing sets 1-4 (not after undoing)
-    if (idx < 4) showTimer();
-  }
-  saveState();
-  renderWorkout();
-}
-
-function updateSet(idx, val) {
-  state.currentSets[idx] = val === '' ? null : parseInt(val);
-
-  const input = document.querySelectorAll('.set-input:not(.locked)')[0];
-  if (input) {
-    const hasVal = val !== '' && val !== null;
-    input.classList.toggle('has-value', hasVal);
-  }
-
-  const allFilled = state.currentSets.every(v => v !== null && v !== '' && v !== 0);
-  const isDayDone = getCompletedDays(state.weekIdx).includes(state.dayIdx);
-  document.getElementById('btn-complete').style.display = (allFilled && !isDayDone) ? 'block' : 'none';
-
-  saveState();
-}
-
-function saveWorkout() {
-  const colIdx = getColIdxForWeek(state.weekIdx);
-  if (colIdx < 0) return;
-
-  const phase = getPhase(state.weekIdx);
-  const colLabel = PHASE_COLS[phase][colIdx];
-  const targets = getDayData(state.weekIdx, state.dayIdx, colIdx);
-  const sets = state.currentSets.map((v, i) => {
-    if (v !== null && v !== '' && v !== 0) return parseInt(v);
-    return 0;
-  });
-  const total = sets.reduce((a,b) => a+b, 0);
-  const memo = document.getElementById('memo').value;
-  state.currentMemo = memo;
-
-  const now = new Date();
-  const date = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-
-  const existIdx = state.history.findIndex(h =>
-    h.weekIdx === state.weekIdx && h.dayIdx === state.dayIdx
-  );
-
-  const record = {
-    date, colIdx, colLabel,
-    weekIdx: state.weekIdx, dayIdx: state.dayIdx,
-    sets, memo, total,
-    completed: getCompletedDays(state.weekIdx).includes(state.dayIdx)
-  };
-
-  if (existIdx >= 0) {
-    record.completed = state.history[existIdx].completed;
-    state.history[existIdx] = record;
-  } else {
-    state.history.push(record);
-  }
-
-  recalcAllEstimates();
-  saveState();
-  render();
-  showToast('저장 완료!');
-}
-
-function completeDay() {
-  const colIdx = getColIdxForWeek(state.weekIdx);
-  const days = getCompletedDays(state.weekIdx);
-  if (!days.includes(state.dayIdx)) {
-    if (!state.completedDays[state.weekIdx]) state.completedDays[state.weekIdx] = [];
-    state.completedDays[state.weekIdx].push(state.dayIdx);
-
-    const existIdx = state.history.findIndex(h =>
-      h.weekIdx === state.weekIdx && h.dayIdx === state.dayIdx
-    );
-    if (existIdx >= 0) {
-      state.history[existIdx].completed = true;
-    } else {
-      saveWorkout();
-      const newIdx = state.history.findIndex(h =>
-        h.weekIdx === state.weekIdx && h.dayIdx === state.dayIdx
-      );
-      if (newIdx >= 0) state.history[newIdx].completed = true;
-    }
-
-    recalcAllEstimates();
-
-    if (isWeekComplete(state.weekIdx)) {
-      const est = getCurrentEstimatedMax();
-      showToast(`Week ${state.weekIdx+1} 완료! 추정 Max: ${est}개`);
-      if (countCompletedWeeks() < 6) {
-        findNextIncomplete();
-        state.currentSets = [null,null,null,null,null];
-        state.currentMemo = '';
-        loadCurrentFromHistory();
-      }
-    } else {
-      const updatedDays = getCompletedDays(state.weekIdx);
-      for (let d = 0; d < 3; d++) {
-        if (!updatedDays.includes(d)) {
-          state.dayIdx = d;
-          state.currentSets = [null,null,null,null,null];
-          state.currentMemo = '';
-          loadCurrentFromHistory();
-          break;
-        }
-      }
-      showToast(`${DAY_LABELS[state.dayIdx]} 시작!`);
-    }
-
-    saveState();
-    render();
-  }
-}
-
-function exportCSV() {
-  if (state.history.length === 0) { showToast('내보낼 기록이 없습니다'); return; }
-  const header = 'Date,Column,Week,Day,Set1,Set2,Set3,Set4,Set5(MAX),Total,Memo';
-  const rows = state.history.map(h =>
-    `"${h.date}","${h.colLabel || ''}","Week ${h.weekIdx+1}","${DAY_LABELS[h.dayIdx]}",${h.sets.join(',')},${h.total},"${(h.memo||'').replace(/"/g,'""')}"`
-  );
-  const csv = [header, ...rows].join('\n');
-  const blob = new Blob(['\uFEFF' + csv], {type:'text/csv;charset=utf-8;'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = `pushup100_${new Date().toISOString().slice(0,10)}.csv`;
-  a.click(); URL.revokeObjectURL(url);
-  showToast('CSV 내보내기 완료');
-}
-
-function showResetModal() { document.getElementById('reset-modal').classList.add('open'); }
-function closeResetModal() { document.getElementById('reset-modal').classList.remove('open'); }
-function resetAll() {
-  state = defaultState();
-  saveState();
-  closeResetModal();
-  document.getElementById('initial-input').value = '';
-  render();
-  showToast('초기화 완료');
-}
-
-function showToast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 2500);
-}
-
-// ===== INIT =====
 render();
 </script>
 </body>
