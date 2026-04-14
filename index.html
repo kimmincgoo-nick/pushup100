@@ -261,7 +261,7 @@ body { font-family:'Space Grotesk',sans-serif; background:var(--bg); color:var(-
     <button class="btn btn-secondary" id="timer-close-btn" onclick="closeTimer()" style="margin-top:12px;">닫기</button>
   </div>
 </div>
-<div class="timer-overlay" id="guide-modal">
+<div class="timer-overlay" id="guide-modal" onclick="event.stopPropagation()">
   <div class="timer-card">
     <div style="font-size:18px;font-weight:600;margin-bottom:12px;">운동 시작!</div>
     <div style="font-size:14px;color:var(--text2);line-height:1.6;">Set 1을 수행하고 '완료' 버튼을 눌러주세요!<br>이후 Set 수행을 위한 타이머가 실행됩니다.</div>
@@ -491,12 +491,13 @@ function updateInitialMax(v){const n=parseInt(v);if(!isNaN(n)&&n>0){state.initia
   for(let w=0;w<startWeek;w++){state.completedDays[w]=[0,1,2];}
   state.weekIdx=startWeek;state.dayIdx=0;
   state.currentSets=[null,null,null,null,null];state.currentMemo='';
+  workoutStarted=false;
   recalcAllEstimates();saveState();render();
   // Show placement popup
   const g=document.getElementById('guide-modal');
   g.querySelector('div:first-child').textContent='자동 배치 완료';
   g.querySelector('div:last-child').innerHTML=`현재 수준에 맞는 <strong>Week ${startWeek+1}</strong>으로 자동 배치되었습니다.`;
-  g.classList.add('open');setTimeout(()=>g.classList.remove('open'),2000);
+  g.classList.add('open');setTimeout(()=>{g.classList.remove('open');render();},2000);
 }else if(v===''){state.initialMax=null;state.completedDays={};saveState();render();}}
 function selectWeek(i){workoutStarted=false;state.weekIdx=i;state.dayIdx=0;const d=getCompletedDays(i);for(let j=0;j<3;j++)if(!d.includes(j)){state.dayIdx=j;break;}state.currentSets=[null,null,null,null,null];state.currentMemo='';loadCurrentFromHistory();saveState();render();}
 function selectDay(i){workoutStarted=false;state.dayIdx=i;state.currentSets=[null,null,null,null,null];state.currentMemo='';loadCurrentFromHistory();saveState();render();}
